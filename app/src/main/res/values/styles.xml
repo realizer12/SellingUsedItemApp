@@ -1,11 +1,26 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!--기본 앱테마에도 acion bar 다 없앰.-->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+
+
+    <!--스플래시 엑티비티에 drawable안에 있는 중고나라  로고 뷰를  스타일 테마로 넣기 위해  아래와 같이 스타일을 설정함.
+        이렇게 한 이유는 기존에 스플래시 엑티비티 사용시 딜레이를 주어서 메인으로 넘어가게 했는데  이때
+        cold start 부분 <앱 종료한 후 앱 시작 또는  기기 부팅후  처음 실행시> 에서
+        안드는 약간의 시동에 시간이 걸리므로, 하얗게  보여지거나 검게 보여진다.
+        이를 해결하기위해  splash activity부분에서 layout 연결대신  스타일 테마로 뷰를  넣어 버려
+        실행시  바로  로고가 보이도록 진행한다.
+        -->
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
 </resources>

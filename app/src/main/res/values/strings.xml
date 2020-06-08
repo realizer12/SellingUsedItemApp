@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">SellingUsedItemApp</string>
+    <!--기기에서 보여지는 앱 이름  -->
+    <string name="app_name">중고마켓</string>
 </resources>

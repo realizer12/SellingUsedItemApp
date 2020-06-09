@@ -14,7 +14,11 @@ import java.util.*
  * Class: SplashActivity.
  * Created by leedonghun.
  * Created On 2020-06-08.
- * Description:
+ *
+ * Description: 맨처음에  시작 될때  보이게 되는
+ *중고나라  로고가 style 태마로  적용된 엑티비티이다.
+ * 앱  launcher 엑티비티로 설정해 놓았으며,  로고를 0.8 초 보여주고
+ * 메인이나(로그인 기록 존재 시) ,  메인 로그인 화면(로그인 기록 x) 으로 넘어가진다.
  */
 class SplashActivity: AppCompatActivity() {
 

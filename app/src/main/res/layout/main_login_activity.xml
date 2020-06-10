@@ -28,15 +28,202 @@
         android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_default="percent"
         app:layout_constraintHeight_percent="0.15"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.25"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgView_for_app_logo_gif"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.25"
         app:srcCompat="@drawable/shake_hands_white_img" />
+
+    <Button
+        android:id="@+id/btn_for_email_login"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="30dp"
+        android:autoSizeMaxTextSize="15sp"
+        android:autoSizeMinTextSize="14sp"
+        android:autoSizeTextType="uniform"
+        android:background="@drawable/custom_btn_for_email_login_res"
+        android:fontFamily="@font/cookierun_regular"
+        android:text="@string/email_login"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.087"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.83" />
+
+    <ImageView
+        android:id="@+id/icon_for_email_login"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_for_email_login"
+        app:layout_constraintEnd_toEndOf="@id/login_icons_guideLine"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.055"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.15"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/btn_for_email_login"
+        app:layout_constraintTop_toTopOf="@+id/btn_for_email_login"
+        app:srcCompat="@drawable/login_email_icon" />
+
+
+    <Button
+        android:id="@+id/btn_for_google_login"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:autoSizeMaxTextSize="15sp"
+        android:autoSizeMinTextSize="14sp"
+        android:autoSizeTextType="uniform"
+        android:background="@drawable/custom_btn_for_google_login_res"
+        android:fontFamily="@font/cookierun_regular"
+        android:textAllCaps="false"
+        android:text="@string/google_login"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.087"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_for_email_login"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.83" />
+
+
+    <ImageView
+        android:id="@+id/icon_for_google_login"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_for_google_login"
+        app:layout_constraintEnd_toEndOf="@id/login_icons_guideLine"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.078"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.15"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/btn_for_google_login"
+        app:layout_constraintTop_toTopOf="@+id/btn_for_google_login"
+        app:srcCompat="@drawable/login_google_icon" />
+
+    <Button
+        android:id="@+id/btn_for_naver_login"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:autoSizeMaxTextSize="15sp"
+        android:autoSizeMinTextSize="14sp"
+        android:autoSizeTextType="uniform"
+        android:background="@drawable/custom_btn_for_naver_login"
+        android:fontFamily="@font/cookierun_regular"
+        android:textAllCaps="false"
+        android:text="@string/naver_login"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.087"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_for_google_login"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.83" />
+
+
+    <ImageView
+        android:id="@+id/icon_for_naver_login"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_for_naver_login"
+        app:layout_constraintEnd_toEndOf="@id/login_icons_guideLine"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.062"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.15"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/btn_for_naver_login"
+        app:layout_constraintTop_toTopOf="@+id/btn_for_naver_login"
+        app:srcCompat="@drawable/login_naver_icon" />
+
+
+    <Button
+        android:id="@+id/btn_for_facebook_login"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:autoSizeMaxTextSize="15sp"
+        android:autoSizeMinTextSize="14sp"
+        android:autoSizeTextType="uniform"
+        android:background="@drawable/custom_btn_for_facebook_login"
+        android:fontFamily="@font/cookierun_regular"
+        android:textAllCaps="false"
+        android:text="@string/facebook_login"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.087"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_for_naver_login"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.83" />
+
+
+    <ImageView
+        android:id="@+id/icon_for_facebook_login"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_for_facebook_login"
+        app:layout_constraintEnd_toEndOf="@id/login_icons_guideLine"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.048"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.15"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/btn_for_facebook_login"
+        app:layout_constraintTop_toTopOf="@+id/btn_for_facebook_login"
+        app:srcCompat="@drawable/login_facebook_icon" />
+
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/login_icons_guideLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.25"
+         />
+
+    <TextView
+        android:id="@+id/txt_to_go_make_id"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:layout_height="0dp"
+        android:layout_marginTop="3dp"
+        android:textColor="#000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.048"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_for_facebook_login"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.8" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

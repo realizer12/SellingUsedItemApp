@@ -1,4 +1,21 @@
 <resources>
     <!--기기에서 보여지는 앱 이름  -->
     <string name="app_name">중고마켓</string>
+
+    <!-- 이메일 로그인 버튼 용 string -->
+    <string name="email_login">이메일 로그인</string>
+
+    <!-- 구글 로그인 버튼용 string   -->
+    <string name="google_login">Google 로그인</string>
+
+    <!-- 네이버 로그인 버튼용 string  -->
+    <string name="naver_login">네이버 로그인</string>
+
+
+    <!-- 페이스북 로그인 버튼용 string  -->
+    <string name="facebook_login">페이스북 로그인</string>
+
+    <!-- 회원가입 엑티비티 연결 버튼용 string  -->
+    <string name="btn_for_make_id">처음 이신 가요?? 회원가입입</string>
+
 </resources>

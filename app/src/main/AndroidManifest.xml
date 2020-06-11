@@ -20,6 +20,10 @@
         <activity android:name=".Activity.MainLoginActivity">
 
         </activity>
+        <activity android:name=".Activity.EmailLoginActivity"
+                  android:windowSoftInputMode="adjustResize">
+
+        </activity>
     </application>
 
 </manifest>

@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:backgroundTint="#FFFFFF">
+
+    <ImageView
+        android:id="@+id/arrow_btn_for_back_to_login_activity"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.04"
+        app:layout_constraintHorizontal_bias="0.03"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.09"
+        app:srcCompat="@drawable/arrow_icon_for_back" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/cookierun_regular"
+        android:text="@string/string_for_top_of_email_login_activity"
+        android:textColor="#000"
+        android:textSize="26sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.06"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_for_email_login_activity"
+        app:layout_constraintTop_toBottomOf="@+id/arrow_btn_for_back_to_login_activity"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <EditText
+        android:id="@+id/editxt_for_add_login_email"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
+        android:paddingLeft="7dp"
+        android:drawableLeft="@drawable/email_login_id_icon"
+        android:drawablePadding="7dp"
+        android:backgroundTint="#000"
+        android:ems="10"
+        android:hint="@string/string_for_add_hint_on_id_place_in_email_login_activity"
+        android:inputType="textEmailAddress"
+        android:fontFamily="@font/cookierun_regular"
+        android:textColorHint="#787878"
+        android:textSize="14sp"
+        android:textColor="#000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.07"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_for_email_login_activity"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.85" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/editxt_for_add_login_password"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
+        android:paddingLeft="7dp"
+        android:drawableLeft="@drawable/email_login_pwd_icon"
+        android:drawablePadding="7dp"
+        android:backgroundTint="#000"
+        android:ems="10"
+        android:hint="@string/string_for_add_hint_on_password_in_email_login_activity"
+        android:inputType="textPassword"
+        android:fontFamily="@font/cookierun_regular"
+        android:textColorHint="#787878"
+        android:textSize="14sp"
+        android:textColor="#000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.07"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_for_email_login_activity"
+        app:layout_constraintTop_toBottomOf="@+id/editxt_for_add_login_email"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.85" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_for_email_login_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="29dp" />
+
+    <FrameLayout
+        android:id="@+id/frame_for_handle_pwd_shown"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.04"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.07"
+        app:layout_constraintVertical_bias="0.4"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/editxt_for_add_login_password"
+        app:layout_constraintEnd_toEndOf="@+id/editxt_for_add_login_password"
+        app:layout_constraintTop_toTopOf="@+id/editxt_for_add_login_password">
+
+
+        <ImageView
+            android:id="@+id/img_for_pwd_not_shown"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/password_not_shown_icon" />
+
+        <ImageView
+            android:id="@+id/img_for_pwd_shown"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/password_show_icon" />
+    </FrameLayout>
+
+
+    <Button
+        android:id="@+id/btn_for_login"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="30dp"
+        android:textSize="15sp"
+        android:background="@drawable/custom_login_btn_for_email_login_in_email_login_activity"
+        android:fontFamily="@font/cookierun_regular"
+        android:text="@string/string_for_login_button"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.080"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.83"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/view"
+        android:layout_alignParentBottom="true"
+
+
+        />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#000000"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.005"
+        app:layout_constraintHorizontal_bias="0.5"
+
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.9"
+        android:layout_marginTop="70dp"
+        app:layout_constraintVertical_bias="19"
+        android:layout_marginBottom="90dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/dasd"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view"
+
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.079"
+        app:layout_constraintHorizontal_bias="0.5"
+
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.87"
+
+        >
+
+        <Button
+            android:id="@+id/btn_for_find_id"
+            style="?android:attr/borderlessButtonStyle"
+            android:textSize="14sp"
+            android:background="@drawable/custom_btn_for_email_login_in_email_login_activity"
+            android:fontFamily="@font/cookierun_regular"
+            android:text="@string/string_for_find_email_login_id"
+            android:textColor="#000000"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_weight="0.2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            />
+
+        <Button
+            android:id="@+id/btn_for_find_pwd"
+            style="?android:attr/borderlessButtonStyle"
+            android:textSize="14sp"
+            android:background="@drawable/custom_btn_for_email_login_in_email_login_activity"
+            android:fontFamily="@font/cookierun_regular"
+            android:text="@string/string_for_find_email_login_pwd"
+            android:textColor="#000000"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

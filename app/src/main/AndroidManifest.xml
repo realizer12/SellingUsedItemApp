@@ -21,7 +21,7 @@
 
         </activity>
         <activity android:name=".Activity.EmailLoginActivity"
-                  android:windowSoftInputMode="adjustResize">
+                  android:windowSoftInputMode="stateAlwaysVisible|adjustPan">
 
         </activity>
     </application>

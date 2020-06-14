@@ -1,16 +1,21 @@
 package com.example.leedonghun.sellinguseditemapp.Activity
 
 import android.os.Bundle
-import android.text.InputType
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
+import androidx.core.view.marginBottom
 import com.example.leedonghun.sellinguseditemapp.R
+import com.example.leedonghun.sellinguseditemapp.Util.KeyboardVisibilityUtils
 import kotlinx.android.synthetic.main.email_login_activity.*
+
 
 /**
  * SellingUsedItemApp
@@ -24,20 +29,60 @@ import kotlinx.android.synthetic.main.email_login_activity.*
  */
 class EmailLoginActivity :AppCompatActivity() {
 
+    private lateinit var keyboardVisibilityUtils: KeyboardVisibilityUtils//키보드 visible 판단해주는  클래스
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.email_login_activity)
-        Log.v("check_app_runnig_status","EmailLoginActivity의 onCreate() 실행됨")
+        Log.v("check_app_runnig_status",localClassName+"EmailLoginActivity의 onCreate() 실행됨")
 
 
 
         //뒤로 가기 버튼 클릭
         arrow_btn_for_back_to_login_activity.setOnClickListener {
-            Log.v("check_app_runnig_status","뒤로가기 버튼 클릭됨-> MainLoginActivity로 이동 됨")
+            Log.v("check_app_runnig_status",localClassName+"뒤로가기 버튼 클릭됨-> MainLoginActivity로 이동 됨")
 
             //현재 엑티비티 종료 시킴
             finish()
         }
+        val parameter = btn_for_login.getLayoutParams() as ConstraintLayout.LayoutParams
+
+         val bottm:Int=parameter.bottomMargin
+
+
+
+        keyboardVisibilityUtils= KeyboardVisibilityUtils(window,
+
+            onShowKeyboard = { keyboardHeight, visibleDisplayFrameHeight ->
+                    // 키보드가 올라올 때의 동작
+                    Log.v("check_app_runnig_status", localClassName+"에서 키보드 올라옴"+visibleDisplayFrameHeight+"asdasd->"+keyboardHeight)
+
+                parameter.setMargins(
+                    parameter.leftMargin ,
+                    parameter.topMargin,
+                    parameter.rightMargin,
+                    keyboardHeight-300
+                ) // left, top, right, bottom
+                btn_for_login.setLayoutParams(parameter)
+
+            },
+
+
+            onHideKeyboard = {
+                    // 키보드가 내려갈 때의 동작
+                    Log.v("check_app_runnig_status", localClassName+"에서 키보드 내려감")
+
+                parameter.setMargins(
+                    parameter.leftMargin ,
+                    parameter.topMargin,
+                    parameter.rightMargin,
+                    bottm
+                ) // left, top, right, bottom
+                btn_for_login.setLayoutParams(parameter)
+
+                }
+        )
+
 
 
 
@@ -45,7 +90,7 @@ class EmailLoginActivity :AppCompatActivity() {
         //비밀번호 보여짐 상태 아이콘  클릭 이벤트
         frame_for_handle_pwd_shown.setOnClickListener {
 
-            Log.v("check_app_runnig_status","비밀번호 보여짐 상태여부  설정 됨")
+            Log.v("check_app_runnig_status",localClassName+"에서 비밀번호 상태  보여짐으로  설정 됨")
 
             //보이기 여부 설정하는 함수 1-1
             show_pwd_shown_status(img_for_pwd_shown,img_for_pwd_not_shown)
@@ -54,19 +99,19 @@ class EmailLoginActivity :AppCompatActivity() {
 
         //로그인 버튼 눌렀을때
         btn_for_login.setOnClickListener {
-            Log.v("check_app_runnig_status","로그인 버튼 눌림")
-            
+            Log.v("check_app_runnig_status",localClassName+"에서 로그인 버튼 눌림")
+
         }
 
         //아이디 찾기 버튼 눌렸을때
         btn_for_find_id.setOnClickListener {
-            Log.v("check_app_runnig_status","아이디 찾기 버튼 눌림")
+            Log.v("check_app_runnig_status",localClassName+"에서 아이디 찾기 버튼 눌림")
 
         }
 
         //비밀번호 찾기 버튼 눌림.
         btn_for_find_pwd.setOnClickListener {
-            Log.v("check_app_runnig_status","비밀번호 찾기 버튼 눌림")
+            Log.v("check_app_runnig_status",localClassName+"에서 비밀번호 찾기 버튼 눌림")
 
         }
 
@@ -75,11 +120,15 @@ class EmailLoginActivity :AppCompatActivity() {
 
 
 
+
     //이메일 로그인 비밀번호  보이기 여부 설정 1-1
     fun show_pwd_shown_status(show_icon:ImageView,not_show_icon:ImageView){
 
+        Log.v("check_app_runnig_status",localClassName+"에서 show_pwd_shown_status() 실행 됨")
+
         //보여지는 상태로 체크 되어있을 경우
         if(show_icon.isVisible){
+
 
             //아이콘 visible 처리
             show_icon.visibility=View.INVISIBLE
@@ -110,3 +159,4 @@ class EmailLoginActivity :AppCompatActivity() {
 
 
 }//EmailLoginActivity 클래스 끝
+

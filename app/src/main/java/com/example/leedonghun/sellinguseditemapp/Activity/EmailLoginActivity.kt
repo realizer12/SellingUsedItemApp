@@ -45,43 +45,44 @@ class EmailLoginActivity :AppCompatActivity() {
             //현재 엑티비티 종료 시킴
             finish()
         }
-        val parameter = btn_for_login.getLayoutParams() as ConstraintLayout.LayoutParams
-
-         val bottm:Int=parameter.bottomMargin
 
 
 
+         //현재 레이아웃에서 로그인 버튼의  위치를  받아옴.
+         val parameter = btn_for_login.getLayoutParams() as ConstraintLayout.LayoutParams
+
+         //현재 xml에  지정된 로그인 버튼의  margin -bottm 값을  변수에 넣어둠.
+         //이유는 키보드 올라올때 margin-bottom값을  키보드 높이- 300 지정하므로,
+         //다시 키보드를 내릴때  로그인 버튼이 원래 자리를  찾아가지 못함.
+         //그러므로,  원래 margin-bottom값을 넣어놓음
+         val bottm_margin:Int=parameter.bottomMargin
+
+
+
+        //키보드 shown /hide 여부 감지
         keyboardVisibilityUtils= KeyboardVisibilityUtils(window,
 
+            // 키보드가 올라올 때의 동작
             onShowKeyboard = { keyboardHeight, visibleDisplayFrameHeight ->
-                    // 키보드가 올라올 때의 동작
-                    Log.v("check_app_runnig_status", localClassName+"에서 키보드 올라옴"+visibleDisplayFrameHeight+"asdasd->"+keyboardHeight)
+                Log.v("check_app_runnig_status", localClassName+"에서 키보드 올라옴")
 
-                parameter.setMargins(
-                    parameter.leftMargin ,
-                    parameter.topMargin,
-                    parameter.rightMargin,
-                    keyboardHeight-300
-                ) // left, top, right, bottom
+                //로그인 버튼 위치 조정-> bottom margin 만  키보드 높이 -300으로 바꿔준다.
+                parameter.setMargins(parameter.leftMargin , parameter.topMargin, parameter.rightMargin, keyboardHeight-300) // left, top, right, bottom
                 btn_for_login.setLayoutParams(parameter)
 
             },
 
-
+            // 키보드가 내려갈 때의 동작
             onHideKeyboard = {
-                    // 키보드가 내려갈 때의 동작
-                    Log.v("check_app_runnig_status", localClassName+"에서 키보드 내려감")
+                Log.v("check_app_runnig_status", localClassName+"에서 키보드 내려감")
 
-                parameter.setMargins(
-                    parameter.leftMargin ,
-                    parameter.topMargin,
-                    parameter.rightMargin,
-                    bottm
-                ) // left, top, right, bottom
+
+                //로그인 버튼 위치  다시  원상 복귀
+                parameter.setMargins(parameter.leftMargin , parameter.topMargin, parameter.rightMargin, bottm_margin) // left, top, right, bottom
                 btn_for_login.setLayoutParams(parameter)
 
-                }
-        )
+            }
+        )//키보드 감지 끝.
 
 
 

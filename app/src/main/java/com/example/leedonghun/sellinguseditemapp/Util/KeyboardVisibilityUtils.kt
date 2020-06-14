@@ -13,6 +13,7 @@ import android.view.Window
  * Created On 2020-06-12
  *.
  * Description: 키보드의 visible 형태를  판단해서 알려준다.
+ * 이부분  다시 한 번  공부하기
  */
 class KeyboardVisibilityUtils(
 

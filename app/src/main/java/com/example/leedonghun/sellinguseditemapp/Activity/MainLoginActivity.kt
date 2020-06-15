@@ -48,6 +48,20 @@ class MainLoginActivity : AppCompatActivity() {
         txt_to_go_make_id.text = stylestring
 
 
+        //회원가입 텍스트 클릭 이벤트
+        txt_to_go_make_id.setOnClickListener {
+            Log.v("check_app_runnig_status","이메일 로그인 회원가입 텍스트 클릭됨 -> MakeNewEmailLoginId로 가짐")
+
+          //회원가입 엑티비티로 감
+          val intent_to_go_to_MakeNewEmailLoginId=Intent(this,MakeNewLoginIdActivity::class.java)
+
+          //보내는 값이 1-> email 로그인 아이디를  생성 할때 , 0->  sns 로그인 아이디 생성 할때
+          //값을 토대로 회원가입 용 뷰페이져의 4개 프래그먼트에서  3번째 프래그먼트(title -> 회원가입) 형태가 바뀌게됨.
+          intent_to_go_to_MakeNewEmailLoginId.putExtra("check_sns_or_email",1)
+          startActivity(intent_to_go_to_MakeNewEmailLoginId)
+
+        }
+
         //로그인 이메일 버튼 이벤트
         btn_for_email_login.setOnClickListener {
             Log.v("check_app_runnig_status","이메일 로그인 버튼 클릭됨")

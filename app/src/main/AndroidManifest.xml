@@ -24,6 +24,10 @@
                   android:windowSoftInputMode="stateAlwaysVisible|adjustPan">
 
         </activity>
+        <activity android:name=".Activity.MakeNewLoginIdActivity"
+                  android:windowSoftInputMode="adjustPan" >
+
+        </activity>
     </application>
 
 </manifest>

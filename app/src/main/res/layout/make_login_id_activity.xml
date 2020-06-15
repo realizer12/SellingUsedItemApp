@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/make_login_id_entire_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:backgroundTint="#FFFFFF">
+
+    <ImageView
+        android:id="@+id/arrow_btn_for_back_to_login_activity"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.04"
+        app:layout_constraintHorizontal_bias="0.03"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.09"
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        app:srcCompat="@drawable/arrow_icon_for_back" />
+
+    <TextView
+        android:id="@+id/txt_for_show_make_id_status"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:fontFamily="@font/cookierun_regular"
+        android:text="@string/string1_for_top_of_make_login_id_activity"
+        android:textColor="#000"
+        android:textSize="26sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.06"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toEndOf="@+id/arrow_btn_for_back_to_login_activity"
+        app:layout_constraintTop_toTopOf="@+id/guideline1" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="10dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="16dp" />
+
+    <TextView
+        android:id="@+id/txt_for_show_number_of_status"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/cookierun_regular"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintHeight_percent="0.04"
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:text="1/4"
+        android:gravity="center"
+        android:textColor="#000"
+        android:background="@drawable/custom_text_for_show_number_of_makeid_status"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_for_show_make_id_status" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager_for_make_new_id"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="spread"
+
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_for_show_number_of_status"
+        app:layout_constraintBottom_toTopOf="@+id/btn_for_check_status_in_make_login_id_activity"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="1" />
+
+    <Button
+        android:id="@+id/btn_for_check_status_in_make_login_id_activity"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/custom_btn_for_no_radius"
+        android:fontFamily="@font/cookierun_regular"
+        android:textColor="#000"
+        android:textSize="20sp"
+        android:text="@string/string_for_check_status_btn_next_step"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.08"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewPager_for_make_new_id"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="1" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

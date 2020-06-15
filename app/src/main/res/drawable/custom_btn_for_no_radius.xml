@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+<!-- Border -->
+<item>
+    <shape>
+        <solid android:color="@color/colorblack" />
+    </shape>
+</item>
+
+<!-- top -> 위 에만  테두리를 줌  나머지 영역으 가려져서 따로 필요 x -->
+<item android:top="3dp">
+    <shape>
+        <solid android:color="#F9E5A8" />
+    </shape>
+</item>
+</layer-list>

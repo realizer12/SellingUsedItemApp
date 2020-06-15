@@ -32,6 +32,12 @@
     <string name="string_for_find_email_login_pwd">비밀번호 찾기</string>
 
 
-
+    <!-- MakeNewLoginIdActivity string용  -->
+    <!-- 뷰페이져 1일때 툴바 위치에 들어가는  이용약관 string    -->
+    <string name="string1_for_top_of_make_login_id_activity">이용 약관</string>
+    <!-- 다음 으로 넘어가는  버튼   -->
+    <string name="string_for_check_status_btn_next_step">다 음</string>
+    <!-- 완료 버튼   -->
+    <string name="string_for_check_status_btn_complete_step">완 료</string>
 
 </resources>

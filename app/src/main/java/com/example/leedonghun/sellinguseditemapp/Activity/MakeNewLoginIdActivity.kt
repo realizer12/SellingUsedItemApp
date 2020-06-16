@@ -40,8 +40,7 @@ class MakeNewLoginIdActivity :AppCompatActivity() {
        //값이  1일 경우 ->  email 로그인 회원 가입 ,   0일 경우 -> sns 로그인 회원가입이다.
        val intent_for_checking_sns_or_email_makeid=intent
        val check_sns_or_email=intent_for_checking_sns_or_email_makeid.getIntExtra("check_sns_or_email",-1)
-        Log.v("check_app_runnig_status",localClassName+"의 넘어온 회원가입 종류 체크 값->"+check_sns_or_email)
-
+       Log.v("check_app_runnig_status",localClassName+"의 넘어온 회원가입 종류 체크 값->"+check_sns_or_email)
 
 
        //이용 약관  ->  viewpager와  연결 시켜줌.
@@ -55,7 +54,6 @@ class MakeNewLoginIdActivity :AppCompatActivity() {
        term_pager.isUserInputEnabled=false
 
 
-
         //다음 버튼 클릭 이벤트
         btn_for_check_status_in_make_login_id_activity.setOnClickListener {
             Log.v("check_app_runnig_status",localClassName+"에서  다음 버튼 눌림")
@@ -63,7 +61,6 @@ class MakeNewLoginIdActivity :AppCompatActivity() {
             //다음으로 넘어가야 함으로 포지션 값을  1씩 올려준다.
             current_pager_positon++
             Log.v("check_app_runnig_status",localClassName+"에서  뷰페이져 현재 포지션->$current_pager_positon")
-
 
             //현재 포지션이 itemcount 보다 작을때 -> 0,1,2,3 일떄
             if(current_pager_positon < (term_pager.adapter as MakeNewLoginIdPagerAdapter).itemCount) {
@@ -87,9 +84,7 @@ class MakeNewLoginIdActivity :AppCompatActivity() {
                         btn_for_check_status_in_make_login_id_activity.text = "완 료"
                     }
             }
-
         }//다음 버튼 클릭 이벤트
-
 
 
         //뒤로가기 버튼 클릭 이벤트
@@ -100,7 +95,6 @@ class MakeNewLoginIdActivity :AppCompatActivity() {
             //현재 엑티비티 종료 시킴
             finish()
         }
-
 
     }//onCreate()끝
 

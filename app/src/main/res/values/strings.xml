@@ -37,7 +37,10 @@
     <string name="string1_for_top_of_make_login_id_activity">이용 약관</string>
     <!-- 다음 으로 넘어가는  버튼   -->
     <string name="string_for_check_status_btn_next_step">다 음</string>
-    <!-- 완료 버튼   -->
-    <string name="string_for_check_status_btn_complete_step">완 료</string>
-
+    <!-- 이용 약관 첫번째  전체 동의  칸-->
+    <string name="string_for_frist_term_pager_entire_check">모두 동의합니다.</string>
+    <string name="string_for_frist_term_pager_entire_check_content">이용약관 및  개인정보 방침을 읽었고, \n이에  모두 동의 합니다.</string>
+    <string name="string_for_first_term_pager_policy_term_check">이용약관 동의 (필수)</string>
+    <string name="string_for_first_term_pager_private_info_usable_check">개인정보 수집 및 이용 동의 (필수)</string>
+    
 </resources>

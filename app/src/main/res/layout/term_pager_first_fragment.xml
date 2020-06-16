@@ -1,25 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#FFFFFF"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
 
-    <TextView
-        android:id="@+id/txt_viewpager1"
-        android:layout_width="363dp"
-        android:layout_height="168dp"
-        android:background="#0000"
-        android:gravity="center"
-        android:text="첫번째 프래그먼트"
-        android:textColor="#000"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/custom_login_btn_for_email_login_in_email_login_activity"
+        android:orientation="vertical"
+        android:weightSum="2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.22"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.82">
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.15"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <FrameLayout
+                android:id="@+id/entire_checking_frame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.6"
+                android:padding="7dp">
+
+                <ImageView
+                    android:id="@+id/entire_checking_checked"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    app:srcCompat="@drawable/check_icon" />
+
+                <ImageView
+                    android:id="@+id/entire_checking_unchecked"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/uncheck_icon" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/cookierun_regular"
+                android:textColor="#000"
+                android:layout_weight="0.4"
+                android:textSize="16sp"
+                android:gravity="start|center_vertical"
+                android:paddingStart="10dp"
+                android:text="@string/string_for_frist_term_pager_entire_check" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/cookierun_regular"
+            android:textColor="#000"
+            android:textSize="12sp"
+            android:layout_weight="0.85"
+            android:background="@drawable/custom_term_pager_textview_in_make_id_activity"
+            android:gravity="start|center_vertical"
+            android:paddingStart="32dp"
+            android:text="@string/string_for_frist_term_pager_entire_check_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/custom_login_btn_for_email_login_in_email_login_activity"
+        android:orientation="vertical"
+        android:weightSum="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.23"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.82">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <FrameLayout
+                android:id="@+id/usable_policy_check_frame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.6"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/usable_policy_checked"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    app:srcCompat="@drawable/check_icon" />
+
+                <ImageView
+                    android:id="@+id/usable_policy_unchecked"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/uncheck_icon" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/txt_for_policy_term_check"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/cookierun_regular"
+                android:textColor="#000"
+                android:layout_weight="0.4"
+                android:textSize="15sp"
+                android:gravity="start|center_vertical"
+                android:paddingStart="10dp"
+                android:text="@string/string_for_first_term_pager_policy_term_check" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/custom_term_pager_textview_in_make_id_activity"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <FrameLayout
+                android:id="@+id/private_info_policy_check_frame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.6"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/private_info_checked"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    app:srcCompat="@drawable/check_icon" />
+
+                <ImageView
+                    android:id="@+id/private_info_unchecked"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/uncheck_icon" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/txt_for_private_info_usable_check"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/cookierun_regular"
+                android:textColor="#000"
+                android:layout_weight="0.4"
+                android:textSize="15sp"
+                android:gravity="start|center_vertical"
+                android:paddingStart="10dp"
+                android:text="@string/string_for_first_term_pager_private_info_usable_check" />
+        </LinearLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

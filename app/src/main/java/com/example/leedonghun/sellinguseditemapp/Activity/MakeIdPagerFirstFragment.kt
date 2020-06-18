@@ -1,27 +1,22 @@
 package com.example.leedonghun.sellinguseditemapp.Activity
 
 
-import android.app.Activity
 import android.content.Context
-import android.graphics.Color
-import android.media.Image
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
-import android.text.style.StyleSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-
+import com.example.leedonghun.sellinguseditemapp.Interface.CheckMakeIdPagerCompleteStatus
 import com.example.leedonghun.sellinguseditemapp.R
 import kotlinx.android.synthetic.main.term_pager_first_fragment.*
-
 import kotlinx.android.synthetic.main.term_pager_first_fragment.view.*
+import java.lang.RuntimeException
 
 
 /**
@@ -38,9 +33,7 @@ import kotlinx.android.synthetic.main.term_pager_first_fragment.view.*
  */
 class MakeIdPagerFirstFragment : Fragment() {
 
-     //전체 동의가  체크 되었는지 여부
-     // 1이면 전체 동의가 체크 됨  0이면 전체 동의가 아님.
-     var check_entire_visible:Int=0
+    lateinit var check_complete: CheckMakeIdPagerCompleteStatus
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,10 +50,7 @@ class MakeIdPagerFirstFragment : Fragment() {
       view.txt_for_private_info_usable_check.text=make_text_styling(0,15,"개인정보 수집 및 이용 동의 (필수)")
 
 
-
-
-
-       //전체 동의  아이콘 담은  프레임 레이아웃  클릭이벤트
+        //전체 동의  아이콘 담은  프레임 레이아웃  클릭이벤트
        view.entire_checking_frame.setOnClickListener {
           Log.v("check_app_runnig_status","전체 동의 체크 프레임 눌림")
 
@@ -75,6 +65,10 @@ class MakeIdPagerFirstFragment : Fragment() {
                //개인 정보 수집 및 이용 동의 -> check 상태로
                icon_check(private_info_checked,private_info_unchecked,0)
 
+               //넘어갈수 있는 상태임을 엑티비티에 알림
+               check_complete.CheckMakeIdPagerComplete_all_or_not(true,1);
+
+
 
            }else{
 
@@ -87,12 +81,16 @@ class MakeIdPagerFirstFragment : Fragment() {
                //개인 정보 수집 및 이용 동의 -> uncheck 상태로
                icon_check(private_info_checked,private_info_unchecked,1)
 
+               //넘어갈수 없는 상태임을 엑티비티에 알림
+               check_complete.CheckMakeIdPagerComplete_all_or_not(false,1);
+
            }
 
        }//전체 동의 끝
 
        //이용 약관 동의 프레임 레이아웃 클릭 이벤트
        view.usable_policy_check_frame.setOnClickListener {
+
            Log.v("check_app_runnig_status","이용 약관 동의 체크 프레임 눌림")
 
            //전체 동의가 되어있는 경우
@@ -103,6 +101,9 @@ class MakeIdPagerFirstFragment : Fragment() {
 
                //이용약관 동의 -> uncheck 상태로
                icon_check(usable_policy_checked,usable_policy_unchecked,1)
+
+               //넘어갈수 없는 상태임을 엑티비티에 알림
+               check_complete.CheckMakeIdPagerComplete_all_or_not(false,1);
 
 
            }else if(private_info_checked.visibility==View.VISIBLE && usable_policy_checked.visibility==View.INVISIBLE){
@@ -116,20 +117,33 @@ class MakeIdPagerFirstFragment : Fragment() {
                //개인 정보 수집 및 이용 동의 -> check 상태로
                icon_check(private_info_checked,private_info_unchecked,0)
 
+               //넘어갈수 있는 상태임을 엑티비티에 알림
+               check_complete.CheckMakeIdPagerComplete_all_or_not(true,1);
+
 
            }else if(private_info_checked.visibility==View.INVISIBLE && usable_policy_checked.visibility==View.VISIBLE) {
 
-               //이용약관 동의 -> check 상태로
+               //이용약관 동의 -> uncheck 상태로
                icon_check(usable_policy_checked,usable_policy_unchecked,1)
+
+               //넘어갈수 없는 상태임을 엑티비티에 알림
+               check_complete.CheckMakeIdPagerComplete_all_or_not(false,1);
+
+
 
            }else if(private_info_checked.visibility==View.INVISIBLE && usable_policy_checked.visibility==View.INVISIBLE){
 
                //이용약관 동의 -> check 상태로
                icon_check(usable_policy_checked,usable_policy_unchecked,0)
+
+               //넘어갈수 없는 상태임을 엑티비티에 알림
+               check_complete.CheckMakeIdPagerComplete_all_or_not(false,1);
+
            }
 
 
        }
+
 
 
        //개인 정보 수집 및 이용 동의 프레임 레이아웃 클릭 이벤트
@@ -146,6 +160,9 @@ class MakeIdPagerFirstFragment : Fragment() {
                 //개인 정보 수집 및 이용 동의 -> check 상태로
                 icon_check(private_info_checked,private_info_unchecked,1)
 
+                //넘어갈수 없는 상태임을 엑티비티에 알림
+                check_complete.CheckMakeIdPagerComplete_all_or_not(false,1);
+
 
             }else if(usable_policy_checked.visibility==View.VISIBLE && private_info_checked.visibility==View.INVISIBLE){
 
@@ -158,16 +175,26 @@ class MakeIdPagerFirstFragment : Fragment() {
                 //개인 정보 수집 및 이용 동의 -> check 상태로
                 icon_check(private_info_checked,private_info_unchecked,0)
 
+                //넘어갈수 있는 상태임을 엑티비티에 알림
+                check_complete.CheckMakeIdPagerComplete_all_or_not(true,1);
 
             }else if(usable_policy_checked.visibility==View.INVISIBLE && private_info_checked.visibility==View.VISIBLE) {
 
-                //이용약관 동의 -> check 상태로
+                //이용약관 동의 -> uncheck 상태로
                 icon_check(private_info_checked,private_info_unchecked,1)
+
+                //넘어갈수 없는 상태임을 엑티비티에 알림
+                check_complete.CheckMakeIdPagerComplete_all_or_not(false,1);
+
 
             }else if(usable_policy_checked.visibility==View.INVISIBLE && private_info_checked.visibility==View.INVISIBLE){
 
                 //이용약관 동의 -> check 상태로
                 icon_check(private_info_checked,private_info_unchecked,0)
+
+                //넘어갈수 없는 상태임을 엑티비티에 알림
+                check_complete.CheckMakeIdPagerComplete_all_or_not(false,1);
+
             }
 
 
@@ -179,6 +206,20 @@ class MakeIdPagerFirstFragment : Fragment() {
         return view
 
     }//onCreateView()끝
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        if(context is CheckMakeIdPagerCompleteStatus){
+            check_complete= context
+        }else{
+            throw RuntimeException(context.toString())
+        }
+
+    }//onAttach() 끝
+
+
 
 
     //아이콘 체크 visible 상태 바꿔주는 메소드
@@ -213,6 +254,7 @@ class MakeIdPagerFirstFragment : Fragment() {
 
        return stylestring
    }//make_text_styling 끝
+
 
 
 }

@@ -32,7 +32,7 @@
     <string name="string_for_find_email_login_pwd">비밀번호 찾기</string>
 
 
-    <!-- MakeNewLoginIdActivity string용  -->
+    <!-- MakeNewLoginIdActivity 뷰페이져 1 string용  -->
     <!-- 뷰페이져 1일때 툴바 위치에 들어가는  이용약관 string    -->
     <string name="string1_for_top_of_make_login_id_activity">이용 약관</string>
     <!-- 다음 으로 넘어가는  버튼   -->
@@ -42,5 +42,17 @@
     <string name="string_for_frist_term_pager_entire_check_content">이용약관 및  개인정보 방침을 읽었고, \n이에  모두 동의 합니다.</string>
     <string name="string_for_first_term_pager_policy_term_check">이용약관 동의 (필수)</string>
     <string name="string_for_first_term_pager_private_info_usable_check">개인정보 수집 및 이용 동의 (필수)</string>
-    
+
+    <!-- MakeNewLoginIdActivity 뷰페이져 2 string용  -->
+
+    <!-- 휴대폰 번호 입력 edittext    -->
+    <string name="string_for_hint_input_phonenumber_edittext">휴대폰 번호를 입력 하세요</string>
+    <string name="string_for_btn_get_certification_code">인증번호 받기</string>
+
+    <!-- sms 인증번호 코드 입력 editext    -->
+    <string name="string_for_hint_input_SMS_certification_code_edittext">문자로 받은 인증번호를 입력하세요</string>
+    <string name="string_for_btn_input_certication_code_complete">입력 완료</string>
+    <string name="string_for_count_txt">2: 57초 남음</string>
+
+
 </resources>

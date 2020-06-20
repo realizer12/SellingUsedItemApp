@@ -11,6 +11,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.leedonghun.sellinguseditemapp.Adapter.MakeNewLoginIdPagerAdapter
 import com.example.leedonghun.sellinguseditemapp.Interface.CheckMakeIdPagerCompleteStatus
 import com.example.leedonghun.sellinguseditemapp.R
+import com.example.leedonghun.sellinguseditemapp.Util.KeyboardVisibilityUtils
 import kotlinx.android.synthetic.main.make_login_id_activity.*
 
 
@@ -30,7 +31,12 @@ import kotlinx.android.synthetic.main.make_login_id_activity.*
 
 class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus {
 
+
+     //다음 프래그먼트로 넘어갈수 있는지 여부를 판단
      private var check_to_available_or_not:Boolean=false
+
+    //키보드 visible 판단해주는  클래스
+    private lateinit var keyboardVisibilityUtils: KeyboardVisibilityUtils
 
     //회원가입  step을 위한  뷰페이져
     private  lateinit var  term_pager: ViewPager2
@@ -120,7 +126,7 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
             }else{
                 Log.v("check_app_runnig_status",localClassName+"에서  다음 버튼 눌림  = 입렵폼  덜 입력됨->false")
-                Toast.makeText(this,"요구하는 정보를  입력해주세요!",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"혹시 빠트린게 없나요?",Toast.LENGTH_SHORT).show()
             }
         }//다음 버튼 클릭 이벤트
 
@@ -152,7 +158,6 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
                    //넘어갈수 있다는걸  표현하기 위해서 버튼 색깔 진하게 바꿔줌.
                    btn_for_check_status_in_make_login_id_activity.background=ContextCompat.getDrawable(this,R.drawable.custom_btn_for_no_radius_with_complete_check_color)
                    check_to_available_or_not=status
-
 
                }else{//status-> false 일때는 다음 페이지로 넘어갈 수 없음.
 

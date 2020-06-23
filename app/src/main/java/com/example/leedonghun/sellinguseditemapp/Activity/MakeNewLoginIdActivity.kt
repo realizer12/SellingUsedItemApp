@@ -59,7 +59,7 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
        //이용 약관  ->  viewpager와  연결 시켜줌.
        term_pager=viewPager_for_make_new_id
-       term_pager.adapter =MakeNewLoginIdPagerAdapter(this,check_sns_or_email)
+       term_pager.adapter =MakeNewLoginIdPagerAdapter(this,check_sns_or_email,this)
 
        //현재 포지션 0으로 지정함.
        term_pager.setCurrentItem(current_pager_positon,true)

@@ -1,58 +1,72 @@
 <resources>
 
     <!--SplashActivity  string 용 -->
-    <!--기기에서 보여지는 앱 이름  -->
-    <string name="app_name">중고마켓</string>
+       <!--기기에서 보여지는 앱 이름  -->
+       <string name="app_name">중고마켓</string>
 
 
 
     <!-- MainLoginActivity string 용 -->
-    <!-- 이메일 로그인 버튼 용 string -->
-    <string name="email_login">이메일 로그인</string>
-    <!-- 구글 로그인 버튼용 string   -->
-    <string name="google_login">Google 로그인</string>
-    <!-- 네이버 로그인 버튼용 string  -->
-    <string name="naver_login">네이버 로그인</string>
-    <!-- 페이스북 로그인 버튼용 string  -->
-    <string name="facebook_login">페이스북 로그인</string>
-    <!-- 회원가입 엑티비티 연결 버튼용 string  -->
-    <string name="btn_for_make_id">처음 이신 가요?? 회원가입입</string>
-    <!-- 이메일 로그인 부분 "중고나라 로그인" string   -->
-    <string name="string_for_top_of_email_login_activity">중고 마켓 로그인</string>
+       <!-- 이메일 로그인 버튼 용 string -->
+       <string name="email_login">이메일 로그인</string>
+       <!-- 구글 로그인 버튼용 string   -->
+       <string name="google_login">Google 로그인</string>
+       <!-- 네이버 로그인 버튼용 string  -->
+       <string name="naver_login">네이버 로그인</string>
+       <!-- 페이스북 로그인 버튼용 string  -->
+       <string name="facebook_login">페이스북 로그인</string>
+       <!-- 회원가입 엑티비티 연결 버튼용 string  -->
+       <string name="btn_for_make_id">처음 이신 가요?? 회원가입입</string>
+       <!-- 이메일 로그인 부분 "중고나라 로그인" string   -->
+       <string name="string_for_top_of_email_login_activity">중고 마켓 로그인</string>
 
 
 
 
     <!--EmailLoginActivity string 용 -->
-    <!--이메일 로그인 아이디 넣는 곳에 hint 아이디 와 패스워드 넣으라 hint 넣어줌. -->
-    <string name="string_for_add_hint_on_id_place_in_email_login_activity">" 사용중인  이메일을  적어주세요"</string>
-    <string name="string_for_add_hint_on_password_in_email_login_activity">" 사용중인 비밀번호를 적어주세요"</string>
-    <string name="string_for_login_button">로그인</string>
-    <string name="string_for_find_email_login_id">아이디 찾기</string>
-    <string name="string_for_find_email_login_pwd">비밀번호 찾기</string>
+       <!--이메일 로그인 아이디 넣는 곳에 hint 아이디 와 패스워드 넣으라 hint 넣어줌. -->
+       <string name="string_for_add_hint_on_id_place_in_email_login_activity">" 사용중인  이메일을  적어주세요"</string>
+       <string name="string_for_add_hint_on_password_in_email_login_activity">" 사용중인 비밀번호를 적어주세요"</string>
+       <string name="string_for_login_button">로그인</string>
+       <string name="string_for_find_email_login_id">아이디 찾기</string>
+       <string name="string_for_find_email_login_pwd">비밀번호 찾기</string>
+
+    <!-- MakeNewLoginIdActivity 뷰페이져 1 (약관 동의) string용  -->
+       <!-- 뷰페이져 1일때 툴바 위치에 들어가는  이용약관 string    -->
+       <string name="string1_for_top_of_make_login_id_activity">이용 약관</string>
+       <!-- 다음 으로 넘어가는  버튼   -->
+       <string name="string_for_check_status_btn_next_step">다 음</string>
+       <!-- 이용 약관 첫번째  전체 동의  칸-->
+       <string name="string_for_frist_term_pager_entire_check">모두 동의합니다.</string>
+       <string name="string_for_frist_term_pager_entire_check_content">이용약관 및  개인정보 방침을 읽었고, \n이에  모두 동의 합니다.</string>
+       <string name="string_for_first_term_pager_policy_term_check">이용약관 동의 (필수)</string>
+       <string name="string_for_first_term_pager_private_info_usable_check">개인정보 수집 및 이용 동의 (필수)</string>
 
 
-    <!-- MakeNewLoginIdActivity 뷰페이져 1 string용  -->
-    <!-- 뷰페이져 1일때 툴바 위치에 들어가는  이용약관 string    -->
-    <string name="string1_for_top_of_make_login_id_activity">이용 약관</string>
-    <!-- 다음 으로 넘어가는  버튼   -->
-    <string name="string_for_check_status_btn_next_step">다 음</string>
-    <!-- 이용 약관 첫번째  전체 동의  칸-->
-    <string name="string_for_frist_term_pager_entire_check">모두 동의합니다.</string>
-    <string name="string_for_frist_term_pager_entire_check_content">이용약관 및  개인정보 방침을 읽었고, \n이에  모두 동의 합니다.</string>
-    <string name="string_for_first_term_pager_policy_term_check">이용약관 동의 (필수)</string>
-    <string name="string_for_first_term_pager_private_info_usable_check">개인정보 수집 및 이용 동의 (필수)</string>
+    <!-- MakeNewLoginIdActivity 뷰페이져 2(sms 인증) string용  -->
+       <!-- 휴대폰 번호 입력 edittext    -->
+       <string name="string_for_hint_input_phonenumber_edittext">휴대폰 번호를 입력 하세요</string>
+       <string name="string_for_btn_get_certification_code">인증번호 받기</string>
+       <!-- sms 인증번호 코드 입력 editext    -->
+       <string name="string_for_hint_input_SMS_certification_code_edittext">문자로 받은 인증번호를 입력하세요</string>
+       <string name="string_for_btn_input_certication_code_complete">입력 완료</string>
+       <string name="string_for_count_txt">2: 57초 남음</string>
 
-    <!-- MakeNewLoginIdActivity 뷰페이져 2 string용  -->
 
-    <!-- 휴대폰 번호 입력 edittext    -->
-    <string name="string_for_hint_input_phonenumber_edittext">휴대폰 번호를 입력 하세요</string>
-    <string name="string_for_btn_get_certification_code">인증번호 받기</string>
-
-    <!-- sms 인증번호 코드 입력 editext    -->
-    <string name="string_for_hint_input_SMS_certification_code_edittext">문자로 받은 인증번호를 입력하세요</string>
-    <string name="string_for_btn_input_certication_code_complete">입력 완료</string>
-    <string name="string_for_count_txt">2: 57초 남음</string>
+    <!--MakeNewLoginIdActivity  뷰페이저3 (회원가입) string 용 -->
+       <!-- 각 edittext 설명을 위한  제목 string-->
+       <string name="string_for_title_txt_of_make_login_email">로그인 이메일</string>
+       <string name="string_for_title_txt_of_make_login_pwd">비밀 번호</string>
+       <string name="string_for_title_txt_of_make_nick_name">닉 네임</string>
+       <!-- edittext들  hint 용  string -->
+       <string name="string_for_hint_make_new_login_email">사용할  이메일을 입력 하세요</string>
+       <string name="string_for_hint_make_new_login_pwd">사용할 비밀번호를 입력 하세요</string>
+       <string name="string_for_hint_make_check_new_pwd_again">한번더 비밀번호를 입력 해주세요</string>
+       <string name="string_for_hint_make_new_nickname">사용할  닉 네임을 입력 하세요</string>
+       <!--중복 확인 button에 들어가는 string -->
+       <string name="string_for_check_dupulicate">중복 확인</string>
+       <!-- 비밀번호관련 사용가능  체크  string-->
+       <string name="string_for_check_accurate_pwd">입력 대기 중</string>
 
 
 </resources>

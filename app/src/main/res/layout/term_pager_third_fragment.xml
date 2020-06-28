@@ -1,24 +1,259 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#FFFFFF"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
 
     <TextView
-        android:id="@+id/txt_viewpager3"
-        android:layout_width="363dp"
-        android:layout_height="168dp"
-        android:gravity="center"
-        android:text="세번째 프래그먼트"
+        android:id="@+id/txt_for_make_new_login_email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cookierun_regular"
+        android:text="@string/string_for_title_txt_of_make_login_email"
         android:textColor="#000"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="10dp"
+        android:textSize="23sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="@+id/guideline_for_txtviews"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearlayout_for_add_new_login_email"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/custom_view_radius_with_white_background"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        android:weightSum="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.11"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.471" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_for_make_new_login_email"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.87">
+
+
+        <EditText
+            android:id="@+id/editxt_for_make_new_login_email"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:backgroundTint="#00000000"
+            android:fontFamily="@font/cookierun_regular"
+            android:gravity="start|center_vertical"
+            android:hint="@string/string_for_hint_make_new_login_email"
+            android:inputType="textEmailAddress"
+            android:paddingStart="14dp"
+            android:textColor="#000"
+            android:textColorHint="#858181"
+            android:textSize="14sp" />
+
+
+        <Button
+            android:id="@+id/btn_for_dupulicate_check_new_login_email"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.4"
+            android:background="@drawable/custom_login_btn_for_email_login_in_email_login_activity"
+            android:fontFamily="@font/cookierun_regular"
+            android:text="@string/string_for_check_dupulicate"
+            android:textColor="#000" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/txt_for_make_login_pwd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cookierun_regular"
+        android:text="@string/string_for_title_txt_of_make_login_pwd"
+        android:textColor="#000"
+        android:layout_marginTop="20dp"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline_for_txtviews"
+        app:layout_constraintTop_toBottomOf="@+id/linearlayout_for_add_new_login_email" />
+
+    <LinearLayout
+        android:id="@+id/linearlayout_for_add_new_login_pwd"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/custom_view_radius_with_white_background"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        android:weightSum="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.11"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_for_make_login_pwd"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.87">
+
+
+        <EditText
+            android:id="@+id/editxt_for_add_new_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:fontFamily="@font/cookierun_regular"
+            android:gravity="start|center_vertical"
+            android:hint="@string/string_for_hint_make_new_login_pwd"
+            android:inputType="number"
+            android:maxLength="5"
+            android:paddingStart="10dp"
+
+            android:textColor="#000"
+            android:textColorHint="#858181"
+
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txt_for_show_new_pwd_available_or_not"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1.4"
+            android:background="@drawable/custom_login_btn_for_email_login_in_email_login_activity"
+            android:fontFamily="@font/cookierun_regular"
+            android:text="@string/string_for_check_accurate_pwd"
+            android:textColor="#000" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_for_double_check_new_login_pwd"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/custom_view_radius_with_white_background"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        android:weightSum="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.11"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearlayout_for_add_new_login_pwd"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.87">
+
+
+        <EditText
+            android:id="@+id/editxt_for_double_check_new_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:fontFamily="@font/cookierun_regular"
+            android:gravity="start|center_vertical"
+            android:hint="@string/string_for_hint_make_check_new_pwd_again"
+            android:inputType="number"
+            android:maxLength="5"
+            android:paddingStart="10dp"
+
+            android:textColor="#000"
+            android:textColorHint="#858181"
+
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txt_for_show_double_check_new_pwd_available_or_not"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1.4"
+            android:background="@drawable/custom_login_btn_for_email_login_in_email_login_activity"
+            android:fontFamily="@font/cookierun_regular"
+            android:text="@string/string_for_check_accurate_pwd"
+            android:textColor="#000" />
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/txt_for_make_nickname"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cookierun_regular"
+        android:text="@string/string_for_title_txt_of_make_nick_name"
+        android:textColor="#000"
+        android:layout_marginTop="20dp"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline_for_txtviews"
+        app:layout_constraintTop_toBottomOf="@+id/linearlayout_for_double_check_new_login_pwd" />
+
+
+    <LinearLayout
+        android:id="@+id/linearlayout_for_add_new_nickname"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/custom_view_radius_with_white_background"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        android:weightSum="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.11"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_for_make_nickname"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.87">
+
+
+        <EditText
+            android:id="@+id/editxt_for_add_new_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:fontFamily="@font/cookierun_regular"
+            android:gravity="start|center_vertical"
+            android:hint="@string/string_for_hint_make_new_nickname"
+            android:inputType="number"
+            android:maxLength="5"
+            android:paddingStart="10dp"
+
+            android:textColor="#000"
+            android:textColorHint="#858181"
+
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_for_dupulicate_check_new_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1.4"
+            android:background="@drawable/custom_login_btn_for_email_login_in_email_login_activity"
+            android:fontFamily="@font/cookierun_regular"
+            android:text="@string/string_for_check_dupulicate"
+            android:textColor="#000" />
+
+    </LinearLayout>
+
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_for_txtviews"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.065" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

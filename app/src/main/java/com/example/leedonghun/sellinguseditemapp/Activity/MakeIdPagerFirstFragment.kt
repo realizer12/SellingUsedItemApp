@@ -33,6 +33,8 @@ import java.lang.RuntimeException
  */
 class MakeIdPagerFirstFragment : Fragment() {
 
+    //현재  프래그먼트에서 요구하는 사항들 모두 진행 했는지 체크해서
+    //parent layout로 값 보내는 인터페이스
     lateinit var check_complete: CheckMakeIdPagerCompleteStatus
 
     override fun onCreateView(
@@ -211,6 +213,7 @@ class MakeIdPagerFirstFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
+        //진행사항  체크 인터페이스 객체 initialize 함.
         if(context is CheckMakeIdPagerCompleteStatus){
             check_complete= context
         }else{

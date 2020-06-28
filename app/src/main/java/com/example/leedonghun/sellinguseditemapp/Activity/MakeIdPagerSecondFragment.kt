@@ -8,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
+import com.example.leedonghun.sellinguseditemapp.Interface.CheckMakeIdPagerCompleteStatus
 import com.example.leedonghun.sellinguseditemapp.R
 import kotlinx.android.synthetic.main.term_pager_second_fragment.view.*
+import java.lang.RuntimeException
 
 /**
  * SellingUsedItemApp
@@ -21,20 +23,22 @@ import kotlinx.android.synthetic.main.term_pager_second_fragment.view.*
  * 이곳에서는 핸드폰 번호를 쓰고  인증 번호를  문자로 받고,
  * 인증번호를 정확히 적었을때  다음으로 넘어갈수 있다.
  */
-class MakeIdPagerSecondFragment (context: Context):Fragment() {
+class MakeIdPagerSecondFragment(context: Context):Fragment() {
 
     //로그 쓸때  편하게 쓰기 위해서..
     val fragment_name_for_Log:String="TermPagerSecondFragment"
 
     //inputmethodmanager ->  소프트 키보드 관련 조작 담당
-    val mInputMethodManager:InputMethodManager = context!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    val mInputMethodManager:InputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
+    //현재  프래그먼트에서 요구하는 사항들 모두 진행 했는지 체크해서
+    //parent layout로 값 보내는 인터페이스
+    lateinit var check_complete: CheckMakeIdPagerCompleteStatus
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
-
 
         //프래그먼트 뷰 연결
         val view: View = inflater.inflate(R.layout.term_pager_second_fragment, container, false)
@@ -46,8 +50,12 @@ class MakeIdPagerSecondFragment (context: Context):Fragment() {
         view.editxt_for_add_phone_number.requestFocus()
 
 
+
         //키보드 안올라왔을때는 올려주고, 올라왔을때는 내려줌 -> toggle 기능
         //맨처음에 시작하면,  안올라와져 있으닊  바로 올라오게 됨.
+        //메니페스트에  키보드  stateAlwaysVisible을 안쓴 이유는
+        //현재  프래그먼트에서만  키보드가 필요한데 위기능은  부모 엑티비티에  사용되기 때문에
+        //키보드가 없는 프래그먼트에서도 키보드가 보인다.  그래서 아래처럼 따로 설정.
         mInputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
 
 
@@ -55,7 +63,6 @@ class MakeIdPagerSecondFragment (context: Context):Fragment() {
         //인증 번호 받기 버튼
         view.btn_for_get_certification_code.setOnClickListener {
             Log.v("check_app_runnig_status",fragment_name_for_Log+"의 휴대폰 인증번호 받기 버튼 눌림")
-
 
             //이제 여기서  해당  sms 인증 문자 제대로 가졌을때, 확인해서
             //조건문을 구별 ㄱㄱ
@@ -71,21 +78,37 @@ class MakeIdPagerSecondFragment (context: Context):Fragment() {
         }
 
 
+
         //문자로 받은 인증 번호 확인 버튼
         view.btn_for_input_certification_code_complete.setOnClickListener {
             Log.v("check_app_runnig_status",fragment_name_for_Log+"의 인증번호 입력완료 버튼 눌림.")
 
             //입련된 인증번호  인증 성공시, 더이상  입력할께 없으므로,  키보드 없애주고,  editexxt 에 포커스 clear 해준다.
-            mInputMethodManager.hideSoftInputFromWindow( view!!.editxt_for_add_phone_number.getWindowToken(), 0);
+            mInputMethodManager.hideSoftInputFromWindow(view.editxt_for_add_phone_number.getWindowToken(), 0);
             view.editxt_for_add_certification_code.clearFocus()
 
+
+            //넘어갈수 있는 상태임을 엑티비티에 알림 -> 일단 넣음.
+            check_complete.CheckMakeIdPagerComplete_all_or_not(true,1);
         }
+
+
 
         return view
 
     }//onCreateView 끝
 
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        //진행사항  체크 인터페이스 객체 initialize 함.
+        if(context is CheckMakeIdPagerCompleteStatus){
+            check_complete= context
+        }else{
+            throw RuntimeException(context.toString())
+        }
+    }
 
     override fun onPause() {
         super.onPause()

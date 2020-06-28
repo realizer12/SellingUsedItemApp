@@ -7,7 +7,7 @@
     android:background="#FFFFFF"
     android:layout_height="match_parent">
 
-    <LinearLayout
+       <LinearLayout
         android:id="@+id/linearlayout_for_input_phone_number_for_certification"
         android:layout_width="0dp"
         android:layout_height="0dp"

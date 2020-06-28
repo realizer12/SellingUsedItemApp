@@ -136,6 +136,9 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
             Log.v("check_app_runnig_status",localClassName+"의 뒤로 가기 버튼 클릭 이벤트")
 
+            //다이얼로그로  작성된 내용 저장되지 않는다고 말해주는 거 띄우기
+
+
             //현재 엑티비티 종료 시킴
             finish()
         }

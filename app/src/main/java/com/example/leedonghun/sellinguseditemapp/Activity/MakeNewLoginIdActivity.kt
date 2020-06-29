@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -65,6 +67,8 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
        val check_sns_or_email=intent_for_checking_sns_or_email_makeid.getIntExtra("check_sns_or_email",-1)
        Log.v("check_app_runnig_status",localClassName+"의 넘어온 회원가입 종류 체크 값->"+check_sns_or_email)
 
+        //뷰에 흔들림 효과를 주는 애니메이션
+        val shake:Animation=AnimationUtils.loadAnimation(this,R.anim.shake)
 
        //이용 약관  ->  viewpager와  연결 시켜줌.
        term_pager=viewPager_for_make_new_id
@@ -209,7 +213,12 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
                         1->{//이메일 로그인일때
 
                             if(editxt_for_make_new_login_email.length()<=0){// 이메일 로그인 일때는 이메일 입력에 자동포커스
+
+                                //이메일 로그인에 입력을 위한 자동포커스이므로 애니메이션으로
+                                //이곳을 입력하라고 알려준다.
+                                linearlayout_for_add_new_login_email.startAnimation(shake)
                                 editxt_for_make_new_login_email.requestFocus()
+
                             }
                         }//이메일 로그인일때 끝.
 

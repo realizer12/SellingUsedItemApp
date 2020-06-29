@@ -41,6 +41,13 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
         Log.v("check_app_runnig_status","TermPagerThirdFragment onCreateView 실행 됨 -> sns 로그인 여부 0=sns , 1=이메일    결과=> $check_sns_or_email")
 
 
+        //배경 눌렀을때도  키보드 내려갈수 있게 만듬
+        view.entire_layout_of_termpager_third_fragment.setOnClickListener {
+
+            mInputMethodManager.hideSoftInputFromWindow(activity?.currentFocus?.windowToken, 0);
+
+        }
+
 
         //그래서 해당 구별 값을 생성자를 통해 보내줌. 0-> sns 회원가입 1-> 이메일 회원가입
         if(check_sns_or_email==0){//-> sns  회원 가입일때는  닉네임만  적으면 됨.

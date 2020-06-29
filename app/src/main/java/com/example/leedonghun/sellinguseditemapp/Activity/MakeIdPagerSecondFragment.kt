@@ -49,6 +49,12 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
         Log.v("check_app_runnig_status",fragment_name_for_Log+"의 onCreateView 실행 됨")
 
 
+        //배경 클릭시  키보드 내려오는  이벤트
+        view.entire_layout_of_termpager_second_fragment.setOnClickListener {
+            mInputMethodManager.hideSoftInputFromWindow(activity?.currentFocus?.windowToken, 0);
+
+        }
+
 
         //인증 번호 받기 버튼
         view.btn_for_get_certification_code.setOnClickListener {

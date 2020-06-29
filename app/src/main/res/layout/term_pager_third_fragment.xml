@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF">
+
 
     <TextView
         android:id="@+id/txt_for_make_new_login_email"
@@ -28,6 +31,7 @@
         android:orientation="horizontal"
         android:visibility="visible"
         android:weightSum="2"
+        android:adjustViewBounds="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_default="percent"
         app:layout_constraintHeight_percent="0.11"
@@ -109,8 +113,8 @@
             android:fontFamily="@font/cookierun_regular"
             android:gravity="start|center_vertical"
             android:hint="@string/string_for_hint_make_new_login_pwd"
-            android:inputType="number"
-            android:maxLength="5"
+            android:inputType="textPassword"
+            android:maxLength="15"
             android:paddingStart="10dp"
 
             android:textColor="#000"
@@ -160,8 +164,8 @@
             android:fontFamily="@font/cookierun_regular"
             android:gravity="start|center_vertical"
             android:hint="@string/string_for_hint_make_check_new_pwd_again"
-            android:inputType="number"
-            android:maxLength="5"
+            android:inputType="textPassword"
+            android:maxLength="15"
             android:paddingStart="10dp"
 
             android:textColor="#000"
@@ -224,8 +228,8 @@
             android:fontFamily="@font/cookierun_regular"
             android:gravity="start|center_vertical"
             android:hint="@string/string_for_hint_make_new_nickname"
-            android:inputType="number"
-            android:maxLength="5"
+            android:inputType="text"
+            android:maxLength="8"
             android:paddingStart="10dp"
 
             android:textColor="#000"
@@ -254,6 +258,5 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.065" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

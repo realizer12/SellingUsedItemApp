@@ -36,7 +36,7 @@ class MakeNewLoginIdPagerAdapter(fm:FragmentActivity, private val check_sns_or_e
 
                //여기서 sns 로그인의 경우는 로그인 이메일이랑 비밀 번호가 필요없음
                //그래서 해당 구별 값을 생성자를 통해 보내줌. 0-> sns 회원가입 1-> 이메일 회원가입
-               2 -> MakeIdPagerThirdFragment(check_sns_or_email)
+               2 -> MakeIdPagerThirdFragment(check_sns_or_email,context)
                3 -> MakeIdPagerFourthFragment()
                else -> {
                    error("이메일 회원가입에서 뷰페이져의 프래그먼트 포지션이 잘 못들어옴")

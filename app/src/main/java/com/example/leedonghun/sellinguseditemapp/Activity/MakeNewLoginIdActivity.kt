@@ -1,18 +1,25 @@
 package com.example.leedonghun.sellinguseditemapp.Activity
 
-import android.graphics.drawable.Drawable
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.leedonghun.sellinguseditemapp.Adapter.MakeNewLoginIdPagerAdapter
 import com.example.leedonghun.sellinguseditemapp.Interface.CheckMakeIdPagerCompleteStatus
 import com.example.leedonghun.sellinguseditemapp.R
 import com.example.leedonghun.sellinguseditemapp.Util.KeyboardVisibilityUtils
+import kotlinx.android.synthetic.main.email_login_activity.*
 import kotlinx.android.synthetic.main.make_login_id_activity.*
+import kotlinx.android.synthetic.main.make_login_id_activity.arrow_btn_for_back_to_login_activity
+import kotlinx.android.synthetic.main.term_pager_second_fragment.*
+import kotlinx.android.synthetic.main.term_pager_second_fragment.view.*
+import kotlinx.android.synthetic.main.term_pager_third_fragment.*
 
 
 /**
@@ -44,11 +51,13 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
     //뷰페이져 포지션 값 -> 초기값 0
     private var current_pager_positon:Int=0
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.make_login_id_activity)
         Log.v("check_app_runnig_status",localClassName+"의 onCreate() 실행 됨")
 
+        val mInputMethodManager:InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
        //MainLoginActivity에서 email 또는 sns 회원가입 여부 체크 값을 받아옴.
        //값이  1일 경우 ->  email 로그인 회원 가입 ,   0일 경우 -> sns 로그인 회원가입이다.
@@ -106,6 +115,7 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
                         //다시 회원가입 정보 입력 완성도 체킹 여부 false 로 바꿈.
                         check_to_available_or_not = false
+
                         //넘어갈수 없다는걸  표현하기 위해서 버튼 색깔 흐리게 바꿔줌.
                         btn_for_check_status_in_make_login_id_activity.background=ContextCompat.getDrawable(this,R.drawable.custom_btn_for_no_radius)
 
@@ -142,6 +152,83 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
             //현재 엑티비티 종료 시킴
             finish()
         }
+
+
+
+        //뷰페이져  페이지 전환  리스너(결과 값 콜백 메소드)
+        term_pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+
+                Log.v("check_app_runnig_status",localClassName+"뷰 페이지 체인지됨  현재  페이져 포지션 ->"+position)
+
+                if(position==1||position==2){//1= sms 인증하는 페이지 , 2= 회원가입 페이지
+
+                    //inputmethodmanager ->  소프트 키보드 관련 조작 담당
+                    mInputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+
+                }
+
+            }
+        })
+
+
+
+        //키보드 shown /hide 여부 감지
+        keyboardVisibilityUtils= KeyboardVisibilityUtils(window,
+
+            // 키보드가 올라올 때의 동작
+            onShowKeyboard = { keyboardHeight, visibleDisplayFrameHeight ->
+                Log.v("check_app_runnig_status", localClassName+"에서 키보드 올라옴")
+
+                //뷰페이져가  sms 인증  프래그먼트를 실행했을때
+                //프래그먼트에  키보드가 올라오는데,  edittext에  포커스가 사라져서 이렇게 하기로 함.
+                if(term_pager.currentItem==1){
+
+                    //맨처음  번호 입력 editext에  아무것도 안적혀있다면,
+                    //포커스를  준다.
+                    if(editxt_for_add_phone_number.length()<=0){
+                        editxt_for_add_phone_number.requestFocus()
+                    }
+
+                }//sms 인증 프래그먼트 실행시
+                else if(term_pager.currentItem==2){
+
+                    when(check_sns_or_email){//로그인 방법으로 나눔.-> 각각 처음 자동 포커스 되는  edittext 가 다르기 때문.
+
+                        0->{//sns로그인 일때
+
+                            if(editxt_for_add_new_nickname.length()<=0){//sns 로그인 일때는  닉네임에  자동 포커스
+
+                                editxt_for_add_new_nickname.requestFocus()
+                            }
+                        }//sns 로그인 끝
+
+
+                        1->{//이메일 로그인일때
+
+                            if(editxt_for_make_new_login_email.length()<=0){// 이메일 로그인 일때는 이메일 입력에 자동포커스
+                                editxt_for_make_new_login_email.requestFocus()
+                            }
+                        }//이메일 로그인일때 끝.
+
+                    }//when끝
+
+                }// 회원가입 프래그먼트 실행시  끝
+
+            },//키보드 올라갈때 이벤트 끝
+
+            // 키보드가 내려갈 때의 동작
+            onHideKeyboard = {
+                Log.v("check_app_runnig_status", localClassName+"에서 키보드 내려감")
+
+
+            }//키보드 내려갈때 이벤트 끝,
+
+        )//키보드 감지 끝.
+
+
 
     }//onCreate()끝
 

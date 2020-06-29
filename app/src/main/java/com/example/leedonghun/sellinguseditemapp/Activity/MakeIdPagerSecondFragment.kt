@@ -6,11 +6,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import com.example.leedonghun.sellinguseditemapp.Interface.CheckMakeIdPagerCompleteStatus
 import com.example.leedonghun.sellinguseditemapp.R
+import kotlinx.android.synthetic.main.term_pager_second_fragment.*
 import kotlinx.android.synthetic.main.term_pager_second_fragment.view.*
+import kotlinx.android.synthetic.main.term_pager_second_fragment.view.editxt_for_add_phone_number
 import java.lang.RuntimeException
 
 /**
@@ -28,12 +31,13 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
     //로그 쓸때  편하게 쓰기 위해서..
     val fragment_name_for_Log:String="TermPagerSecondFragment"
 
-    //inputmethodmanager ->  소프트 키보드 관련 조작 담당
-    val mInputMethodManager:InputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//    //inputmethodmanager ->  소프트 키보드 관련 조작 담당
+     val mInputMethodManager:InputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
     //현재  프래그먼트에서 요구하는 사항들 모두 진행 했는지 체크해서
     //parent layout로 값 보내는 인터페이스
     lateinit var check_complete: CheckMakeIdPagerCompleteStatus
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,20 +47,6 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
         //프래그먼트 뷰 연결
         val view: View = inflater.inflate(R.layout.term_pager_second_fragment, container, false)
         Log.v("check_app_runnig_status",fragment_name_for_Log+"의 onCreateView 실행 됨")
-
-
-        //우선 두번째 프래그 먼트 시작되면,
-        //폰 번호 입력 editext 포커스  주게 해줌.
-        view.editxt_for_add_phone_number.requestFocus()
-
-
-
-        //키보드 안올라왔을때는 올려주고, 올라왔을때는 내려줌 -> toggle 기능
-        //맨처음에 시작하면,  안올라와져 있으닊  바로 올라오게 됨.
-        //메니페스트에  키보드  stateAlwaysVisible을 안쓴 이유는
-        //현재  프래그먼트에서만  키보드가 필요한데 위기능은  부모 엑티비티에  사용되기 때문에
-        //키보드가 없는 프래그먼트에서도 키보드가 보인다.  그래서 아래처럼 따로 설정.
-        mInputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
 
 
 
@@ -84,7 +74,7 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
             Log.v("check_app_runnig_status",fragment_name_for_Log+"의 인증번호 입력완료 버튼 눌림.")
 
             //입련된 인증번호  인증 성공시, 더이상  입력할께 없으므로,  키보드 없애주고,  editexxt 에 포커스 clear 해준다.
-            mInputMethodManager.hideSoftInputFromWindow(view.editxt_for_add_phone_number.getWindowToken(), 0);
+            mInputMethodManager.hideSoftInputFromWindow(view.editxt_for_add_phone_number.windowToken, 0);
             view.editxt_for_add_certification_code.clearFocus()
 
 
@@ -99,8 +89,11 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
     }//onCreateView 끝
 
 
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
+
+        Log.v("check_app_runnig_status",fragment_name_for_Log+"의 onAttach() 실행 됨")
 
         //진행사항  체크 인터페이스 객체 initialize 함.
         if(context is CheckMakeIdPagerCompleteStatus){
@@ -112,13 +105,17 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
 
     override fun onPause() {
         super.onPause()
-
-        //현재  프래그먼트가 화면에 있는 상황에서  pause 상태가 되었을때,
-        //키보드 사라지는 코드를  넣어줌.
-        mInputMethodManager.hideSoftInputFromWindow(view!!.editxt_for_add_phone_number.getWindowToken(), 0);
+        Log.v("check_app_runnig_status",fragment_name_for_Log+"의 onpause() 실행 됨")
 
 
-    }//onPause() 끝
+        //맨처음 포커싱 해서  키보드 올려주는  editext만  hide 를  적용
+        //왜냐면, 애네는  inputmanager로  키보드를  올려놓은 상태이기 때문에
+        //pause 단계에서도  그대로 유지가 되어있는 중이다.
+        //그래서 혹시나  맨처음  키보드 올린상태에서 더이상 키보드 전환 과정이 없다면,
+        //아래 코드로  적용  hide가 적용된다.
+        mInputMethodManager.hideSoftInputFromWindow(view!!.editxt_for_add_phone_number.windowToken, 0);
+
+    }
 
 
 }//현재 class  끝

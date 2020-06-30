@@ -63,7 +63,6 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
 
 
 
-
         }
 
 

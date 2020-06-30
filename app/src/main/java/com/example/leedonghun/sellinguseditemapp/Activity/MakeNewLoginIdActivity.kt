@@ -15,6 +15,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.leedonghun.sellinguseditemapp.Adapter.MakeNewLoginIdPagerAdapter
 import com.example.leedonghun.sellinguseditemapp.Interface.CheckMakeIdPagerCompleteStatus
 import com.example.leedonghun.sellinguseditemapp.R
+import com.example.leedonghun.sellinguseditemapp.Retrofit.RetrofitClient
 import com.example.leedonghun.sellinguseditemapp.Util.KeyboardVisibilityUtils
 import kotlinx.android.synthetic.main.email_login_activity.*
 import kotlinx.android.synthetic.main.make_login_id_activity.*
@@ -22,6 +23,9 @@ import kotlinx.android.synthetic.main.make_login_id_activity.arrow_btn_for_back_
 import kotlinx.android.synthetic.main.term_pager_second_fragment.*
 import kotlinx.android.synthetic.main.term_pager_second_fragment.view.*
 import kotlinx.android.synthetic.main.term_pager_third_fragment.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 /**
@@ -239,9 +243,8 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
 
 
+
     }//onCreate()끝
-
-
 
 
     //각 프래그먼트별  완성 여부 받음.

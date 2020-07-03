@@ -241,9 +241,6 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
         )//키보드 감지 끝.
 
-
-
-
     }//onCreate()끝
 
 

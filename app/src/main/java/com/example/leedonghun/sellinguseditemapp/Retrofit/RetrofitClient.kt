@@ -19,8 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 class RetrofitClient {
 
-
-    var retrofit:Retrofit=Retrofit.Builder()
+    private var retrofit:Retrofit=Retrofit.Builder()
         .baseUrl(ServerIp.baseurl)
         .addConverterFactory(GsonConverterFactory.create())
         .build()

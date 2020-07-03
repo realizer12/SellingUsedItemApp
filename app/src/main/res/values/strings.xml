@@ -4,8 +4,6 @@
        <!--기기에서 보여지는 앱 이름  -->
        <string name="app_name">중고마켓</string>
 
-
-
     <!-- MainLoginActivity string 용 -->
        <!-- 이메일 로그인 버튼 용 string -->
        <string name="email_login">이메일 로그인</string>
@@ -20,9 +18,6 @@
        <!-- 이메일 로그인 부분 "중고나라 로그인" string   -->
        <string name="string_for_top_of_email_login_activity">중고 마켓 로그인</string>
 
-
-
-
     <!--EmailLoginActivity string 용 -->
        <!--이메일 로그인 아이디 넣는 곳에 hint 아이디 와 패스워드 넣으라 hint 넣어줌. -->
        <string name="string_for_add_hint_on_id_place_in_email_login_activity">" 사용중인  이메일을  적어주세요"</string>
@@ -30,6 +25,7 @@
        <string name="string_for_login_button">로그인</string>
        <string name="string_for_find_email_login_id">아이디 찾기</string>
        <string name="string_for_find_email_login_pwd">비밀번호 찾기</string>
+
 
     <!-- MakeNewLoginIdActivity 뷰페이져 1 (약관 동의) string용  -->
        <!-- 뷰페이져 1일때 툴바 위치에 들어가는  이용약관 string    -->
@@ -42,16 +38,14 @@
        <string name="string_for_first_term_pager_policy_term_check">이용약관 동의 (필수)</string>
        <string name="string_for_first_term_pager_private_info_usable_check">개인정보 수집 및 이용 동의 (필수)</string>
 
-
     <!-- MakeNewLoginIdActivity 뷰페이져 2(sms 인증) string용  -->
-       <!-- 휴대폰 번호 입력 edittext    -->
-       <string name="string_for_hint_input_phonenumber_edittext">휴대폰 번호를 입력 하세요</string>
+       <!-- 휴대폰 번호 입력 edittext   -->
+       <string name="string_for_hint_input_phonenumber_edittext">휴대폰 번호 - 없이 입력 하세요</string>
        <string name="string_for_btn_get_certification_code">인증번호 받기</string>
        <!-- sms 인증번호 코드 입력 editext    -->
        <string name="string_for_hint_input_SMS_certification_code_edittext">문자로 받은 인증번호를 입력하세요</string>
        <string name="string_for_btn_input_certication_code_complete">입력 완료</string>
        <string name="string_for_count_txt">2: 57초 남음</string>
-
 
     <!--MakeNewLoginIdActivity  뷰페이저3 (회원가입) string 용 -->
        <!-- 각 edittext 설명을 위한  제목 string-->

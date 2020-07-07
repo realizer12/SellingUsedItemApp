@@ -52,6 +52,8 @@ class MakeIdPagerFirstFragment : Fragment() {
       view.txt_for_private_info_usable_check.text=make_text_styling(0,15,"개인정보 수집 및 이용 동의 (필수)")
 
 
+
+
         //전체 동의  아이콘 담은  프레임 레이아웃  클릭이벤트
        view.entire_checking_frame.setOnClickListener {
           Log.v("check_app_runnig_status","전체 동의 체크 프레임 눌림")
@@ -210,8 +212,10 @@ class MakeIdPagerFirstFragment : Fragment() {
     }//onCreateView()끝
 
 
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
+
 
         //진행사항  체크 인터페이스 객체 initialize 함.
         if(context is CheckMakeIdPagerCompleteStatus){
@@ -257,7 +261,6 @@ class MakeIdPagerFirstFragment : Fragment() {
 
        return stylestring
    }//make_text_styling 끝
-
 
 
 }

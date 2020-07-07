@@ -9,17 +9,21 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.leedonghun.sellinguseditemapp.Adapter.MakeNewLoginIdPagerAdapter
 import com.example.leedonghun.sellinguseditemapp.Interface.CheckMakeIdPagerCompleteStatus
+import com.example.leedonghun.sellinguseditemapp.Interface.SendPhonNumberToAnotherFragment
 import com.example.leedonghun.sellinguseditemapp.R
 import com.example.leedonghun.sellinguseditemapp.Retrofit.RetrofitClient
+import com.example.leedonghun.sellinguseditemapp.Singleton.auth_phon_num
 import com.example.leedonghun.sellinguseditemapp.Util.KeyboardVisibilityUtils
 import kotlinx.android.synthetic.main.email_login_activity.*
 import kotlinx.android.synthetic.main.make_login_id_activity.*
 import kotlinx.android.synthetic.main.make_login_id_activity.arrow_btn_for_back_to_login_activity
+import kotlinx.android.synthetic.main.term_pager_first_fragment.*
 import kotlinx.android.synthetic.main.term_pager_second_fragment.*
 import kotlinx.android.synthetic.main.term_pager_second_fragment.view.*
 import kotlinx.android.synthetic.main.term_pager_third_fragment.*
@@ -42,7 +46,7 @@ import retrofit2.Response
  * 뷰페이져가 넘어간다.
  */
 
-class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus {
+class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus,SendPhonNumberToAnotherFragment {
 
 
      //다음 프래그먼트로 넘어갈수 있는지 여부를 판단
@@ -57,18 +61,21 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
     //뷰페이져 포지션 값 -> 초기값 0
     private var current_pager_positon:Int=0
 
+    private var check_sns_or_email:Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.make_login_id_activity)
         Log.v("check_app_runnig_status",localClassName+"의 onCreate() 실행 됨")
 
+
+        //키보드 관련 input 매니져
         val mInputMethodManager:InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
        //MainLoginActivity에서 email 또는 sns 회원가입 여부 체크 값을 받아옴.
        //값이  1일 경우 ->  email 로그인 회원 가입 ,   0일 경우 -> sns 로그인 회원가입이다.
        val intent_for_checking_sns_or_email_makeid=intent
-       val check_sns_or_email=intent_for_checking_sns_or_email_makeid.getIntExtra("check_sns_or_email",-1)
+       check_sns_or_email=intent_for_checking_sns_or_email_makeid.getIntExtra("check_sns_or_email",-1)
        Log.v("check_app_runnig_status",localClassName+"의 넘어온 회원가입 종류 체크 값->"+check_sns_or_email)
 
         //뷰에 흔들림 효과를 주는 애니메이션
@@ -113,6 +120,7 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
                         //다시 회원가입 정보 입력 완성도 체킹 여부 false 로 바꿈.
                         check_to_available_or_not = false
+
                         //넘어갈수 없다는걸  표현하기 위해서 버튼 색깔 흐리게 바꿔줌.
                         btn_for_check_status_in_make_login_id_activity.background=ContextCompat.getDrawable(this,R.drawable.custom_btn_for_no_radius)
 
@@ -133,13 +141,20 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
                         //다시 회원가입 정보 입력 완성도 체킹 여부 false 로 바꿈.
                         check_to_available_or_not = false
+
                         //넘어갈수 없다는걸  표현하기 위해서 버튼 색깔 흐리게 바꿔줌.
                         btn_for_check_status_in_make_login_id_activity.background=ContextCompat.getDrawable(this,R.drawable.custom_btn_for_no_radius)
-
 
                         //마지막 포지션이므로  버튼 텍스트를 완료 텍스트로 바꿔줌.
                         btn_for_check_status_in_make_login_id_activity.text = "완 료"
                     }
+
+                }else{//이제 완료 버튼을 눌러서  끝날때이다. 이때  서버에  회원 정보를  모두 저장한다.
+
+
+                    //완료 버튼이  눌렸을때,
+
+
                 }
 
             }else{
@@ -155,11 +170,22 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
             Log.v("check_app_runnig_status",localClassName+"의 뒤로 가기 버튼 클릭 이벤트")
 
             //다이얼로그로  작성된 내용 저장되지 않는다고 말해주는 거 띄우기
+            AlertDialog.Builder(this)
+                .setMessage("뒤로가기를 누르면,\n회원가입 취소로 간주됩니다.\n정말 뒤로 가시겠습니까??")
+                .setCancelable(false)
+                .setPositiveButton("네"){dialog, which ->
 
+                    dialog.dismiss()
+                    finish()//취소하면  회원가입을  취소-> 메인으로 돌아가기
 
-            //현재 엑티비티 종료 시킴
-            finish()
-        }
+                }
+                .setNegativeButton("아니오"){dialog, which ->
+
+                    dialog.dismiss()
+
+                }.show()
+
+        }//뒤로가기 버튼 클릭 이벤트
 
 
 
@@ -245,9 +271,9 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
 
     //각 프래그먼트별  완성 여부 받음.
-    override fun CheckMakeIdPagerComplete_all_or_not(status: Boolean,page_number:Int) {
+    override fun CheckMakeIdPagerComplete_all_or_not(status: Boolean,check_page_number:Int) {
 
-       when(page_number){
+       when(check_page_number){
 
            //1,2,3 페이지 일때
            1,2,3-> {
@@ -278,5 +304,12 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
     }//CheckMakeIdPagerComplete_all_or_not끝
 
+    override fun send_authed_phone_num(phone_num: String) {
+
+        Log.v("check","인증된 폰번호 ${phone_num}")
+
+        auth_phon_num.get_phone_number(phone_num)
+
+    }
 
 }//MakeNewEmailLoginId 클래스 끝

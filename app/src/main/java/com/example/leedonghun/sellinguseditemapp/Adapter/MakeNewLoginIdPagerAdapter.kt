@@ -21,8 +21,7 @@ import com.example.leedonghun.sellinguseditemapp.Activity.MakeIdPagerThirdFragme
  * Description: MakeNewLoginIdActivity 에서  뷰페이져 부분에  프래그먼트를  사용한다.
  * 여기는 각 뷰페이져 포지션에 프래그먼트를 생성해주는 adapter 이다.
  */
-class MakeNewLoginIdPagerAdapter(fm:FragmentActivity, private val check_sns_or_email:Int,private val context: Context) : FragmentStateAdapter(fm) {
-
+class MakeNewLoginIdPagerAdapter(private val fm:FragmentActivity, private val check_sns_or_email:Int,private val context: Context) : FragmentStateAdapter(fm) {
 
 
    //각 포지션 별 프래그먼트 생성
@@ -43,6 +42,7 @@ class MakeNewLoginIdPagerAdapter(fm:FragmentActivity, private val check_sns_or_e
                }
            }
     }//createFragment 끝
+
 
     //회원가입 용 뷰페이져  페이지수는 4개임
     override fun getItemCount(): Int {

@@ -6,16 +6,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.leedonghun.sellinguseditemapp.Interface.SendPhonNumberToAnotherFragment
 import com.example.leedonghun.sellinguseditemapp.R
-import com.example.leedonghun.sellinguseditemapp.Util.KeyboardVisibilityUtils
-import kotlinx.android.synthetic.main.email_login_activity.*
-import kotlinx.android.synthetic.main.term_pager_second_fragment.view.*
-import kotlinx.android.synthetic.main.term_pager_third_fragment.*
+import com.example.leedonghun.sellinguseditemapp.Singleton.auth_phon_num
 import kotlinx.android.synthetic.main.term_pager_third_fragment.view.*
-import kotlinx.android.synthetic.main.term_pager_third_fragment.view.txt_for_make_new_login_email
+
 
 /**
  * SellingUsedItemApp
@@ -35,6 +33,7 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
         container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
 
+
         //프래그먼트 뷰 연결
         val view: View = inflater.inflate(R.layout.term_pager_third_fragment, container, false)
 
@@ -45,6 +44,8 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
         view.entire_layout_of_termpager_third_fragment.setOnClickListener {
 
             mInputMethodManager.hideSoftInputFromWindow(activity?.currentFocus?.windowToken, 0);
+
+            Toast.makeText(activity, auth_phon_num.phonnumber,Toast.LENGTH_SHORT).show()
 
         }
 
@@ -69,6 +70,7 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
         return view
 
     }//oncreateview 끝
+
 
 
     override fun onPause() {

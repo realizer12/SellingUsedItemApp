@@ -27,10 +27,21 @@ interface ApiService {
     //핸드폰 번호를 이용한  본인 인증
     //폰번호를 넣어서 보내면, 서버측에서 인증키를  만들어서 sms를 보냄.
     //map(member_auth_phone_number)reason -> 0 =  회원가입 ,   1= 아이디 찾기 ,   2=  비밀번호 찾기
+    //callback 은 response body로
     @FormUrlEncoded
     @POST("map.php")
-    fun send_phone_number_for_join_member(@Field("phone_number")phone_number: String,@Field("map_reason")reason:Int):Call<ResponseBody>
+    fun send_phone_number_for_auth_own(@Field("phone_number")phone_number: String,
+                                       @Field("map_reason")reason:Int):Call<ResponseBody>
 
+
+    //핸드폰 인증 시 받은 인증번호를
+    //서버로 보내주는 역할을 한다.
+    //callback 은 response body로
+    @FormUrlEncoded
+    @POST("check_map_key.php")
+    fun send_sms_auth_key(@Field("phone_number")phone_number: String,
+                          @Field("map_reason")reason: Int,
+                          @Field("map_auth_key")auth_key:String):Call<ResponseBody>
 
 
 }

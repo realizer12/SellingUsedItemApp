@@ -54,7 +54,7 @@
        <string name="string_for_title_txt_of_make_nick_name">닉 네임</string>
        <!-- edittext들  hint 용  string -->
        <string name="string_for_hint_make_new_login_email">사용할  이메일을 입력 하세요</string>
-       <string name="string_for_hint_make_new_login_pwd">사용할 비밀번호를 입력 하세요</string>
+       <string name="string_for_hint_make_new_login_pwd">(영어+숫자 조합 7자리) 입력 !</string>
        <string name="string_for_hint_make_check_new_pwd_again">한번더 비밀번호를 입력 해주세요</string>
        <string name="string_for_hint_make_new_nickname">사용할  닉 네임을 입력 하세요</string>
        <!--중복 확인 button에 들어가는 string -->

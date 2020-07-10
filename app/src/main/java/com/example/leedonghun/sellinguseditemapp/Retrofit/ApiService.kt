@@ -44,4 +44,13 @@ interface ApiService {
                           @Field("map_auth_key")auth_key:String):Call<ResponseBody>
 
 
+    //이메일 중복 체크를 위해
+    //사용자가 입력한 이메일을  서버로 보내 체크한다.
+    //callback은  response body로
+    @FormUrlEncoded
+    @POST("duplicate_check_login_email.php")
+    fun check_duplicate_login_email(@Field("login_email")login_email:String):Call<ResponseBody>
+
+
+
 }

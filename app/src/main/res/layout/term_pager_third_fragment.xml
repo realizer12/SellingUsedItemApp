@@ -58,7 +58,6 @@
             android:textColorHint="#858181"
             android:textSize="14sp" />
 
-
         <Button
             android:id="@+id/btn_for_dupulicate_check_new_login_email"
             android:layout_width="match_parent"
@@ -115,12 +114,10 @@
             android:gravity="start|center_vertical"
             android:hint="@string/string_for_hint_make_new_login_pwd"
             android:inputType="textPassword"
-            android:maxLength="15"
+            android:maxLength="7"
             android:paddingStart="10dp"
-
             android:textColor="#000"
             android:textColorHint="#858181"
-
             android:textSize="14sp" />
 
         <TextView

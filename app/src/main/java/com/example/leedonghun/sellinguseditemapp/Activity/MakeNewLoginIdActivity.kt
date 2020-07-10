@@ -15,7 +15,6 @@ import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.leedonghun.sellinguseditemapp.Adapter.MakeNewLoginIdPagerAdapter
 import com.example.leedonghun.sellinguseditemapp.Interface.CheckMakeIdPagerCompleteStatus
-import com.example.leedonghun.sellinguseditemapp.Interface.SendPhonNumberToAnotherFragment
 import com.example.leedonghun.sellinguseditemapp.R
 import com.example.leedonghun.sellinguseditemapp.Retrofit.RetrofitClient
 import com.example.leedonghun.sellinguseditemapp.Singleton.auth_phon_num
@@ -46,7 +45,7 @@ import retrofit2.Response
  * 뷰페이져가 넘어간다.
  */
 
-class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus,SendPhonNumberToAnotherFragment {
+class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus {
 
 
      //다음 프래그먼트로 넘어갈수 있는지 여부를 판단
@@ -167,7 +166,7 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
         //뒤로가기 버튼 클릭 이벤트
         arrow_btn_for_back_to_login_activity.setOnClickListener {
 
-            Log.v("check_app_runnig_status",localClassName+"의 뒤로 가기 버튼 클릭 이벤트")
+                      Log.v("check_app_runnig_status",localClassName+"의 뒤로 가기 버튼 클릭 이벤트")
 
             //다이얼로그로  작성된 내용 저장되지 않는다고 말해주는 거 띄우기
             AlertDialog.Builder(this)
@@ -270,6 +269,30 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
     }//onCreate()끝
 
 
+    //뒤로가기 버튼 클릭 이벤트
+    override fun onBackPressed() {
+
+        Log.v("check_app_runnig_status",localClassName+"의 뒤로 가기 버튼 클릭 이벤트")
+
+        //다이얼로그로  작성된 내용 저장되지 않는다고 말해주는 거 띄우기
+        AlertDialog.Builder(this)
+            .setMessage("뒤로가기를 누르면,\n회원가입 취소로 간주됩니다.\n정말 뒤로 가시겠습니까??")
+            .setCancelable(false)
+            .setPositiveButton("네"){dialog, which ->
+
+                dialog.dismiss()
+                finish()//취소하면  회원가입을  취소-> 메인으로 돌아가기
+
+            }
+            .setNegativeButton("아니오"){dialog, which ->
+
+                dialog.dismiss()
+
+            }.show()
+    }
+
+
+
     //각 프래그먼트별  완성 여부 받음.
     override fun CheckMakeIdPagerComplete_all_or_not(status: Boolean,check_page_number:Int) {
 
@@ -304,12 +327,5 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
     }//CheckMakeIdPagerComplete_all_or_not끝
 
-    override fun send_authed_phone_num(phone_num: String) {
-
-        Log.v("check","인증된 폰번호 ${phone_num}")
-
-        auth_phon_num.get_phone_number(phone_num)
-
-    }
 
 }//MakeNewEmailLoginId 클래스 끝

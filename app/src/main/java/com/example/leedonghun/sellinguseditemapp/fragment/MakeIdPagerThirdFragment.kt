@@ -48,8 +48,11 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
     //inputmethodmanager ->  소프트 키보드 관련 조작 담당
     val mInputMethodManager:InputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
-    //멤버  이메일
+    //가입하려는 멤버  이메일
     lateinit var member_email:String
+
+    //가입하려는 닉네임
+    lateinit var member_nickname:String
 
     //비밀번호  256해쉬값 만드는 클래스 객체
     val make_hash256_and_sort_value:MakePassWordSecurity=MakePassWordSecurity()
@@ -66,6 +69,17 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
     //로그인 이메일 중복 체크 여부 -> default 값 false
     var check_duplicate_login_email:Boolean=false
 
+
+    //닉네임 중복 체크 여부 -> default 값 false
+    var check_duplicate_nickname:Boolean=false
+
+
+    //비밀번호 정규식 입력 판단 결과  default 값 false
+    var check_pws_regex_result:Boolean = false
+
+    //적은  비밀번호
+    lateinit var written_password:String
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -76,6 +90,22 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
         val view: View = inflater.inflate(R.layout.term_pager_third_fragment, container, false)
 
         Log.v("check_app_runnig_status","TermPagerThirdFragment onCreateView 실행 됨 -> sns 로그인 여부 0=sns , 1=이메일    결과=> $check_sns_or_email")
+
+
+
+
+        //그래서 해당 구별 값을 생성자를 통해 보내줌. 0-> sns 회원가입 1-> 이메일 회원가입
+        if(check_sns_or_email==0){//-> sns  회원 가입일때는  닉네임만  적으면 됨.
+
+            //로그인 이메일, 비밀번호, 비밀번호 체크  모두 gone
+            view.txt_for_make_new_login_email.visibility=View.GONE
+            view.txt_for_make_login_pwd.visibility=View.GONE
+            view.linearlayout_for_add_new_login_email.visibility=View.GONE
+            view.linearlayout_for_add_new_login_pwd.visibility=View.GONE
+            view.linearlayout_for_double_check_new_login_pwd.visibility=View.GONE
+
+        }
+
 
 
         //배경 눌렀을때도  키보드 내려갈수 있게 만듬
@@ -172,6 +202,9 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
                                     //edit text처리
                                     make_clear_editext_with_wrong_value(view.editxt_for_make_new_login_email)
 
+                                    //중복 체크 실패니까 false로
+                                    check_duplicate_login_email=false
+
 
                                 }else if(result.equals("-1")){//쿼리 실패함
                                     Log.v("check_app_runnig_status","${log_for_class}의 이메일 중복 쿼리문 실패")
@@ -180,6 +213,10 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
 
                                     //edit text처리
                                     make_clear_editext_with_wrong_value(view.editxt_for_make_new_login_email)
+
+
+                                    //중복 체크 실패니까 false로
+                                    check_duplicate_login_email=false
 
                                 }
 
@@ -195,6 +232,9 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
 
                                 //edit text처리
                                 make_clear_editext_with_wrong_value(view.editxt_for_make_new_login_email)
+
+                                //중복 체크 실패니까 false로
+                                check_duplicate_login_email=false
 
                                 //처리 끝났으므로, 다이얼로그 꺼줌.
                                 loadingDialog.dismiss_dialog()
@@ -214,6 +254,9 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
                 Toast.makeText(activity,"이메일 형식이 아닙니다. ",Toast.LENGTH_SHORT).show()
                 make_clear_editext_with_wrong_value(view.editxt_for_make_new_login_email)
 
+                //중복 체크 실패니까 false로
+                check_duplicate_login_email=false
+
             }
 
         }//아이디 중복 체크 버튼 클릭됨
@@ -226,56 +269,247 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
 
 
 
-        //그래서 해당 구별 값을 생성자를 통해 보내줌. 0-> sns 회원가입 1-> 이메일 회원가입
-        if(check_sns_or_email==0){//-> sns  회원 가입일때는  닉네임만  적으면 됨.
-
-            //로그인 이메일, 비밀번호, 비밀번호 체크  모두 gone
-            view.txt_for_make_new_login_email.visibility=View.GONE
-            view.txt_for_make_login_pwd.visibility=View.GONE
-            view.linearlayout_for_add_new_login_email.visibility=View.GONE
-            view.linearlayout_for_add_new_login_pwd.visibility=View.GONE
-            view.linearlayout_for_double_check_new_login_pwd.visibility=View.GONE
-
-        }else if(check_sns_or_email==1){//이메일 회원가입일때
-
-
-
-        }
-
-
 
         //사용할 패스워드 입력하는 editext 텍스트 watcher
         view.editxt_for_add_new_pwd.addTextChangedListener(object : TextWatcher{
-
             //text change 이전
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                Log.v("checkadsda_before",s.toString())
+                Log.v("check_app_runnig_status","패스워드 입력 beforetextchanged 실행 -> $s")
             }
-
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                Log.v("checkadsda_textchanged",s.toString())
+                Log.v("check_app_runnig_status","패스워드 입력 onTextChanged 실행 -> $s")
 
             }
-
+            //edit된 상태의  텍스트를  감지해야하므로  여기에다가
+            //정규식 체크 함수를 넣어줌.
             override fun afterTextChanged(s: Editable?) {
+                Log.v("check_app_runnig_status","패스워드 입력 afterTextChanged 실행 -> $s")
 
-                Log.v("checkadsda_after",s.toString())
-                val boolean:Boolean=check_pws_regex_funtion(s.toString())
+                 //check_pws_regex_funtion 리턴값으로  change된  텍스트 값 넣어주고 확인
+                check_pws_regex_result=check_pws_regex_funtion(s.toString())
 
-                if(boolean){
+                //사용이 가능할때
+                if(check_pws_regex_result){
+                    Log.v("check_app_runnig_status","$log_for_class 의  비밀번호 =>$s   정규식 체크 ->  사용 가능")
 
-                    Log.v("cdddd","비밀번호 가능")
-                }else{
-                    Log.v("cdddd","비밀번호 불가능")
+                    view.txt_for_show_new_pwd_available_or_not.text="사용 가능"
+                    view.txt_for_show_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_view_radius_with_green_bacground)
 
+                }else{//사용이 불가능 할때
+                    Log.v("check_app_runnig_status","$log_for_class 의  비밀번호 =>$s   정규식 체크 ->  사용 불가능")
+
+                   if( view.editxt_for_add_new_pwd.length()>0){//뭐라도 하나 써있을 경우
+
+                       view.txt_for_show_new_pwd_available_or_not.text="사용 불가"
+                       view.txt_for_show_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_view_radius_with_red_background)
+
+                   }else{//아무것도 안써있을때
+
+                       view.txt_for_show_new_pwd_available_or_not.text="입력 대기 중"
+                       view.txt_for_show_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_login_btn_for_email_login_in_email_login_activity)
+                   }
                 }
+                //혹시나  패스워드 입력하고,  다시 입력도 한 상태에서
+                //비밀번호 입력을 바꿀시에는 다시 입력한곳도 바뀌여야 한다.
+                //그래서 아래와 같이  코드를  더 추가시켜줌.
+                //입력한 패스워드
+                written_password= view.editxt_for_add_new_pwd.text.toString()
+
+                //더블 체크 값이랑  입력한 패스워드가 일치 할 경우
+                if(written_password == view.editxt_for_double_check_new_pwd.text.toString()){
+
+                    Log.v("check_app_runnig_status","$log_for_class 의  비밀번호 더블 체크  일치 함")
+
+                    view.txt_for_show_double_check_new_pwd_available_or_not.text="일치"
+                    view.txt_for_show_double_check_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_view_radius_with_green_bacground)
+
+                }else{//일치 하지 않을 경우
+
+                    //일치 하지 않지만 뭐라도 쓴 경우
+                    if(view.editxt_for_double_check_new_pwd.length()>0){
+
+                        Log.v("check_app_runnig_status","$log_for_class 의  비밀번호 더블 체크  일치 하지 않음")
+                        view.txt_for_show_double_check_new_pwd_available_or_not.text="불일치"
+                        view.txt_for_show_double_check_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_view_radius_with_red_background)
+
+
+                    }else{//일치 하지 않고 아무것도 안쓴 경우
+                        Log.v("check_app_runnig_status","$log_for_class 의  비밀번호 더블 체크 아무것도 안 써져잇음")
+
+                        view.txt_for_show_double_check_new_pwd_available_or_not.text="입력 대기 중"
+                        view.txt_for_show_double_check_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_login_btn_for_email_login_in_email_login_activity)
+
+                    }
+                }
+                //입력한  패스워드  수정에 따른   다시 입력하는 패스워드 수정
+            }
+        })//패스워드 입력 editext 텍스트 watcher 끝
+
+
+
+
+
+
+
+        //패스워드  더블 체크  하는 부분  텍스트  watcher
+        view.editxt_for_double_check_new_pwd.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                Log.v("check_app_runnig_status","패스워드 더블 체크 입력 beforetextchanged 실행 -> $s")
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                Log.v("check_app_runnig_status","패스워드 더블 체크 입력 onTextChanged 실행 -> $s")
+
+            }
+            override fun afterTextChanged(s: Editable?) {
+                Log.v("check_app_runnig_status","패스워드 더블 체크 입력 afterTextChanged 실행 -> $s")
+
+                //입력한 패스워드
+                written_password= view.editxt_for_add_new_pwd.text.toString()
+
+                //더블 체크 값이랑  입력한 패스워드가 일치 할 경우
+                if(written_password == view.editxt_for_double_check_new_pwd.text.toString()){
+                    Log.v("check_app_runnig_status","$log_for_class 의  비밀번호 더블 체크  일치 함")
+                    view.txt_for_show_double_check_new_pwd_available_or_not.text="일치"
+                    view.txt_for_show_double_check_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_view_radius_with_green_bacground)
+
+                }else{//일치 하지 않을 경우
+
+                    //일치 하지 않지만 뭐라도 쓴 경우
+                    if(view.editxt_for_double_check_new_pwd.length()>0){
+                        Log.v("check_app_runnig_status","$log_for_class 의  비밀번호 더블 체크  일치 하지 않음")
+                        view.txt_for_show_double_check_new_pwd_available_or_not.text="불일치"
+                        view.txt_for_show_double_check_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_view_radius_with_red_background)
+                    }else{//일치 하지 않고 아무것도 안쓴 경우
+                        Log.v("check_app_runnig_status","$log_for_class 의  비밀번호 더블 체크 아무것도 안 써져잇음")
+                        view.txt_for_show_double_check_new_pwd_available_or_not.text="입력 대기 중"
+                        view.txt_for_show_double_check_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_login_btn_for_email_login_in_email_login_activity)
+
+                    }
+                }
+            }
+        })//패스워드 더블 체크  텍스트 watcher 끝
+
+
+
+
+
+
+
+
+        //닉네임 중복 체크 버튼
+        view.btn_for_dupulicate_check_new_nickname.setOnClickListener {
+             
+            Log.v("check_app_runnig_status", "$log_for_class 의 닉네임 중복 체크 버튼 클릭 됨")
+
+            //사용자가 사용하려는  닉네임
+            member_nickname=view.editxt_for_add_new_nickname.text.toString()
+
+
+            //닉네임 체크가 되어있을 경우
+            if(check_duplicate_nickname){
+
+
+                //alert를  띄어서 취소 여부를  물어본다.
+                AlertDialog.Builder(activity)
+                    .setPositiveButton("네"){dialog, which ->
+
+                        Log.v("check_app_runnig_status" ,"$log_for_class 닉네임 취소 ok 버튼  눌림")
+
+                        dialog.dismiss()
+
+                    }//setpositivebutton 끝
+
+                    .setNegativeButton("아니오"){dialog, which ->
+
+                        Log.v("check_app_runnig_status" ,"$log_for_class 닉네임 취소 취소 버튼  눌림")
+
+                        dialog.dismiss()
+
+                    }.show()
+
+            }else{//닉네임 체크가  아직 안되어있을 경우
+
+
+                Log.v("check_app_runnig_status","$log_for_class 의 닉네임 중복 체크 상태 false")
+
+                //닉네임 서버로 보내서  중복 체크
+                retrofitClient.apiService.check_duplicate_user_nickname(member_nickname)
+                    .enqueue(object :Callback<ResponseBody>{
+
+                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+
+                           //닉네임 중복 체크 결과 값
+                           val result:String?=response.body()?.string()
+                            Log.v("check_app_runnig_status","$log_for_class 의  닉네임 중복체크 결과 값-> $result")
+
+                           when(result){
+
+                               "1"->{//중복값 없음
+                                   Log.v("check_app_runnig_status","$log_for_class 의  닉네임 중복체크 결과 -> 사용 가능")
+                                   Toast.makeText(activity,"사용 가능한 닉네임 입니다.",Toast.LENGTH_SHORT).show()
+
+                                   //버튼 text변경
+                                   view.btn_for_dupulicate_check_new_nickname.text="다시 입력"
+
+                                   //닉네임 입력 막음
+                                   view.editxt_for_add_new_nickname.isEnabled=false
+                                   //사용 가능함을  초록색으로 보여줌.
+                                   view.linearlayout_for_add_new_nickname.setBackgroundResource(R.drawable.custom_view_radius_with_green_bacground)
+
+
+                                   //중복체크 여부 true
+                                   check_duplicate_nickname=true
+
+                               }//1일때 끝
+
+                               "-2"->{//중복 있음
+                                   Log.v("check_app_runnig_status","$log_for_class 의  닉네임 중복체크 결과 -> 중복값 있음")
+                                   Toast.makeText(activity,"이미 사용중인 닉네임 입니다.",Toast.LENGTH_SHORT).show()
+
+                                   //중복체크 여부 false
+                                   check_duplicate_nickname=false
+
+                               }//-2 일때 끝
+
+                               "-1"->{//쿼리 에러
+                                   Log.v("check_app_runnig_status","$log_for_class 의  닉네임 중복체크 결과 -> 서버 쿼리 에러")
+                                   Toast.makeText(activity,"서버 에러 code 1",Toast.LENGTH_SHORT).show()
+
+                                   //중복체크 여부 false
+                                   check_duplicate_nickname=false
+
+                               } //-1 일때 끝
+
+                               else ->{//서버 에러
+                                   Log.v("check_app_runnig_status","$log_for_class 의  닉네임 중복체크 결과 -> 서버 에러")
+                                   Toast.makeText(activity,"서버 에러 code 2",Toast.LENGTH_SHORT).show()
+
+                                   //중복체크 여부 false
+                                   check_duplicate_nickname=false
+
+                               }//그밖에 끝
+
+                           }//when() 절 끝
+
+
+
+                        }//onResponse() 끝
+
+
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+
+                        }//onFailure() 끝
+
+
+                    })
+
 
             }
 
 
+        }//닉네임 중복 체크 버튼  끝
 
-
-        })
 
 
 

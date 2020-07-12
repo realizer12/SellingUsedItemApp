@@ -236,7 +236,7 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
                         view.linearlayout_for_input_certification_sms_code.setBackgroundResource(R.drawable.custom_view_radius_with_white_background)
 
                         //넘어갈수 없는 상태로 다시 바꿈
-                        check_complete.CheckMakeIdPagerComplete_all_or_not(false,1);
+                        check_complete.CheckMakeIdPagerComplete_all_or_not(false,2);
 
                         //인증 여부  무효화 시켜줌.
                         check_auth_correct=false
@@ -286,7 +286,7 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
 
 
                                 //넘어갈수 있는 상태임을 엑티비티에 알림 -> 일단 넣음.
-                                check_complete.CheckMakeIdPagerComplete_all_or_not(true,1);
+                                check_complete.CheckMakeIdPagerComplete_all_or_not(true,2);
 
                                 timer_job.cancel()//타이머코루틴 job 취소
 

@@ -18,6 +18,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.leedonghun.sellinguseditemapp.Dialog.LoadingDialog
+import com.example.leedonghun.sellinguseditemapp.Interface.CheckMakeIdPagerCompleteStatus
+import com.example.leedonghun.sellinguseditemapp.Interface.NewMemberInfo
 import com.example.leedonghun.sellinguseditemapp.R
 import com.example.leedonghun.sellinguseditemapp.Retrofit.RetrofitClient
 import com.example.leedonghun.sellinguseditemapp.Singleton.auth_phon_num
@@ -25,6 +27,7 @@ import com.example.leedonghun.sellinguseditemapp.Util.MakePassWordSecurity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.term_pager_third_fragment.view.*
 import okhttp3.ResponseBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -42,7 +45,6 @@ import java.util.regex.Pattern
  */
 class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Context) :Fragment() {
 
-
     private var log_for_class:String="TermPagerThirdFragment"
 
     //inputmethodmanager ->  소프트 키보드 관련 조작 담당
@@ -53,6 +55,7 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
 
     //가입하려는 닉네임
     lateinit var member_nickname:String
+
 
     //비밀번호  256해쉬값 만드는 클래스 객체
     val make_hash256_and_sort_value:MakePassWordSecurity=MakePassWordSecurity()
@@ -66,12 +69,19 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
     //sms 인증시 띄어줄  커스텀 다이얼로그 -로딩용
     val loadingDialog: LoadingDialog = LoadingDialog(context)
 
+
+
     //로그인 이메일 중복 체크 여부 -> default 값 false
     var check_duplicate_login_email:Boolean=false
 
+    //비밀 번호  체크  여부 -> default 값 false
+    var check_pws_double_check_status:Boolean=false
 
     //닉네임 중복 체크 여부 -> default 값 false
     var check_duplicate_nickname:Boolean=false
+
+
+
 
 
     //비밀번호 정규식 입력 판단 결과  default 값 false
@@ -79,6 +89,19 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
 
     //적은  비밀번호
     lateinit var written_password:String
+
+    //현재  프래그먼트에서 요구하는 사항들 모두 진행 했는지 체크해서
+    //parent layout로 값 보내는 인터페이스
+    lateinit var check_complete: CheckMakeIdPagerCompleteStatus
+
+
+    //멤버 정보 취합 위한 인터페이스
+    lateinit var member_info: NewMemberInfo
+
+
+    //member 정보들 취합할 json 객체
+    var member_info_json:JSONObject= JSONObject()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -105,7 +128,6 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
             view.linearlayout_for_double_check_new_login_pwd.visibility=View.GONE
 
         }
-
 
 
         //배경 눌렀을때도  키보드 내려갈수 있게 만듬
@@ -147,6 +169,10 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
 
                             //다시 색깔 원래 색으로 바꿔줌
                             view.linearlayout_for_add_new_login_email.setBackgroundResource(R.drawable.custom_view_radius_with_white_background)
+
+
+                            //요구사항 입력 여부  체크
+                            detect_status_of_requirement_info(check_duplicate_login_email,check_pws_regex_result,check_pws_double_check_status,check_duplicate_nickname)
 
 
                             dialog.dismiss()
@@ -220,12 +246,15 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
 
                                 }
 
+                                //요구사항 입력 여부  체크
+                                detect_status_of_requirement_info(check_duplicate_login_email,check_pws_regex_result,check_pws_double_check_status,check_duplicate_nickname)
+
                                 //처리 끝났으므로, 다이얼로그 꺼줌.
                                 loadingDialog.dismiss_dialog()
                             }//onResponse() 끝
 
                             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                                Log.v("check_app_runnig_status","${log_for_class}에서 아이디 중복 체크 에러남 결과 -> $t")
+                                Log.v("check_app_runnig_status","${log_for_class}에서 아이디 중복 체크 에러남 결과 -> ${t.message}")
 
 
                                 Toast.makeText(activity,"서버에 문제 발생 erro -3",Toast.LENGTH_SHORT).show()
@@ -235,6 +264,10 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
 
                                 //중복 체크 실패니까 false로
                                 check_duplicate_login_email=false
+
+                                //요구사항 입력 여부  체크
+                                detect_status_of_requirement_info(check_duplicate_login_email,check_pws_regex_result,check_pws_double_check_status,check_duplicate_nickname)
+
 
                                 //처리 끝났으므로, 다이얼로그 꺼줌.
                                 loadingDialog.dismiss_dialog()
@@ -257,15 +290,17 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
                 //중복 체크 실패니까 false로
                 check_duplicate_login_email=false
 
+                //요구사항 입력 여부  체크
+                detect_status_of_requirement_info(check_duplicate_login_email,check_pws_regex_result,check_pws_double_check_status,check_duplicate_nickname)
+
+
             }
+
 
         }//아이디 중복 체크 버튼 클릭됨
 
 
-        view.btn_for_dupulicate_check_new_nickname.setOnClickListener {
-            Log.v("check_app_runnig_status","${log_for_class}에서 닉네임 중복 확인 리스너  클릭됨")
 
-        }
 
 
 
@@ -340,8 +375,12 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
                         view.txt_for_show_double_check_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_login_btn_for_email_login_in_email_login_activity)
 
                     }
-                }
-                //입력한  패스워드  수정에 따른   다시 입력하는 패스워드 수정
+
+                } //입력한  패스워드  수정에 따른   다시 입력하는 패스워드 수정
+
+                //요구사항 입력 여부  체크
+                detect_status_of_requirement_info(check_duplicate_login_email,check_pws_regex_result,check_pws_double_check_status,check_duplicate_nickname)
+
             }
         })//패스워드 입력 editext 텍스트 watcher 끝
 
@@ -353,13 +392,15 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
 
         //패스워드  더블 체크  하는 부분  텍스트  watcher
         view.editxt_for_double_check_new_pwd.addTextChangedListener(object :TextWatcher{
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 Log.v("check_app_runnig_status","패스워드 더블 체크 입력 beforetextchanged 실행 -> $s")
             }
+
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 Log.v("check_app_runnig_status","패스워드 더블 체크 입력 onTextChanged 실행 -> $s")
-
             }
+
             override fun afterTextChanged(s: Editable?) {
                 Log.v("check_app_runnig_status","패스워드 더블 체크 입력 afterTextChanged 실행 -> $s")
 
@@ -368,11 +409,15 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
 
                 //더블 체크 값이랑  입력한 패스워드가 일치 할 경우
                 if(written_password == view.editxt_for_double_check_new_pwd.text.toString()){
+
                     Log.v("check_app_runnig_status","$log_for_class 의  비밀번호 더블 체크  일치 함")
                     view.txt_for_show_double_check_new_pwd_available_or_not.text="일치"
                     view.txt_for_show_double_check_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_view_radius_with_green_bacground)
 
+                    check_pws_double_check_status=true
+
                 }else{//일치 하지 않을 경우
+
 
                     //일치 하지 않지만 뭐라도 쓴 경우
                     if(view.editxt_for_double_check_new_pwd.length()>0){
@@ -385,14 +430,17 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
                         view.txt_for_show_double_check_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_login_btn_for_email_login_in_email_login_activity)
 
                     }
+
+                    check_pws_double_check_status=false
+
+
                 }
+                //요구사항 입력 여부  체크
+                detect_status_of_requirement_info(check_duplicate_login_email,check_pws_regex_result,check_pws_double_check_status,check_duplicate_nickname)
+
             }
+
         })//패스워드 더블 체크  텍스트 watcher 끝
-
-
-
-
-
 
 
 
@@ -408,12 +456,27 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
             //닉네임 체크가 되어있을 경우
             if(check_duplicate_nickname){
 
-
                 //alert를  띄어서 취소 여부를  물어본다.
                 AlertDialog.Builder(activity)
+                    .setMessage("닉네임을 정말 바꾸시겠습니까??")
                     .setPositiveButton("네"){dialog, which ->
 
                         Log.v("check_app_runnig_status" ,"$log_for_class 닉네임 취소 ok 버튼  눌림")
+
+                        //버튼 text변경
+                        view.btn_for_dupulicate_check_new_nickname.text="중복 확인"
+
+                        //닉네임 입력 막음
+                        view.editxt_for_add_new_nickname.isEnabled=true
+
+                        //사용 가능함을  초록색으로 보여줌.
+                        view.linearlayout_for_add_new_nickname.setBackgroundResource(R.drawable.custom_view_radius_with_white_background)
+
+                        //중복체크 여부 다시 false로
+                        check_duplicate_nickname=false
+
+                        //요구사항 입력 여부  체크
+                        detect_status_of_requirement_info(check_duplicate_login_email,check_pws_regex_result,check_pws_double_check_status,check_duplicate_nickname)
 
                         dialog.dismiss()
 
@@ -429,8 +492,10 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
 
             }else{//닉네임 체크가  아직 안되어있을 경우
 
-
                 Log.v("check_app_runnig_status","$log_for_class 의 닉네임 중복 체크 상태 false")
+
+                //중복확인 동안  다이얼로그 보여줌.
+                loadingDialog.show_dialog()
 
                 //닉네임 서버로 보내서  중복 체크
                 retrofitClient.apiService.check_duplicate_user_nickname(member_nickname)
@@ -492,11 +557,30 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
                            }//when() 절 끝
 
 
+                            //중복확인 끝났으니  다이얼로그 없애줌
+                            loadingDialog.dismiss_dialog()
+
+
+                            //요구사항 입력 여부  체크
+                            detect_status_of_requirement_info(check_duplicate_login_email,check_pws_regex_result,check_pws_double_check_status,check_duplicate_nickname)
+
 
                         }//onResponse() 끝
 
 
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                             Log.v("check_app_runnig_status","$log_for_class 의  닉네임 중복체크 결과  서버  에러-> ${t.message}")
+
+
+                            //중복확인 끝났으니  다이얼로그 없애줌
+                            loadingDialog.dismiss_dialog()
+
+                            //중복체크 여부 false
+                            check_duplicate_nickname=false
+
+                            //요구사항 입력 여부  체크
+                            detect_status_of_requirement_info(check_duplicate_login_email,check_pws_regex_result,check_pws_double_check_status,check_duplicate_nickname)
 
 
                         }//onFailure() 끝
@@ -504,18 +588,69 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
 
                     })
 
-
-            }
+            }//이전에 닉네임 중복 체크가 안되어있을 경우
 
 
         }//닉네임 중복 체크 버튼  끝
 
-
-
-
         return view
 
     }//oncreateview 끝
+
+
+
+
+    //전체 입력사항  체크 해서 parent
+    // 엑티비티에 넘어가도 되는지 여부  정보 넘겨준다.
+    fun detect_status_of_requirement_info(login_email_status:Boolean,password_status:Boolean,password_double_check:Boolean,nickname_status:Boolean){
+
+        //전체  요구사항들  true -> 사용자가 요구사항대로 입력했을 경우
+        if(login_email_status && password_status && nickname_status && password_double_check) {
+            Log.v("check_app_runnig_status","$log_for_class 의 요구 입력사항 모두 체크 됨")
+
+
+            member_info_json.put("login_email",member_email)//멤버 로그인 이메일
+            member_info_json.put("nick_name",member_nickname)//멤버 닉네임
+            member_info_json.put("password",make_hash256_and_sort_value.make_sha_256_hash_value("sd456852"))//패스워드
+            member_info_json.put("phone_num",auth_phon_num.auth_phonnumber)//핸드폰 번호
+
+
+            //다음 페이져로 넘어가기 가능함.
+            check_complete.CheckMakeIdPagerComplete_all_or_not(true,3)
+
+            //위에서 넣어준 멤버 정보들 넘겨줌.
+            member_info.new_member_info_with_json(member_info_json)
+
+        }else{//하나라도  안되어있을 경우
+
+            //다음 페이져로 넘어가기 불가능 함.
+            check_complete.CheckMakeIdPagerComplete_all_or_not(false,3)
+        }
+
+    }//detect_status_of_requirement_info() 끝
+
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        Log.v("check_app_runnig_status","$log_for_class 의 onAttach() 실행 됨")
+
+
+        //진행사항  체크 인터페이스 객체 initialize 함.
+        if(context is CheckMakeIdPagerCompleteStatus){
+            check_complete= context
+        }else{
+            throw RuntimeException(context.toString())
+        }
+
+        //진행사항  체크 인터페이스 객체 initialize 함.
+        if(context is  NewMemberInfo){
+            member_info= context
+        }else{
+            throw RuntimeException(context.toString())
+        }
+    }//onattach() 끝
 
 
     //비밀번호  정규식 체크 하는 기능
@@ -529,6 +664,7 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
         //true false 형태로 결과 값 return 함
        return matcher.matches()
     }
+
 
 
     //이메일 형식  체크 하는 기능

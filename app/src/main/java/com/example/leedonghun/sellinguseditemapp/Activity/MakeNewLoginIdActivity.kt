@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.leedonghun.sellinguseditemapp.Adapter.MakeNewLoginIdPagerAdapter
 import com.example.leedonghun.sellinguseditemapp.Interface.CheckMakeIdPagerCompleteStatus
+import com.example.leedonghun.sellinguseditemapp.Interface.NewMemberInfo
 import com.example.leedonghun.sellinguseditemapp.R
 import com.example.leedonghun.sellinguseditemapp.Retrofit.RetrofitClient
 import com.example.leedonghun.sellinguseditemapp.Singleton.auth_phon_num
@@ -26,6 +27,7 @@ import kotlinx.android.synthetic.main.term_pager_first_fragment.*
 import kotlinx.android.synthetic.main.term_pager_second_fragment.*
 import kotlinx.android.synthetic.main.term_pager_second_fragment.view.*
 import kotlinx.android.synthetic.main.term_pager_third_fragment.*
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,7 +47,7 @@ import retrofit2.Response
  * 뷰페이져가 넘어간다.
  */
 
-class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus {
+class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus,NewMemberInfo {
 
 
      //다음 프래그먼트로 넘어갈수 있는지 여부를 판단
@@ -61,6 +63,13 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
     private var current_pager_positon:Int=0
 
     private var check_sns_or_email:Int = 0
+
+
+
+    //멤버 패스워드 256 단방향 암호화 hash와  sort값 들어가 json
+    private var memberInfo_for_upload:JSONObject= JSONObject()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,6 +104,7 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
         //다음 버튼 클릭 이벤트
         btn_for_check_status_in_make_login_id_activity.setOnClickListener {
 
+
             //정보 입력 여부가 true일때만 다음으로 넘어갈수 있다.
             if(check_to_available_or_not) {
                 Log.v("check_app_runnig_status",localClassName+"에서  다음 버튼 눌림  = 입렵폼  모두 입력 됨->true")
@@ -102,6 +112,10 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
                 //다음으로 넘어가야 함으로 포지션 값을  1씩 올려준다.
                 current_pager_positon++
+
+
+
+
                 Log.v(
                     "check_app_runnig_status",
                     localClassName + "에서  뷰페이져 현재 포지션->$current_pager_positon"
@@ -326,6 +340,18 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
 
     }//CheckMakeIdPagerComplete_all_or_not끝
+
+    //회원가입 세번째 프래그먼트에서 새 회원 정보 입력이 모두 끝나면,
+    //그 정보를 json으로 받아오는 역할을 한다.
+    override fun new_member_info_with_json(memberInfo: JSONObject) {
+
+        Log.v("checkjson_info",memberInfo.toString())
+
+        //서버로 업로드할  멤버 정보 json으로 받음.
+        memberInfo_for_upload=memberInfo
+
+
+    }//new_member_info_with_json 끝
 
 
 }//MakeNewEmailLoginId 클래스 끝

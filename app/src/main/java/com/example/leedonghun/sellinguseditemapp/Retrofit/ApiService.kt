@@ -1,6 +1,7 @@
 package com.example.leedonghun.sellinguseditemapp.Retrofit
 
 import okhttp3.ResponseBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -56,6 +57,15 @@ interface ApiService {
     //닉네임은  굳이  중요한  개인 정보가 아니라서 GET으로 보냄
     @GET("duplicate_check_nickname.php")
     fun check_duplicate_user_nickname(@Query("nickname")nickname:String):Call<ResponseBody>
+
+
+    //회원등록할 new 회원 정보들을  json형태로
+    //서버에 보낸다.
+    //서버에 회원 등록  성공 여부는 response body로 진행한다.
+    //callback은 response body로 진행
+    @FormUrlEncoded
+    @POST("upload_new_member_info.php")
+    fun upload_new_member_info(@Field("new_ember_info")new_member_info:JSONObject):Call<ResponseBody>
 
 
 }

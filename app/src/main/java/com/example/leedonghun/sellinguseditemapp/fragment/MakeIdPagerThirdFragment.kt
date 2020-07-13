@@ -358,6 +358,8 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
                     view.txt_for_show_double_check_new_pwd_available_or_not.text="일치"
                     view.txt_for_show_double_check_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_view_radius_with_green_bacground)
 
+                    check_pws_double_check_status=true
+
                 }else{//일치 하지 않을 경우
 
                     //일치 하지 않지만 뭐라도 쓴 경우
@@ -375,6 +377,8 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
                         view.txt_for_show_double_check_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_login_btn_for_email_login_in_email_login_activity)
 
                     }
+
+                    check_pws_double_check_status=false
 
                 } //입력한  패스워드  수정에 따른   다시 입력하는 패스워드 수정
 

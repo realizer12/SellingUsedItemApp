@@ -27,6 +27,7 @@ import kotlinx.android.synthetic.main.term_pager_first_fragment.*
 import kotlinx.android.synthetic.main.term_pager_second_fragment.*
 import kotlinx.android.synthetic.main.term_pager_second_fragment.view.*
 import kotlinx.android.synthetic.main.term_pager_third_fragment.*
+import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -69,6 +70,9 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
     //멤버 패스워드 256 단방향 암호화 hash와  sort값 들어가 json
     private var memberInfo_for_upload:JSONObject= JSONObject()
 
+
+    //retrofit 객체
+    val retrofitClient:RetrofitClient= RetrofitClient()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -114,8 +118,6 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
                 current_pager_positon++
 
 
-
-
                 Log.v(
                     "check_app_runnig_status",
                     localClassName + "에서  뷰페이져 현재 포지션->$current_pager_positon"
@@ -124,10 +126,13 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
                 //현재 포지션이 itemcount 보다 작을때 -> 0,1,2,3 일떄
                 if (current_pager_positon < (term_pager.adapter as MakeNewLoginIdPagerAdapter).itemCount) {
 
-                    term_pager.setCurrentItem(current_pager_positon, true)
-                    txt_for_show_number_of_status.text = "${current_pager_positon + 1}/4"
+
 
                     if (current_pager_positon == 1) {
+
+
+                        term_pager.setCurrentItem(current_pager_positon, true)
+                        txt_for_show_number_of_status.text = "${current_pager_positon + 1}/4"
 
                         txt_for_show_make_id_status.text = "휴대폰 인증"
 
@@ -138,6 +143,10 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
                         btn_for_check_status_in_make_login_id_activity.background=ContextCompat.getDrawable(this,R.drawable.custom_btn_for_no_radius)
 
                     } else if (current_pager_positon == 2) {
+
+
+                        term_pager.setCurrentItem(current_pager_positon, true)
+                        txt_for_show_number_of_status.text = "${current_pager_positon + 1}/4"
 
                         txt_for_show_make_id_status.text = "회원 가입"
 
@@ -150,16 +159,69 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
                     } else if (current_pager_positon == 3) {
 
-                        txt_for_show_make_id_status.text = "선호하는 상품 카테고리"
 
-                        //다시 회원가입 정보 입력 완성도 체킹 여부 false 로 바꿈.
-                        check_to_available_or_not = false
+                        AlertDialog.Builder(this)
+                            .setCancelable(false)
+                            .setMessage("여기까지 입력한 정보로 \n회원가입이 진행됩니다\n\n회원가입을 진행하시겠습니까??\n\n" +
+                                    "\n※ 다음 페이지는 사용자              ※" +
+                                    "\n※ 선호 상품 카테고리 조사입니다      ※" +
+                                    "\n※ 회원가입 후 꼭 해야하는 조사입니다  ※")
+                            .setPositiveButton("네"){ dialog, which ->//이경우 현재  정한 페이지로,
 
-                        //넘어갈수 없다는걸  표현하기 위해서 버튼 색깔 흐리게 바꿔줌.
-                        btn_for_check_status_in_make_login_id_activity.background=ContextCompat.getDrawable(this,R.drawable.custom_btn_for_no_radius)
 
-                        //마지막 포지션이므로  버튼 텍스트를 완료 텍스트로 바꿔줌.
-                        btn_for_check_status_in_make_login_id_activity.text = "완 료"
+
+                                 retrofitClient.apiService.upload_new_member_info(memberInfo_for_upload).enqueue(object :Callback<ResponseBody>{
+
+                                     override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+
+                                          Log.v("check_member_info",response.body()?.string())
+
+                                         dialog.dismiss()
+
+
+                                     }//onResponse() 끝
+
+
+                                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                                         Log.v("check_member_info",t.message)
+
+                                     }//onFailure() 끝
+
+                                 })
+
+
+                                //다음 선호도 조사 페이지로 넘어가줌.
+                                term_pager.setCurrentItem(current_pager_positon, true)
+                                txt_for_show_number_of_status.text = "${current_pager_positon + 1}/4"
+
+                                txt_for_show_make_id_status.text = "선호하는 상품 카테고리"
+
+
+                                //다시 회원가입 정보 입력 완성도 체킹 여부 false 로 바꿈.
+                                check_to_available_or_not = false
+
+
+                                //마지막 포지션이므로  버튼 텍스트를 완료 텍스트로 바꿔줌.
+                                btn_for_check_status_in_make_login_id_activity.text = "완 료"
+
+
+                                //넘어갈수 없다는걸  표현하기 위해서 버튼 색깔 흐리게 바꿔줌.
+                                btn_for_check_status_in_make_login_id_activity.background=ContextCompat.getDrawable(this,R.drawable.custom_btn_for_no_radius)
+
+
+
+                            }
+                            .setNegativeButton("아니오"){ dialog, which ->
+
+                                //넘어가지 않았으니까 다시  뷰페이져 포지션 2로 지정한다.
+                                current_pager_positon=2
+
+                                dialog.dismiss()
+
+
+                            }.show()
+
+
                     }
 
                 }else{//이제 완료 버튼을 눌러서  끝날때이다. 이때  서버에  회원 정보를  모두 저장한다.
@@ -177,28 +239,60 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
         }//다음 버튼 클릭 이벤트
 
 
+
+
+
         //뒤로가기 버튼 클릭 이벤트
         arrow_btn_for_back_to_login_activity.setOnClickListener {
 
-                      Log.v("check_app_runnig_status",localClassName+"의 뒤로 가기 버튼 클릭 이벤트")
+            Log.v("check_app_runnig_status",localClassName+"의 뒤로 가기 버튼 클릭 이벤트")
 
-            //다이얼로그로  작성된 내용 저장되지 않는다고 말해주는 거 띄우기
-            AlertDialog.Builder(this)
-                .setMessage("뒤로가기를 누르면,\n회원가입 취소로 간주됩니다.\n정말 뒤로 가시겠습니까??")
-                .setCancelable(false)
-                .setPositiveButton("네"){dialog, which ->
 
-                    dialog.dismiss()
-                    finish()//취소하면  회원가입을  취소-> 메인으로 돌아가기
+            if(current_pager_positon<3){
 
-                }
-                .setNegativeButton("아니오"){dialog, which ->
 
-                    dialog.dismiss()
+                //다이얼로그로  작성된 내용 저장되지 않는다고 말해주는 거 띄우기
+                AlertDialog.Builder(this)
+                    .setMessage("뒤로가기를 누르면,\n회원가입 취소로 간주됩니다.\n정말 뒤로 가시겠습니까??")
+                    .setCancelable(false)
+                    .setPositiveButton("네"){dialog, which ->
 
-                }.show()
+                        dialog.dismiss()
+                        finish()//취소하면  회원가입을  취소-> 메인으로 돌아가기
+
+                    }
+                    .setNegativeButton("아니오"){dialog, which ->
+
+                        dialog.dismiss()
+
+                    }.show()
+
+            }else{
+
+                //다이얼로그로  작성된 내용 저장되지 않는다고 말해주는 거 띄우기
+                AlertDialog.Builder(this)
+                    .setMessage("선호 상품 카테고리 선택은 \n꼭 해야하는 절차입니다.\n지금 안하더라도,\n로그인시 하셔야 됩니다.\n\n그냥 넘어 가시겠습니까?")
+                    .setCancelable(false)
+                    .setPositiveButton("네"){dialog, which ->
+
+                        dialog.dismiss()
+                        finish()//취소하면  회원가입을  취소-> 메인으로 돌아가기
+
+                    }
+                    .setNegativeButton("아니오"){dialog, which ->
+
+                        dialog.dismiss()
+
+                    }.show()
+
+
+            }
+
+
 
         }//뒤로가기 버튼 클릭 이벤트
+
+
 
 
 
@@ -288,21 +382,47 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
         Log.v("check_app_runnig_status",localClassName+"의 뒤로 가기 버튼 클릭 이벤트")
 
-        //다이얼로그로  작성된 내용 저장되지 않는다고 말해주는 거 띄우기
-        AlertDialog.Builder(this)
-            .setMessage("뒤로가기를 누르면,\n회원가입 취소로 간주됩니다.\n정말 뒤로 가시겠습니까??")
-            .setCancelable(false)
-            .setPositiveButton("네"){dialog, which ->
+        if(current_pager_positon<3){
 
-                dialog.dismiss()
-                finish()//취소하면  회원가입을  취소-> 메인으로 돌아가기
 
-            }
-            .setNegativeButton("아니오"){dialog, which ->
+            //다이얼로그로  작성된 내용 저장되지 않는다고 말해주는 거 띄우기
+            AlertDialog.Builder(this)
+                .setMessage("뒤로가기를 누르면,\n회원가입 취소로 간주됩니다.\n정말 뒤로 가시겠습니까??")
+                .setCancelable(false)
+                .setPositiveButton("네"){dialog, which ->
 
-                dialog.dismiss()
+                    dialog.dismiss()
+                    finish()//취소하면  회원가입을  취소-> 메인으로 돌아가기
 
-            }.show()
+                }
+                .setNegativeButton("아니오"){dialog, which ->
+
+                    dialog.dismiss()
+
+                }.show()
+
+        }else{
+
+            //다이얼로그로  작성된 내용 저장되지 않는다고 말해주는 거 띄우기
+            AlertDialog.Builder(this)
+                .setMessage("선호 상품 카테고리 선택은 \n꼭 해야하는 절차입니다.\n지금 안하더라도,\n로그인시 하셔야 됩니다.\n\n그냥 넘어 가시겠습니까?")
+                .setCancelable(false)
+                .setPositiveButton("네"){dialog, which ->
+
+                    dialog.dismiss()
+                    finish()//취소하면  회원가입을  취소-> 메인으로 돌아가기
+
+                }
+                .setNegativeButton("아니오"){dialog, which ->
+
+                    dialog.dismiss()
+
+                }.show()
+
+
+        }
+
+
     }
 
 

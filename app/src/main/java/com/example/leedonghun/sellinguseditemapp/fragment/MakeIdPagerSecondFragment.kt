@@ -153,12 +153,14 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
                                 //sms 보내기 성공 했으니,  이제  시간 초안에
                                 //문자로 받은  인증 코드를 적어줘야되게  숨겨 놨던 인증 코드 입력 뷰 보여 줌
                                 view.btn_for_get_certification_code.text = "다시 받기"
-                                view.txt_for_show_remain_count_of_input_code.visibility = View.VISIBLE
-                                view.linearlayout_for_input_certification_sms_code.visibility = View.VISIBLE
+                                view.txt_for_show_remain_count_of_input_code.visibility =
+                                    View.VISIBLE
+                                view.linearlayout_for_input_certification_sms_code.visibility =
+                                    View.VISIBLE
 
 
                                 //핸드폰 번호 쓰는  ediitext는  더이상 글을 쓰지 못하게 막는다.
-                                view.editxt_for_add_phone_number.isEnabled=false
+                                view.editxt_for_add_phone_number.isEnabled = false
 
                                 //sms 요청 중 상태로 바꿔줌
                                 check_sms_request_ing = true
@@ -169,14 +171,21 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
 
 
                                 //코루틴으로 시간초 진행
-                                timer_job= Job()
-                                timer(view.txt_for_show_remain_count_of_input_code,
+                                timer_job = Job()
+                                timer(
+                                    view.txt_for_show_remain_count_of_input_code,
                                     timer_job,
                                     view.editxt_for_add_certification_code,
                                     view.btn_for_input_certification_code_complete,
                                     view.btn_for_get_certification_code
                                 )
 
+
+                            }else if(send_phone_num_result.equals("5")){//중복값이 있는 경우이다.
+
+                                 Toast.makeText(activity,"누군가 사용중인 핸드폰 번호 입니다.",Toast.LENGTH_SHORT).show()
+                                 view.linearlayout_for_input_phone_number_for_certification.startAnimation(shake)
+                                 view.editxt_for_add_phone_number.requestFocus()
 
                             }else{//서버에서  해당 폰  번호 넘기는 과정에서  문제가 생김.
 

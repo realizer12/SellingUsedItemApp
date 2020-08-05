@@ -615,7 +615,7 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
 
             member_info_json.put("login_email",member_email)//멤버 로그인 이메일
             member_info_json.put("nick_name",member_nickname)//멤버 닉네임
-            member_info_json.put("password",make_hash256_and_sort_value.make_sha_256_hash_value("sd456852"))//패스워드
+            member_info_json.put("password",make_hash256_and_sort_value.make_sha_256_hash_value(view?.editxt_for_add_new_pwd?.text.toString()))//패스워드
             member_info_json.put("phone_num",auth_phon_num.auth_phonnumber)//핸드폰 번호
 
 
@@ -657,6 +657,8 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
     }//onattach() 끝
 
 
+
+
     //비밀번호  정규식 체크 하는 기능
     fun check_pws_regex_funtion(password:String):Boolean{
 
@@ -671,6 +673,8 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
 
 
 
+
+
     //이메일 형식  체크 하는 기능
     fun check_email_regex_function(email:String):Boolean{
 
@@ -682,6 +686,7 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
 
       return matcher.matches()
     }
+
 
 
     //이메일 중복 확인이랑 닉네임 중복 체크 할때 값이 잘못되면  해주는 처리

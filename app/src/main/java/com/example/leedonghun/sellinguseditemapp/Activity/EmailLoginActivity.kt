@@ -49,7 +49,7 @@ class EmailLoginActivity :AppCompatActivity() {
 
 
          //현재 레이아웃에서 로그인 버튼의  위치를  받아옴.
-         val parameter = btn_for_login.getLayoutParams() as ConstraintLayout.LayoutParams
+         val parameter = btn_for_login.layoutParams as ConstraintLayout.LayoutParams
 
          //현재 xml에  지정된 로그인 버튼의  margin -bottm 값을  변수에 넣어둠.
          //이유는 키보드 올라올때 margin-bottom값을  키보드 높이- 300 지정하므로,
@@ -68,7 +68,7 @@ class EmailLoginActivity :AppCompatActivity() {
 
                 //로그인 버튼 위치 조정-> bottom margin 만  키보드 높이 -300으로 바꿔준다.
                 parameter.setMargins(parameter.leftMargin , parameter.topMargin, parameter.rightMargin, keyboardHeight-300) // left, top, right, bottom
-                btn_for_login.setLayoutParams(parameter)
+                btn_for_login.layoutParams = parameter
 
             },
 
@@ -79,7 +79,7 @@ class EmailLoginActivity :AppCompatActivity() {
 
                 //로그인 버튼 위치  다시  원상 복귀
                 parameter.setMargins(parameter.leftMargin , parameter.topMargin, parameter.rightMargin, bottm_margin) // left, top, right, bottom
-                btn_for_login.setLayoutParams(parameter)
+                btn_for_login.layoutParams = parameter
 
             }
         )//키보드 감지 끝.
@@ -136,7 +136,7 @@ class EmailLoginActivity :AppCompatActivity() {
             not_show_icon.visibility=View.VISIBLE
 
             //에딧 텍스트 -패스워드 보여지게 처리 ->1234
-            editxt_for_add_login_password.setTransformationMethod(PasswordTransformationMethod.getInstance())
+            editxt_for_add_login_password.transformationMethod = PasswordTransformationMethod.getInstance()
 
         }else{//안보여짐 상태로 체크된 경우
 
@@ -145,7 +145,7 @@ class EmailLoginActivity :AppCompatActivity() {
             not_show_icon.visibility=View.INVISIBLE
 
             //에딧 텍스트 패스워드 안보여지게 처리 -> ****
-            editxt_for_add_login_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            editxt_for_add_login_password.transformationMethod = HideReturnsTransformationMethod.getInstance()
 
         }
 

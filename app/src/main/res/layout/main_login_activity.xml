@@ -225,5 +225,17 @@
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="0.8" />
 
-
+    <!-- 페이스북에서 지원하는  로그인 버튼
+         일반 버튼으로 Login button 을 지원하기 어려워서
+         이거 만들어서  일반 버튼에 onclick 으로  넣어주자.-->
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/facebook_login_api_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </com.facebook.login.widget.LoginButton>
 </androidx.constraintlayout.widget.ConstraintLayout>

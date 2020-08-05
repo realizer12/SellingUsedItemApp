@@ -63,4 +63,18 @@
        <string name="string_for_check_accurate_pwd">입력 대기 중</string>
 
 
+
+
+
+
+
+      <!-- 페이스북 로그인 api  사용관련  key  내용  -->
+      <string name="facebook_app_id">1279967912355965</string>
+      <string name="fb_login_protocol_scheme">fb1279967912355965</string>
+
+      <!-- 페이스북 가입시  로그인 이메일이 없는 경우     -->
+      <string name="face_book_login_email_null_check">해당 페이스북 아이디는\n사용중인 이메일이 없네요</string>
+
+
+
 </resources>

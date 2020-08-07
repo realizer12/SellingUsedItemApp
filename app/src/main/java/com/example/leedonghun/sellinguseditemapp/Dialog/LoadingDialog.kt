@@ -23,21 +23,25 @@ class LoadingDialog(context: Context) {
 
     //로딩용 다이얼로그
     private var dialog: Dialog= Dialog(context)
+    val imageView: ImageView
+    val animation: Animation
+
 
     //외부 context 받아서  로딩용 dialog 세팅 진행
     init {
 
        this.dialog.setContentView(R.layout.custom_loading_dialog)
        this.dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-       val imageView: ImageView =this.dialog.findViewById(R.id.loading_img)
-       val animation: Animation = AnimationUtils.loadAnimation(context, R.anim.loading)
-       imageView.startAnimation(animation)
+
+       this.imageView=this.dialog.findViewById(R.id.loading_img)
+       this.animation=AnimationUtils.loadAnimation(context, R.anim.loading)
    }
 
 
     //다이얼로그 보이기
     fun show_dialog(){
 
+        imageView.startAnimation(animation)
         this.dialog.show()
 
     }

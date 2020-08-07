@@ -3,8 +3,6 @@ package com.example.leedonghun.sellinguseditemapp.Activity
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
@@ -16,16 +14,13 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.leedonghun.sellinguseditemapp.Adapter.MakeNewLoginIdPagerAdapter
 import com.example.leedonghun.sellinguseditemapp.Interface.CheckMakeIdPagerCompleteStatus
 import com.example.leedonghun.sellinguseditemapp.Interface.NewMemberInfo
+import com.example.leedonghun.sellinguseditemapp.PrivateInfo.ServerIp
 import com.example.leedonghun.sellinguseditemapp.R
 import com.example.leedonghun.sellinguseditemapp.Retrofit.RetrofitClient
-import com.example.leedonghun.sellinguseditemapp.Singleton.auth_phon_num
 import com.example.leedonghun.sellinguseditemapp.Util.KeyboardVisibilityUtils
-import kotlinx.android.synthetic.main.email_login_activity.*
 import kotlinx.android.synthetic.main.make_login_id_activity.*
 import kotlinx.android.synthetic.main.make_login_id_activity.arrow_btn_for_back_to_login_activity
-import kotlinx.android.synthetic.main.term_pager_first_fragment.*
 import kotlinx.android.synthetic.main.term_pager_second_fragment.*
-import kotlinx.android.synthetic.main.term_pager_second_fragment.view.*
 import kotlinx.android.synthetic.main.term_pager_third_fragment.*
 import okhttp3.ResponseBody
 import org.json.JSONObject
@@ -72,7 +67,7 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
 
     //retrofit 객체
-    val retrofitClient:RetrofitClient= RetrofitClient()
+    val retrofitClient:RetrofitClient= RetrofitClient(ServerIp.baseurl)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

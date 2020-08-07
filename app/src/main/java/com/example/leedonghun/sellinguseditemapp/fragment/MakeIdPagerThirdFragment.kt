@@ -2,8 +2,6 @@ package com.example.leedonghun.sellinguseditemapp.Activity
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -20,18 +18,17 @@ import androidx.fragment.app.Fragment
 import com.example.leedonghun.sellinguseditemapp.Dialog.LoadingDialog
 import com.example.leedonghun.sellinguseditemapp.Interface.CheckMakeIdPagerCompleteStatus
 import com.example.leedonghun.sellinguseditemapp.Interface.NewMemberInfo
+import com.example.leedonghun.sellinguseditemapp.PrivateInfo.ServerIp
 import com.example.leedonghun.sellinguseditemapp.R
 import com.example.leedonghun.sellinguseditemapp.Retrofit.RetrofitClient
-import com.example.leedonghun.sellinguseditemapp.Singleton.auth_phon_num
+import com.example.leedonghun.sellinguseditemapp.Singleton.AuthPoneNum
 import com.example.leedonghun.sellinguseditemapp.Util.MakePassWordSecurity
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.term_pager_third_fragment.view.*
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -61,7 +58,7 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
     val make_hash256_and_sort_value:MakePassWordSecurity=MakePassWordSecurity()
 
     //retrofir 통신을 하기위한 클래스 객체
-    val retrofitClient:RetrofitClient= RetrofitClient()
+    val retrofitClient:RetrofitClient= RetrofitClient(ServerIp.baseurl)
 
     //뷰에 흔들림 효과를 주는 애니메이션
     val shake: Animation = AnimationUtils.loadAnimation(context,R.anim.shake)
@@ -616,7 +613,7 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
             member_info_json.put("login_email",member_email)//멤버 로그인 이메일
             member_info_json.put("nick_name",member_nickname)//멤버 닉네임
             member_info_json.put("password",make_hash256_and_sort_value.make_sha_256_hash_value(view?.editxt_for_add_new_pwd?.text.toString()))//패스워드
-            member_info_json.put("phone_num",auth_phon_num.auth_phonnumber)//핸드폰 번호
+            member_info_json.put("phone_num",AuthPoneNum.auth_phonnumber)//핸드폰 번호
 
 
             //다음 페이져로 넘어가기 가능함.

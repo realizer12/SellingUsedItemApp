@@ -1,14 +1,10 @@
 package com.example.leedonghun.sellinguseditemapp.Activity
 
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.TextUtils
-import android.text.format.Time
-import android.text.format.Time.getCurrentTimezone
 import android.util.Log
 import android.view.*
 import android.view.animation.Animation
@@ -18,21 +14,19 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.leedonghun.sellinguseditemapp.Dialog.LoadingDialog
 import com.example.leedonghun.sellinguseditemapp.Interface.CheckMakeIdPagerCompleteStatus
+import com.example.leedonghun.sellinguseditemapp.PrivateInfo.ServerIp
 import com.example.leedonghun.sellinguseditemapp.R
 import com.example.leedonghun.sellinguseditemapp.Retrofit.RetrofitClient
-import com.example.leedonghun.sellinguseditemapp.Singleton.auth_phon_num
+import com.example.leedonghun.sellinguseditemapp.Singleton.AuthPoneNum
 import kotlinx.android.synthetic.main.term_pager_second_fragment.*
 import kotlinx.android.synthetic.main.term_pager_second_fragment.view.*
 import kotlinx.android.synthetic.main.term_pager_second_fragment.view.editxt_for_add_phone_number
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.channels.ticker
 import okhttp3.ResponseBody
-import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.LocalDateTime
 import java.util.regex.Pattern
 import kotlin.RuntimeException
 
@@ -59,7 +53,7 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
     lateinit var check_complete: CheckMakeIdPagerCompleteStatus
 
      //retrofit 객체
-    val retrofitClient:RetrofitClient= RetrofitClient()
+     lateinit var retrofitClient:RetrofitClient
 
     //뷰에 흔들림 효과를 주는 애니메이션
     val shake: Animation = AnimationUtils.loadAnimation(context,R.anim.shake)
@@ -132,9 +126,9 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
                  //로딩 다이얼로그 보여줌.
                  loadingDialog.show_dialog()
 
-
                  //서버로  폰 번호랑  이유 보냄 -> 이유는 0 = 회원가입을 위한  인증.
-                 retrofitClient.apiService.send_phone_number_for_auth_own(phone_number,0)
+                retrofitClient=RetrofitClient(ServerIp.baseurl)
+                retrofitClient.apiService.send_phone_number_for_auth_own(phone_number,0)
                     .enqueue(object:Callback<ResponseBody>{
                         override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
 
@@ -276,6 +270,7 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
 
                 Log.v("check_app_runnig_status",fragment_name_for_Log+"의  인증번호 5자리 맞음")
 
+                retrofitClient= RetrofitClient(ServerIp.baseurl)
                 retrofitClient.apiService.send_sms_auth_key(phone_number,0,auth_key)
                     .enqueue(object :Callback<ResponseBody>{
 
@@ -303,7 +298,7 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
                                 view.txt_for_show_remain_count_of_input_code.setTextColor(Color.GREEN)
 
                                 //인증한 핸드폰 번호  싱글 톤에  넣어줌.
-                                auth_phon_num.get_phone_number(phone_number)
+                                AuthPoneNum.get_phone_number(phone_number)
 
                                 //인증되었으니까  editext 입력 못하게 막음.
                                 view.editxt_for_add_certification_code.isEnabled=false

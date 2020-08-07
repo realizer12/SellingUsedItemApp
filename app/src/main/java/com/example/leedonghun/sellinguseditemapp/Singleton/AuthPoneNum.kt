@@ -15,7 +15,7 @@ package com.example.leedonghun.sellinguseditemapp.Singleton
  * 다음 페이져 프래그먼트로 보내기로 결정함.
  */
 
-object auth_phon_num {
+object AuthPoneNum {
 
     var auth_phonnumber:String=""//인증한  폰 번호
 
@@ -23,6 +23,17 @@ object auth_phon_num {
     fun get_phone_number(auth_phonnumber:String){
 
         this.auth_phonnumber=auth_phonnumber
+
+    }
+
+
+    //singltone에 있던 값 없애줌.
+    //필요한 부분이 끝나면,  더이상
+    //해당 값을 가지고 있으면  유출 될수 있으므로,
+    //없애준다,
+    fun delete_phone_num(){
+
+        this.auth_phonnumber=""
 
     }
 

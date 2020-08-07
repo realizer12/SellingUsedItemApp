@@ -1,8 +1,11 @@
 package com.example.leedonghun.sellinguseditemapp.Retrofit
 
+import com.example.leedonghun.sellinguseditemapp.SNSLogin.GetNaverLoginResponse
+
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.http.*
 
 /**
@@ -66,6 +69,15 @@ interface ApiService {
     @FormUrlEncoded
     @POST("upload_new_member_info.php")
     fun upload_new_member_info(@Field("new_ember_info")new_member_info:JSONObject):Call<ResponseBody>
+
+
+
+    //네이버 로그인의 경우은  access token 을 이용해서
+    //아래  주소로  사용자 정보를  받아와야한다.
+    //토큰은 hearder 에  넣어주면 된다.
+    //그외 파라미터는 없음
+    @GET("v1/nid/me")
+    fun get_naver_login_user_email(@Header("Authorization")token:String):Call<GetNaverLoginResponse>
 
 
 }

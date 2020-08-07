@@ -17,10 +17,10 @@ import retrofit2.converter.gson.GsonConverterFactory
  * 반환 시킬수 있도록 만들어 놓았다,
  *
  */
-class RetrofitClient {
+class RetrofitClient(url:String) {
 
     private var retrofit:Retrofit=Retrofit.Builder()
-        .baseUrl(ServerIp.baseurl)
+        .baseUrl(url)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 

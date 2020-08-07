@@ -65,8 +65,17 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:18.1.0'
 
 
-    //페이스북 관련 의존성 추가
+    //페이스북 로그인 관련 의존성 추가
     implementation 'com.facebook.android:facebook-login:5.15.3'
+
+
+    //네이버 로그인 관련 의존성 추가
+    implementation files('libs/naveridlogin_android_sdk_4.2.6.aar')
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:support-core-utils:28.0.0'
+    implementation 'com.android.support:customtabs:28.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
+
 
 
 }

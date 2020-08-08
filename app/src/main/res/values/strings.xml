@@ -1,5 +1,8 @@
 <resources>
 
+    <!-- 로그용 TAG값   -->
+    <string name="LOG_TAG">check_app_runnig_status</string>
+
     <!--SplashActivity  string 용 -->
        <!--기기에서 보여지는 앱 이름  -->
        <string name="app_name">중고마켓</string>
@@ -61,11 +64,6 @@
        <string name="string_for_check_dupulicate">중복 확인</string>
        <!-- 비밀번호관련 사용가능  체크  string-->
        <string name="string_for_check_accurate_pwd">입력 대기 중</string>
-
-
-
-
-
 
 
       <!-- 페이스북 로그인 api  사용관련  key  내용  -->

@@ -33,6 +33,9 @@ class LoadingDialog(context: Context) {
        this.dialog.setContentView(R.layout.custom_loading_dialog)
        this.dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+       //다이얼로그 유저가 취소 못하게 만듬.
+       this.dialog.setCancelable(false)
+
        this.imageView=this.dialog.findViewById(R.id.loading_img)
        this.animation=AnimationUtils.loadAnimation(context, R.anim.loading)
    }

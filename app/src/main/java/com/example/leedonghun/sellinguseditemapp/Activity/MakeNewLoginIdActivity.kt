@@ -17,6 +17,8 @@ import com.example.leedonghun.sellinguseditemapp.Interface.NewMemberInfo
 import com.example.leedonghun.sellinguseditemapp.PrivateInfo.ServerIp
 import com.example.leedonghun.sellinguseditemapp.R
 import com.example.leedonghun.sellinguseditemapp.Retrofit.RetrofitClient
+import com.example.leedonghun.sellinguseditemapp.Singleton.SnsEmailValue
+import com.example.leedonghun.sellinguseditemapp.Util.DeleteSnsData
 import com.example.leedonghun.sellinguseditemapp.Util.KeyboardVisibilityUtils
 import kotlinx.android.synthetic.main.make_login_id_activity.*
 import kotlinx.android.synthetic.main.make_login_id_activity.arrow_btn_for_back_to_login_activity
@@ -252,6 +254,11 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
                     .setCancelable(false)
                     .setPositiveButton("네"){dialog, which ->
 
+
+                        //sns 토큰 및 저장된 sns 이메일  싱글톤 리셋
+                        DeleteSnsData(this).Sns_login_signOut()
+
+
                         dialog.dismiss()
                         finish()//취소하면  회원가입을  취소-> 메인으로 돌아가기
 
@@ -385,6 +392,9 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
                 .setMessage("뒤로가기를 누르면,\n회원가입 취소로 간주됩니다.\n정말 뒤로 가시겠습니까??")
                 .setCancelable(false)
                 .setPositiveButton("네"){dialog, which ->
+
+                    //sns 토큰 및 저장된 sns 이메일  싱글톤 리셋
+                    DeleteSnsData(this).Sns_login_signOut()
 
                     dialog.dismiss()
                     finish()//취소하면  회원가입을  취소-> 메인으로 돌아가기

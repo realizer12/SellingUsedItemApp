@@ -2,7 +2,6 @@ package com.example.leedonghun.sellinguseditemapp.Activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.AsyncTask
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.StyleSpan
@@ -16,7 +15,9 @@ import com.example.leedonghun.sellinguseditemapp.PrivateInfo.ServerIp
 import com.example.leedonghun.sellinguseditemapp.R
 import com.example.leedonghun.sellinguseditemapp.Retrofit.RetrofitClient
 import com.example.leedonghun.sellinguseditemapp.SNSLogin.GetNaverLoginResponse
+import com.example.leedonghun.sellinguseditemapp.Singleton.LOG
 import com.example.leedonghun.sellinguseditemapp.Singleton.SnsEmailValue
+import com.example.leedonghun.sellinguseditemapp.Util.DeleteSnsData
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -37,11 +38,13 @@ import com.nhn.android.naverlogin.OAuthLogin
 import com.nhn.android.naverlogin.OAuthLoginHandler
 import com.nhn.android.naverlogin.data.OAuthLoginState
 import kotlinx.android.synthetic.main.main_login_activity.*
+import kotlinx.android.synthetic.main.term_pager_third_fragment.view.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.math.sign
 
 
 /**
@@ -59,19 +62,20 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MainLoginActivity : AppCompatActivity() {
 
 
-    //구글 로그인 client
-    private lateinit var googleSignInClient: GoogleSignInClient
-
     //구글 로그인 startactivity for result ->  아이디 고르는 창  띄우고  값
     //받아오기 위한 request code
     private val GOOGLE_LOGIN_REQUEST:Int=100
 
+    //구글 로그인 client
+    private lateinit var googleSignInClient: GoogleSignInClient
 
     //페이스북 로그인 응답 처리 callback manager
     private lateinit var callbackManager: CallbackManager
 
+    //네이버 oauth 로그인
     private lateinit var nhnOAuthLoginModule: OAuthLogin
 
+    //retrofit2 기본 설정된 class 객체
     lateinit var retrofitClient:RetrofitClient
 
     //sns  로그인 버튼 눌렀을때
@@ -122,7 +126,9 @@ class MainLoginActivity : AppCompatActivity() {
         //sign_out 진행
         imgView_for_app_logo_gif.setOnClickListener {
 
-            signOut()
+            //sns 로그아웃
+            DeleteSnsData(this).Sns_login_signOut()
+
         }
 
 
@@ -138,20 +144,10 @@ class MainLoginActivity : AppCompatActivity() {
 
         //회원가입 텍스트 클릭 이벤트
         txt_to_go_make_id.setOnClickListener {
-            Log.v("check_app_runnig_status","이메일 로그인 회원가입 텍스트 클릭됨 -> MakeNewEmailLoginId로 가짐")
+            Log.v(LOG.TAG,"이메일 로그인 회원가입 텍스트 클릭됨 -> MakeNewEmailLoginId로 가짐")
 
-
-
-
-
-
-          //회원가입 엑티비티로 감
-          val intent_to_go_to_MakeNewEmailLoginId=Intent(this,MakeNewLoginIdActivity::class.java)
-
-          //보내는 값이 1-> email 로그인 아이디를  생성 할때 , 0->  sns 로그인 아이디 생성 할때
-          //값을 토대로 회원가입 용 뷰페이져의 4개 프래그먼트에서  3번째 프래그먼트(title -> 회원가입) 형태가 바뀌게됨.
-          intent_to_go_to_MakeNewEmailLoginId.putExtra("check_sns_or_email",1)
-          startActivity(intent_to_go_to_MakeNewEmailLoginId)
+            //sns 로그인  아님으로 체크 해서  회원 가입 진행한다.
+            move_make_id_with_sns_login_check(sns_login = false,sns_login_email = "")
 
         }
 
@@ -227,37 +223,109 @@ class MainLoginActivity : AppCompatActivity() {
 
     }//onCreate() 끝
 
-    //여기서는 signout 진행되지는 않지만 일단 추가 시켜놓음
-    private fun signOut() {
 
-        LoginManager.getInstance().logOut()
-        // Firebase sign out
-        FirebaseAuth.getInstance().signOut()
-
-
-        //naver sign out
-        nhnOAuthLoginModule.logoutAndDeleteToken(this)
-
-        // Google sign out
-        googleSignInClient.signOut().addOnCompleteListener(this) {
-
-            // Firebase sign out
-            FirebaseAuth.getInstance().signOut()
-
-        }
-
-        //일단 signletone 지워줌.
-        //기존에  회원가입용 signleton은  회원가입 끝날때  다 리셋 시키자.
-        SnsEmailValue.delete_sns_email()
-
-    }
 
 
     override fun onPause() {
         super.onPause()
 
+
+
         Log.v("check_app_runnig_status","싱글톤으로 받은  sns login email-> ${SnsEmailValue.sns_login_email}")
+
+
     }
+
+
+    //sns  로그인 여부 체크 해서
+    //회원가입 창으로 넘어간다.
+    //일반 회원 가입의 경우는 그냥  넘어가고,
+    //sns 회원 가입의 경우는 서버에서 해당  로그인  이메일을 체크해서
+    //넘어가기 여부를 체크 한다.
+    fun move_make_id_with_sns_login_check(sns_login:Boolean,sns_login_email:String){
+
+
+        Log.v(LOG.TAG,"sns 로그인 체크 메소드 실행됨 ->  sns 로그인 체크 값 -> $sns_login")
+
+        //회원가입 엑티비티로 감
+        val intent_to_go_to_MakeNewEmailLoginId=Intent(this,MakeNewLoginIdActivity::class.java)
+
+        //sns 로그인이 맞을 때
+        if(sns_login){
+
+
+
+            //여기서는 우선 해당 이메일이 회원기록에 있는지 체크부터 해준다.
+            //회원 기록에 있으면, 바로 accesstoken 발행만 해서
+            //메인으로 넘겨준다.
+            //회원기록이 없으면  이제  새 회원으로 인식해서 회원가입 진행
+
+            //서버로  이메일  보내서 확인
+            retrofitClient= RetrofitClient(ServerIp.baseurl)
+            retrofitClient.apiService.check_duplicate_login_email(sns_login_email)
+                .enqueue(object:Callback<ResponseBody>{
+                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+
+                        //이메일 중복 체크 결과
+                        val result:String?=response.body()?.string()
+
+                        when {
+                            result.equals("1") -> {// 중복 없음 -> 이메일 사용 가능
+
+                                //다 끝났으니  다이얼로그 꺼줌
+                                loadingDialog.dismiss_dialog()
+
+                                //sns 이메일 싱글톤 객체에 가져온 이메일 넣어줌.
+                                SnsEmailValue.get_sns_email(sns_login_email)
+
+
+                                //사용 가능한 이메일 이므로  인텐트로 넘긴다.
+                                //보내는 값이 1-> email 로그인 아이디를  생성 할때 , 0->  sns 로그인 아이디 생성 할때
+                                //값을 토대로 회원가입 용 뷰페이져의 4개 프래그먼트에서  3번째 프래그먼트(title -> 회원가입) 형태가 바뀌게됨.
+                                intent_to_go_to_MakeNewEmailLoginId.putExtra("check_sns_or_email",0)
+                                startActivity(intent_to_go_to_MakeNewEmailLoginId)
+
+                            }
+
+                            result.equals("-2") -> {//중복 값이 있음 -> 이메일 사용 불가능
+
+                                //다 끝났으니  다이얼로그 꺼줌
+                                loadingDialog.dismiss_dialog()
+
+                                //사용하는 이메일이 있는 것이므로,  accesstoken을  서버로 부터 요청해서  로그인 처리를
+                                //진행한다.
+
+                            }
+
+
+                            result.equals("-1") -> {//쿼리 실패함
+
+                                //다 끝났으니  다이얼로그 꺼줌
+                                loadingDialog.dismiss_dialog()
+
+                            }
+
+
+                        }
+
+                    }
+
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        TODO("Not yet implemented")
+                    }
+
+                })
+
+        }else{//sns 로그인이 아닐때
+
+            //보내는 값이 1-> email 로그인 아이디를  생성 할때 , 0->  sns 로그인 아이디 생성 할때
+            //값을 토대로 회원가입 용 뷰페이져의 4개 프래그먼트에서  3번째 프래그먼트(title -> 회원가입) 형태가 바뀌게됨.
+            intent_to_go_to_MakeNewEmailLoginId.putExtra("check_sns_or_email",1)
+            startActivity(intent_to_go_to_MakeNewEmailLoginId)
+
+        }
+    }
+
 
 
 
@@ -298,6 +366,15 @@ class MainLoginActivity : AppCompatActivity() {
                             //네이버 로그인 진행
                             get_naver_login_info(" Bearer $Naver_accessToken")
 
+                        }else{
+
+                            //실패시  다이얼로그  없애줌.
+                            loadingDialog.dismiss_dialog()
+
+
+                            //토큰 다 없애줌.
+                            //sns 로그아웃
+                            DeleteSnsData(this@MainLoginActivity).Sns_login_signOut()
                         }
 
 
@@ -332,19 +409,34 @@ class MainLoginActivity : AppCompatActivity() {
 
                     if(response.isSuccessful) {
 
-                            //네이버 로그인 유저정보 api 에서 받아온 값
-                            val naver_user_info = response.body()?.resultcode
-                            val naver_user_email=naver_user_info?.email
+                        //네이버 로그인 유저정보 api 에서 받아온 값
+                        val naver_user_info = response.body()?.resultcode
+                        val naver_user_email=naver_user_info?.email
 
-                            Log.v("check_app_runnig_status", "네이버 로그인 유저 이메일 -> $naver_user_email")
+                       Log.v("check_app_runnig_status", "네이버 로그인 유저 이메일 -> $naver_user_email")
 
-                            //sns 이메일 싱글톤 객체에 가져온 이메일 넣어줌.
-                            SnsEmailValue.get_sns_email(naver_user_email.toString())
+                        //네이버 유저  이메일 정보가 null 이 아닐때
+                        if(naver_user_email != null) {
 
-                            //끝났으니 다이얼로그 없애줌.
+                            //처음 가입 하는 회원인지 판별
+                            move_make_id_with_sns_login_check(
+                                sns_login = true,
+                                sns_login_email = naver_user_email
+                            )
+
+                        }else{//null 일 경우
+
+                            //실패시  다이얼로그  없애줌.
                             loadingDialog.dismiss_dialog()
 
-                    }
+
+
+                            //sns 로그아웃
+                            DeleteSnsData(this@MainLoginActivity).Sns_login_signOut()
+
+                        }
+
+                     }
                 }
 
                 override fun onFailure(call: Call<GetNaverLoginResponse>, t: Throwable) {
@@ -405,7 +497,12 @@ class MainLoginActivity : AppCompatActivity() {
             }catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
                 Log.w("check_app_runnig_status", "Google sign in failed", e)
-                 loadingDialog.dismiss_dialog()
+
+                //실패시  다이얼로그  없애줌.
+                loadingDialog.dismiss_dialog()
+
+                //sns 로그아웃
+                DeleteSnsData(this@MainLoginActivity).Sns_login_signOut()
 
             }
         }//GOOGLE_LOGIN_REQUEST 끝
@@ -431,21 +528,41 @@ class MainLoginActivity : AppCompatActivity() {
                     Log.v("check_app_runnig_status","user  값 -> $google_user_email")
 
 
-                    //sns 이메일 싱글톤 객체에 가져온 이메일 넣어줌.
-                    //구글이나 페이스북 이메일의 경우는  이미  파이어베이스 객체로
-                    //공유가 가능하지만, 네이버는 싱글톤을 이용해야하므로,
-                    //공통적으로  넣어서 사용하자
-                    SnsEmailValue.get_sns_email(google_user_email.toString())
+                    //구글 유저  이메일 정보가 null 이 아닐때
+                    if(google_user_email != null) {
+
+                        //처음 가입 하는 회원인지 판별
+                        move_make_id_with_sns_login_check(
+                            sns_login = true,
+                            sns_login_email = google_user_email
+                        )
+
+                    }else{//null 일 경우
+
+                        //실패시  다이얼로그  없애줌.
+                        loadingDialog.dismiss_dialog()
+
+
+                        //sns 로그아웃
+                        DeleteSnsData(this@MainLoginActivity).Sns_login_signOut()
+
+
+                    }
+
+
 
                 } else {
 
                     // If sign in fails, display a message to the user.
                     Log.w("check_app_runnig_status", "signInWithCredential:failure", task.exception)
 
+                    //뭐가 되었든 result를 받았으니까 로딩  없애줌.
+                    loadingDialog.dismiss_dialog()
+                    //sns 로그아웃
+                    DeleteSnsData(this@MainLoginActivity).Sns_login_signOut()
                 }
 
-                //뭐가 되었든 result를 받았으니까 로딩  없애줌.
-                loadingDialog.dismiss_dialog()
+
             }
     }
 
@@ -471,6 +588,13 @@ class MainLoginActivity : AppCompatActivity() {
 
                     //페이스북에서  받은 acesstoken 파이어베이스로 넘김
                     handleFacebookAccessToken(result.accessToken)
+                }else{
+
+                    //뭐가 되었든 result를 받았으니까 로딩  없애줌.
+                    loadingDialog.dismiss_dialog()
+
+                    //sns 로그아웃
+                    DeleteSnsData(this@MainLoginActivity).Sns_login_signOut()
                 }
 
             }
@@ -513,8 +637,12 @@ class MainLoginActivity : AppCompatActivity() {
 
                     if(facebook_user_email==null){
 
-                        FirebaseAuth.getInstance().signOut()
-                        LoginManager.getInstance().logOut()
+                        //뭐가 되었든 result를 받았으니까 로딩  없애줌.
+                        loadingDialog.dismiss_dialog()
+
+
+                        //sns 로그아웃
+                        DeleteSnsData(this@MainLoginActivity).Sns_login_signOut()
 
                         //페이스북 같은 경우에는  핸드폰  가입도 있어서  이경우에는
                         //토스트로 알리고
@@ -523,12 +651,11 @@ class MainLoginActivity : AppCompatActivity() {
                     }else{
 
 
-
-                        //sns 이메일 싱글톤 객체에 가져온 이메일 넣어줌.
-                        //구글이나 페이스북 이메일의 경우는  이미  파이어베이스 객체로
-                        //공유가 가능하지만, 네이버는 싱글톤을 이용해야하므로,
-                        //공통적으로  넣어서 사용하자
-                        SnsEmailValue.get_sns_email(facebook_user_email.toString())
+                        //처음 가입 하는 회원인지 판별
+                        move_make_id_with_sns_login_check(
+                            sns_login = true,
+                            sns_login_email = facebook_user_email
+                        )
 
                     }
 
@@ -542,11 +669,15 @@ class MainLoginActivity : AppCompatActivity() {
                     Log.v("check_app_runnig_status", "파이어베이스에  페이스북 accesstoken 등록 실패 -> ${task.exception}")
                     Toast.makeText(this, R.string.face_book_login_fail_to_register_firbase, Toast.LENGTH_SHORT).show()
 
+                    //뭐가 되었든 result를 받았으니까 로딩  없애줌.
+                    loadingDialog.dismiss_dialog()
+
+                    //sns 로그아웃
+                    DeleteSnsData(this@MainLoginActivity).Sns_login_signOut()
 
                 }
 
-                //뭐가 되었든 result를 받았으니까 로딩  없애줌.
-                loadingDialog.dismiss_dialog()
+
 
             }
     }

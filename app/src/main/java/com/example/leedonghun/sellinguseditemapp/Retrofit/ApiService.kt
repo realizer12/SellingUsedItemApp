@@ -53,7 +53,6 @@ interface ApiService {
     @POST("duplicate_check_login_email.php")
     fun check_duplicate_login_email(@Field("login_email")login_email:String):Call<ResponseBody>
 
-
     //닉네임 중복 체크를 위해
     //사용자가 입력한 닉네임을 서버로 보내 체크 한다.
     //callback은 response body로
@@ -78,6 +77,4 @@ interface ApiService {
     //그외 파라미터는 없음
     @GET("v1/nid/me")
     fun get_naver_login_user_email(@Header("Authorization")token:String):Call<GetNaverLoginResponse>
-
-
 }

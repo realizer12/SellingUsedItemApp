@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.StyleSpan
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
@@ -15,9 +14,9 @@ import com.example.leedonghun.sellinguseditemapp.PrivateInfo.ServerIp
 import com.example.leedonghun.sellinguseditemapp.R
 import com.example.leedonghun.sellinguseditemapp.Retrofit.RetrofitClient
 import com.example.leedonghun.sellinguseditemapp.SNSLogin.GetNaverLoginResponse
-import com.example.leedonghun.sellinguseditemapp.Singleton.LOG
 import com.example.leedonghun.sellinguseditemapp.Singleton.SnsEmailValue
 import com.example.leedonghun.sellinguseditemapp.Util.DeleteSnsData
+import com.example.leedonghun.sellinguseditemapp.Util.Logger
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -85,8 +84,7 @@ class MainLoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_login_activity)
-
-        Log.v("check_app_runnig_status","MainLoginActivity onCreate() 실행됨")
+        Logger.v("실행됨")
 
 
         //로그인 다이얼로그 용
@@ -144,7 +142,7 @@ class MainLoginActivity : AppCompatActivity() {
 
         //회원가입 텍스트 클릭 이벤트
         txt_to_go_make_id.setOnClickListener {
-            Log.v(LOG.TAG,"이메일 로그인 회원가입 텍스트 클릭됨 -> MakeNewEmailLoginId로 가짐")
+            Logger.v("이메일 로그인 회원가입 텍스트 클릭됨 -> MakeNewEmailLoginId로 가짐")
 
             //sns 로그인  아님으로 체크 해서  회원 가입 진행한다.
             move_make_id_with_sns_login_check(sns_login = false,sns_login_email = "")
@@ -157,7 +155,7 @@ class MainLoginActivity : AppCompatActivity() {
 
         //로그인 이메일 버튼 이벤트
         btn_for_email_login.setOnClickListener {
-            Log.v("check_app_runnig_status","이메일 로그인 버튼 클릭됨")
+            Logger.v("이메일 로그인 버튼 클릭됨")
 
             //이메일 로그인 엑티비티로 가기 위한 인텐트
             val intent_to_go_email_login_activity:Intent=Intent(this,EmailLoginActivity::class.java)
@@ -171,8 +169,7 @@ class MainLoginActivity : AppCompatActivity() {
 
         //구글 버튼 클릭 이벤트
         btn_for_google_login.setOnClickListener {
-
-            Log.v("check_app_runnig_status","구글 로그인 버튼 클릭됨")
+            Logger.v("구글 로그인 버튼 클릭됨")
 
             //구글 로그인  처리하는데
             //시간이 걸릴때가 있어서 로딩 화면  띄어줌.
@@ -189,7 +186,7 @@ class MainLoginActivity : AppCompatActivity() {
 
         //네이버 버튼 클릭 이벤트
         btn_for_naver_login.setOnClickListener {
-            Log.v("check_app_runnig_status","네이버 로그인 버튼 클릭됨")
+            Logger.v("네이버 로그인 버튼 클릭됨")
 
 
             //로딩 다이얼로그 보여줌
@@ -206,7 +203,7 @@ class MainLoginActivity : AppCompatActivity() {
 
         //페이스북 버튼 클릭 이벤트
         btn_for_facebook_login.setOnClickListener {
-            Log.v("check_app_runnig_status","페이스북 로그인 버튼 클릭됨")
+            Logger.v("페이스북 로그인 버튼 클릭됨")
 
 
             facebook_login_api_btn.performClick()
@@ -229,9 +226,8 @@ class MainLoginActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
 
+        Logger.v("싱글톤으로 받은  sns login email-> ${SnsEmailValue.sns_login_email}")
 
-
-        Log.v("check_app_runnig_status","싱글톤으로 받은  sns login email-> ${SnsEmailValue.sns_login_email}")
 
 
     }
@@ -244,8 +240,8 @@ class MainLoginActivity : AppCompatActivity() {
     //넘어가기 여부를 체크 한다.
     fun move_make_id_with_sns_login_check(sns_login:Boolean,sns_login_email:String){
 
+        Logger.v("sns 로그인 체크 메소드 실행됨 ->  sns 로그인 체크 값 -> $sns_login")
 
-        Log.v(LOG.TAG,"sns 로그인 체크 메소드 실행됨 ->  sns 로그인 체크 값 -> $sns_login")
 
         //회원가입 엑티비티로 감
         val intent_to_go_to_MakeNewEmailLoginId=Intent(this,MakeNewLoginIdActivity::class.java)
@@ -272,6 +268,9 @@ class MainLoginActivity : AppCompatActivity() {
                         when {
                             result.equals("1") -> {// 중복 없음 -> 이메일 사용 가능
 
+                                Logger.v("해당 sns email 중복 없음 -> 사용가능")
+
+
                                 //다 끝났으니  다이얼로그 꺼줌
                                 loadingDialog.dismiss_dialog()
 
@@ -287,13 +286,21 @@ class MainLoginActivity : AppCompatActivity() {
 
                             }
 
-                            result.equals("-2") -> {//중복 값이 있음 -> 이메일 사용 불가능
-
-                                //다 끝났으니  다이얼로그 꺼줌
-                                loadingDialog.dismiss_dialog()
+                            result.equals("-2") -> {//중복 값이 있음 -> 해당  sns  이메일로 로그인을 할수 있음.
 
                                 //사용하는 이메일이 있는 것이므로,  accesstoken을  서버로 부터 요청해서  로그인 처리를
                                 //진행한다.
+                                //우선,
+                                Logger.v("해당 sns email 중복 있음 -> 사용불가")
+
+
+                                Toast.makeText(this@MainLoginActivity,R.string.string_for_duplicate_email,Toast.LENGTH_SHORT).show()
+                                //다 끝났으니  다이얼로그 꺼줌
+                                loadingDialog.dismiss_dialog()
+                                //sns 로그아웃
+                                DeleteSnsData(this@MainLoginActivity).Sns_login_signOut()
+
+
 
                             }
 
@@ -302,7 +309,8 @@ class MainLoginActivity : AppCompatActivity() {
 
                                 //다 끝났으니  다이얼로그 꺼줌
                                 loadingDialog.dismiss_dialog()
-
+                                //sns 로그아웃
+                                DeleteSnsData(this@MainLoginActivity).Sns_login_signOut()
                             }
 
 
@@ -350,18 +358,19 @@ class MainLoginActivity : AppCompatActivity() {
                         val expiresAt = nhnOAuthLoginModule.getExpiresAt(this@MainLoginActivity)
                         val tokenType = nhnOAuthLoginModule.getTokenType(this@MainLoginActivity)
 
-                        Log.v("check_app_runnig_status", "nhn Login Access Token : $Naver_accessToken")
-                        Log.v("check_app_runnig_status", "nhn Login refresh Token : $refreshToken")
-                        Log.v("check_app_runnig_status", "nhn Login expiresAt : $expiresAt")
-                        Log.v("check_app_runnig_status", "nhn Login Token Type : $tokenType")
-                        Log.v("check_app_runnig_status", "nhn Login Module State : " + nhnOAuthLoginModule.getState(this@MainLoginActivity).toString())
+
+                        Logger.v("nhn Login Access Token : $Naver_accessToken")
+                        Logger.v("nhn Login refresh Token : $refreshToken")
+                        Logger.v("nhn Login expiresAt : $expiresAt")
+                        Logger.v("nhn Login Token Type : $tokenType")
+                        Logger.v("nhn Login Module State : " + nhnOAuthLoginModule.getState(this@MainLoginActivity).toString())
 
 
                         //엑세스 토큰이  존재 하면
                         //해당 토큰으로  로그인 정보 가져오기 진행
                         if(Naver_accessToken !=null) {
 
-                            Log.v("check_app_runnig_status","토큰 값-> $Naver_accessToken")
+                            Logger.v("토큰 값-> $Naver_accessToken")
 
                             //네이버 로그인 진행
                             get_naver_login_info(" Bearer $Naver_accessToken")
@@ -381,9 +390,9 @@ class MainLoginActivity : AppCompatActivity() {
                     } else {//oauth 로그인 실패
 
 
-                        val errorCode = nhnOAuthLoginModule.getLastErrorCode(this@MainLoginActivity).getCode()
+                        val errorCode = nhnOAuthLoginModule.getLastErrorCode(this@MainLoginActivity).code
                         val errorDesc = nhnOAuthLoginModule.getLastErrorDesc(this@MainLoginActivity)
-                        Log.v("check_app_runnig_status","nhn login errorCode -> $errorCode , errorDesc -> $errorDesc")
+                        Logger.v("nhn login errorCode -> $errorCode , errorDesc -> $errorDesc")
 
                         //실패시  다이얼로그  없애줌.
                         loadingDialog.dismiss_dialog()
@@ -413,7 +422,7 @@ class MainLoginActivity : AppCompatActivity() {
                         val naver_user_info = response.body()?.resultcode
                         val naver_user_email=naver_user_info?.email
 
-                       Log.v("check_app_runnig_status", "네이버 로그인 유저 이메일 -> $naver_user_email")
+                       Logger.v("네이버 로그인 유저 이메일 -> $naver_user_email")
 
                         //네이버 유저  이메일 정보가 null 이 아닐때
                         if(naver_user_email != null) {
@@ -441,7 +450,7 @@ class MainLoginActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<GetNaverLoginResponse>, t: Throwable) {
 
-                    Log.v("check_app_runnig_status",t.message)
+                    Logger.v("네이버 accesstoken 받기 에러 나옴-> ${t.message}")
                     loadingDialog.dismiss_dialog()
                 }
 
@@ -489,14 +498,14 @@ class MainLoginActivity : AppCompatActivity() {
 
                 //파이어베이스  구글 로그인 성공
                 val account = task.getResult(ApiException::class.java)!!
-                Log.d("check_app_runnig_status", "firebaseAuthWithGoogle:" + account.id)
+                Logger.v("firebaseAuthWithGoogle:" + account.id)
 
                 //구글  siginin 으로  받아온  토큰  파이어베이스 구글  인증으로  넘겨줌.
                 firebaseAuthWithGoogle(account.idToken!!)
 
             }catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
-                Log.w("check_app_runnig_status", "Google sign in failed", e)
+                Logger.v("Google sign in failed-> $e")
 
                 //실패시  다이얼로그  없애줌.
                 loadingDialog.dismiss_dialog()
@@ -525,7 +534,7 @@ class MainLoginActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     val user = FirebaseAuth.getInstance().currentUser
                     val google_user_email=user?.email
-                    Log.v("check_app_runnig_status","user  값 -> $google_user_email")
+                    Logger.v("user  값 -> $google_user_email")
 
 
                     //구글 유저  이메일 정보가 null 이 아닐때
@@ -554,7 +563,7 @@ class MainLoginActivity : AppCompatActivity() {
                 } else {
 
                     // If sign in fails, display a message to the user.
-                    Log.w("check_app_runnig_status", "signInWithCredential:failure", task.exception)
+                    Logger.v( "signInWithCredential:failure  -> ${task.exception}")
 
                     //뭐가 되었든 result를 받았으니까 로딩  없애줌.
                     loadingDialog.dismiss_dialog()
@@ -582,7 +591,7 @@ class MainLoginActivity : AppCompatActivity() {
         facebook_login_api_btn.registerCallback(callbackManager,object :FacebookCallback<LoginResult>{
 
             override fun onSuccess(result: LoginResult?) {
-                Log.v("check_app_runnig_status", "페이스북 로그인 성공 내용-> $result")
+                Logger.v("페이스북 로그인 성공 내용-> $result")
 
                 if(result !=null) {
 
@@ -595,21 +604,27 @@ class MainLoginActivity : AppCompatActivity() {
 
                     //sns 로그아웃
                     DeleteSnsData(this@MainLoginActivity).Sns_login_signOut()
+                    Toast.makeText(this@MainLoginActivity,R.string.face_login_fail,Toast.LENGTH_SHORT).show()
                 }
 
             }
 
             override fun onCancel() {
-                Log.v("check_app_runnig_status", "페이스북 로그인 취소")
+                Logger.v("페이스북 로그인 취소")
 
                 loadingDialog.dismiss_dialog()
-
+                //sns 로그아웃
+                DeleteSnsData(this@MainLoginActivity).Sns_login_signOut()
+                Toast.makeText(this@MainLoginActivity,R.string.face_login_fail,Toast.LENGTH_SHORT).show()
             }
 
             override fun onError(error: FacebookException?) {
-                Log.v("check_app_runnig_status", "페이스북 로그인 실패   내용-> $error")
+                Logger.v("페이스북 로그인 실패   내용-> $error")
                 loadingDialog.dismiss_dialog()
 
+                //sns 로그아웃
+                DeleteSnsData(this@MainLoginActivity).Sns_login_signOut()
+                Toast.makeText(this@MainLoginActivity,R.string.face_login_fail,Toast.LENGTH_SHORT).show()
 
             }
 
@@ -619,7 +634,7 @@ class MainLoginActivity : AppCompatActivity() {
 
     //파이어베이스에  페이스북 엑세스 토큰 등록
     private fun handleFacebookAccessToken(token: AccessToken) {
-        Log.d("check_app_runnig_status", "페이스북 access toke -> :$token")
+        Logger.v("페이스북 access toke -> :$token")
 
         val credential = FacebookAuthProvider.getCredential(token.token)
         FirebaseAuth.getInstance().signInWithCredential(credential)
@@ -628,7 +643,7 @@ class MainLoginActivity : AppCompatActivity() {
                 //파이어베이스에  페이스북  accesstoken  등록 성공
                 if (task.isSuccessful) {
 
-                    Log.d("check_app_runnig_status", "파이어베이스에  페이스북 accesstoken 등록 성공")
+                    Logger.v("파이어베이스에  페이스북 accesstoken 등록 성공")
 
                     //유저의  정보 중  이메일 정보를 받아서 null체크를 해준다.
                     //만약에  null 값이라면,
@@ -650,6 +665,7 @@ class MainLoginActivity : AppCompatActivity() {
 
                     }else{
 
+                        Logger.v("페이스북  user 이메일 값 -> ${user.email}")
 
                         //처음 가입 하는 회원인지 판별
                         move_make_id_with_sns_login_check(
@@ -659,14 +675,14 @@ class MainLoginActivity : AppCompatActivity() {
 
                     }
 
-                    Log.v("check_app_runnig_status","페이스북  user 이메일 값 -> ${user?.email}")
+
 
 
 
                 } else {//파이어베이스에 accesstoken 등록 실패
 
+                    Logger.v("파이어베이스에  페이스북 accesstoken 등록 실패 -> ${task.exception}")
 
-                    Log.v("check_app_runnig_status", "파이어베이스에  페이스북 accesstoken 등록 실패 -> ${task.exception}")
                     Toast.makeText(this, R.string.face_book_login_fail_to_register_firbase, Toast.LENGTH_SHORT).show()
 
                     //뭐가 되었든 result를 받았으니까 로딩  없애줌.

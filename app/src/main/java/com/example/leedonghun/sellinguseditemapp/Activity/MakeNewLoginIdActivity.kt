@@ -2,7 +2,6 @@ package com.example.leedonghun.sellinguseditemapp.Activity
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
@@ -20,6 +19,7 @@ import com.example.leedonghun.sellinguseditemapp.Retrofit.RetrofitClient
 import com.example.leedonghun.sellinguseditemapp.Singleton.SnsEmailValue
 import com.example.leedonghun.sellinguseditemapp.Util.DeleteSnsData
 import com.example.leedonghun.sellinguseditemapp.Util.KeyboardVisibilityUtils
+import com.example.leedonghun.sellinguseditemapp.Util.Logger
 import kotlinx.android.synthetic.main.make_login_id_activity.*
 import kotlinx.android.synthetic.main.make_login_id_activity.arrow_btn_for_back_to_login_activity
 import kotlinx.android.synthetic.main.term_pager_second_fragment.*
@@ -75,7 +75,7 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.make_login_id_activity)
-        Log.v("check_app_runnig_status",localClassName+"의 onCreate() 실행 됨")
+        Logger.v("실행 됨")
 
 
         //키보드 관련 input 매니져
@@ -85,7 +85,7 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
        //값이  1일 경우 ->  email 로그인 회원 가입 ,   0일 경우 -> sns 로그인 회원가입이다.
        val intent_for_checking_sns_or_email_makeid=intent
        check_sns_or_email=intent_for_checking_sns_or_email_makeid.getIntExtra("check_sns_or_email",-1)
-       Log.v("check_app_runnig_status",localClassName+"의 넘어온 회원가입 종류 체크 값->"+check_sns_or_email)
+       Logger.v("넘어온 회원가입 종류 체크 값 -> $check_sns_or_email")
 
         //뷰에 흔들림 효과를 주는 애니메이션
         val shake:Animation=AnimationUtils.loadAnimation(this,R.anim.shake)
@@ -108,17 +108,14 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
             //정보 입력 여부가 true일때만 다음으로 넘어갈수 있다.
             if(check_to_available_or_not) {
-                Log.v("check_app_runnig_status",localClassName+"에서  다음 버튼 눌림  = 입렵폼  모두 입력 됨->true")
+                Logger.v("다음 버튼 눌림  = 입렵폼  모두 입력 됨->true")
 
 
                 //다음으로 넘어가야 함으로 포지션 값을  1씩 올려준다.
                 current_pager_positon++
 
 
-                Log.v(
-                    "check_app_runnig_status",
-                    localClassName + "에서  뷰페이져 현재 포지션->$current_pager_positon"
-                )
+                Logger.v("뷰페이져 현재 포지션->$current_pager_positon")
 
                 //현재 포지션이 itemcount 보다 작을때 -> 0,1,2,3 일떄
                 if (current_pager_positon < (term_pager.adapter as MakeNewLoginIdPagerAdapter).itemCount) {
@@ -171,7 +168,41 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
                                      override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
 
-                                          Log.v("check_member_info",response.body()?.string())
+                                         val result=response.body()?.string()
+
+                                         //1 일 경우 회원가입 성공
+                                         //2 일경우 회원가입 쿼리 실패
+                                         //그밖에  pdo exception 에러가 발생함
+                                         if(result.equals("1")){
+
+                                             Logger.v("회원가입 결과 -> $result -> 성공")
+
+                                             //다음 선호도 조사 페이지로 넘어가줌.
+                                             term_pager.setCurrentItem(current_pager_positon, true)
+                                             txt_for_show_number_of_status.text = "${current_pager_positon + 1}/4"
+
+                                             txt_for_show_make_id_status.text = "선호하는 상품 카테고리"
+
+
+                                             //다시 회원가입 정보 입력 완성도 체킹 여부 false 로 바꿈.
+                                             check_to_available_or_not = false
+
+
+                                             //마지막 포지션이므로  버튼 텍스트를 완료 텍스트로 바꿔줌.
+                                             btn_for_check_status_in_make_login_id_activity.text = "완 료"
+
+
+                                             //넘어갈수 없다는걸  표현하기 위해서 버튼 색깔 흐리게 바꿔줌.
+                                             btn_for_check_status_in_make_login_id_activity.background=ContextCompat.getDrawable(this@MakeNewLoginIdActivity,R.drawable.custom_btn_for_no_radius)
+
+
+                                         }else{
+
+                                             Logger.v("회원가입 결과 -> $result -> 실패")
+                                             Toast.makeText(this@MakeNewLoginIdActivity,R.string.string_for_fail_make_id,Toast.LENGTH_SHORT).show()
+
+                                         }
+
 
                                          dialog.dismiss()
 
@@ -180,31 +211,10 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
 
                                      override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                                         Log.v("check_member_info",t.message)
-
+                                         Logger.v("회원가입 결과 에러-> ${t.message} -> 실패")
                                      }//onFailure() 끝
 
                                  })
-
-
-                                //다음 선호도 조사 페이지로 넘어가줌.
-                                term_pager.setCurrentItem(current_pager_positon, true)
-                                txt_for_show_number_of_status.text = "${current_pager_positon + 1}/4"
-
-                                txt_for_show_make_id_status.text = "선호하는 상품 카테고리"
-
-
-                                //다시 회원가입 정보 입력 완성도 체킹 여부 false 로 바꿈.
-                                check_to_available_or_not = false
-
-
-                                //마지막 포지션이므로  버튼 텍스트를 완료 텍스트로 바꿔줌.
-                                btn_for_check_status_in_make_login_id_activity.text = "완 료"
-
-
-                                //넘어갈수 없다는걸  표현하기 위해서 버튼 색깔 흐리게 바꿔줌.
-                                btn_for_check_status_in_make_login_id_activity.background=ContextCompat.getDrawable(this,R.drawable.custom_btn_for_no_radius)
-
 
 
                             }
@@ -230,7 +240,7 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
                 }
 
             }else{
-                Log.v("check_app_runnig_status",localClassName+"에서  다음 버튼 눌림  = 입렵폼  덜 입력됨->false")
+                Logger.v("다음 버튼 눌림  = 입렵폼  덜 입력됨->false")
                 Toast.makeText(this,"혹시 빠트린게 없나요?",Toast.LENGTH_SHORT).show()
             }
         }//다음 버튼 클릭 이벤트
@@ -242,7 +252,7 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
         //뒤로가기 버튼 클릭 이벤트
         arrow_btn_for_back_to_login_activity.setOnClickListener {
 
-            Log.v("check_app_runnig_status",localClassName+"의 뒤로 가기 버튼 클릭 이벤트")
+            Logger.v("뒤로 가기 버튼 클릭 이벤트")
 
 
             if(current_pager_positon<3){
@@ -304,7 +314,7 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
 
-                Log.v("check_app_runnig_status",localClassName+"뷰 페이지 체인지됨  현재  페이져 포지션 ->"+position)
+                Logger.v("뷰 페이지 체인지됨  현재  페이져 포지션 -> $position")
 
                 if(position==1||position==2){//1= sms 인증하는 페이지 , 2= 회원가입 페이지
 
@@ -323,7 +333,7 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
             // 키보드가 올라올 때의 동작
             onShowKeyboard = { keyboardHeight, visibleDisplayFrameHeight ->
-                Log.v("check_app_runnig_status", localClassName+"에서 키보드 올라옴")
+                Logger.v("키보드 올라옴")
 
                 //뷰페이져가  sms 인증  프래그먼트를 실행했을때
                 //프래그먼트에  키보드가 올라오는데,  edittext에  포커스가 사라져서 이렇게 하기로 함.
@@ -369,7 +379,7 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
             // 키보드가 내려갈 때의 동작
             onHideKeyboard = {
-                Log.v("check_app_runnig_status", localClassName+"에서 키보드 내려감")
+                Logger.v("키보드 내려감")
 
 
             }//키보드 내려갈때 이벤트 끝,
@@ -382,7 +392,7 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
     //뒤로가기 버튼 클릭 이벤트
     override fun onBackPressed() {
 
-        Log.v("check_app_runnig_status",localClassName+"의 뒤로 가기 버튼 클릭 이벤트")
+        Logger.v("뒤로 가기 버튼 클릭 이벤트")
 
         if(current_pager_positon<3){
 
@@ -470,7 +480,7 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
     //그 정보를 json으로 받아오는 역할을 한다.
     override fun new_member_info_with_json(memberInfo: JSONObject) {
 
-        Log.v("checkjson_info",memberInfo.toString())
+        Logger.v("새회원 정보  입력 끝나서 login activity 로  받아옴 -> $memberInfo")
 
         //서버로 업로드할  멤버 정보 json으로 받음.
         memberInfo_for_upload=memberInfo

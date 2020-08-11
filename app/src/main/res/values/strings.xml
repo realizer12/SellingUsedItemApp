@@ -19,6 +19,9 @@
        <string name="string_for_top_of_email_login_activity">중고 마켓 로그인</string>
        <!--sns 이메일  중복값  존재 -->
        <string name="string_for_duplicate_email">해당 sns 이메일은\n누군가 사용중입니다.</string>
+       <!-- sns 이메일  체크   서버 에러   -->
+       <string name="string_for_duplicate_email_check_server_error">이메일 체크 중  서버 에러 발생</string>
+
 
     <!--EmailLoginActivity string 용 -->
        <!--이메일 로그인 아이디 넣는 곳에 hint 아이디 와 패스워드 넣으라 hint 넣어줌. -->

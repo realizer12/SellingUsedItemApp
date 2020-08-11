@@ -4,9 +4,9 @@ import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.leedonghun.sellinguseditemapp.R
+import com.example.leedonghun.sellinguseditemapp.Util.Logger
 import java.util.*
 
 /**
@@ -25,7 +25,7 @@ class SplashActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Log.v("check_app_runnig_status","SplashActivity onCreate() 실행")
+        Logger.v("실행")
 
 
         //우선 cold start 부분에서  바로 로고 가  뜨게 만들었음.

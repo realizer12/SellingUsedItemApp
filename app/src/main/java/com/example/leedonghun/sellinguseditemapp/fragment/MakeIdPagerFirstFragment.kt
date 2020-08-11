@@ -5,7 +5,6 @@ import android.content.Context
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +13,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.leedonghun.sellinguseditemapp.Interface.CheckMakeIdPagerCompleteStatus
 import com.example.leedonghun.sellinguseditemapp.R
+import com.example.leedonghun.sellinguseditemapp.Util.Logger
 import kotlinx.android.synthetic.main.term_pager_first_fragment.*
 import kotlinx.android.synthetic.main.term_pager_first_fragment.view.*
 import java.lang.RuntimeException
@@ -44,7 +44,7 @@ class MakeIdPagerFirstFragment : Fragment() {
 
       //프래그먼트 뷰 연결
       val view: View = inflater.inflate(R.layout.term_pager_first_fragment, container, false)
-      Log.v("check_app_runnig_status","TermPagerFirstFragment의 onCreateView 실행 됨")
+      Logger.v("실행 됨")
 
 
       //각각 텍스트뷰  스트링열  (필수) 부분을 빨간색으로 처리해줌.
@@ -56,7 +56,7 @@ class MakeIdPagerFirstFragment : Fragment() {
 
         //전체 동의  아이콘 담은  프레임 레이아웃  클릭이벤트
        view.entire_checking_frame.setOnClickListener {
-          Log.v("check_app_runnig_status","전체 동의 체크 프레임 눌림")
+          Logger.v("전체 동의 체크 프레임 눌림")
 
            if(entire_checking_checked.visibility==View.INVISIBLE){
 
@@ -95,7 +95,7 @@ class MakeIdPagerFirstFragment : Fragment() {
        //이용 약관 동의 프레임 레이아웃 클릭 이벤트
        view.usable_policy_check_frame.setOnClickListener {
 
-           Log.v("check_app_runnig_status","이용 약관 동의 체크 프레임 눌림")
+           Logger.v("이용 약관 동의 체크 프레임 눌림")
 
            //전체 동의가 되어있는 경우
            if(entire_checking_checked.visibility==View.VISIBLE){
@@ -152,7 +152,7 @@ class MakeIdPagerFirstFragment : Fragment() {
 
        //개인 정보 수집 및 이용 동의 프레임 레이아웃 클릭 이벤트
         view.private_info_policy_check_frame.setOnClickListener {
-            Log.v("check_app_runnig_status","개인 정보 수집 및 이용동의 체크 프레임 눌림")
+            Logger.v("개인 정보 수집 및 이용동의 체크 프레임 눌림")
 
 
             //전체 동의가 되어있는 경우

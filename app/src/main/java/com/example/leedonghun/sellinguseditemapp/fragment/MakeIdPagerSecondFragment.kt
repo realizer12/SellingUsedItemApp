@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -18,6 +17,7 @@ import com.example.leedonghun.sellinguseditemapp.PrivateInfo.ServerIp
 import com.example.leedonghun.sellinguseditemapp.R
 import com.example.leedonghun.sellinguseditemapp.Retrofit.RetrofitClient
 import com.example.leedonghun.sellinguseditemapp.Singleton.AuthPoneNum
+import com.example.leedonghun.sellinguseditemapp.Util.Logger
 import kotlinx.android.synthetic.main.term_pager_second_fragment.*
 import kotlinx.android.synthetic.main.term_pager_second_fragment.view.*
 import kotlinx.android.synthetic.main.term_pager_second_fragment.view.editxt_for_add_phone_number
@@ -42,8 +42,7 @@ import kotlin.RuntimeException
  */
 class MakeIdPagerSecondFragment(context: Context):Fragment() {
 
-    //로그 쓸때  편하게 쓰기 위해서..
-    val fragment_name_for_Log:String="TermPagerSecondFragment"
+
 
 //    //inputmethodmanager ->  소프트 키보드 관련 조작 담당
      val mInputMethodManager:InputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -77,7 +76,7 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
 
         //프래그먼트 뷰 연결
         val view: View = inflater.inflate(R.layout.term_pager_second_fragment, container, false)
-        Log.v("check_app_runnig_status",fragment_name_for_Log+"의 onCreateView 실행 됨")
+        Logger.v("실행 됨")
 
 
         var phone_number:String//인증할 핸드폰 번호
@@ -93,7 +92,7 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
 
         //인증 번호 받기 버튼
         view.btn_for_get_certification_code.setOnClickListener {
-            Log.v("check_app_runnig_status",fragment_name_for_Log+"의 휴대폰 인증번호 받기 버튼 눌림")
+            Logger.v("휴대폰 인증번호 받기 버튼 눌림")
 
             phone_number= view.editxt_for_add_phone_number.text.toString()//휴대폰 번호 입력란에 적은 핸드폰 번호.
 
@@ -101,7 +100,7 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
             //phone_number가  비어있다면,
             if(TextUtils.isEmpty(phone_number)){
 
-                Log.v("check_app_runnig_status","$fragment_name_for_Log 의 phone_number edittext 비어 있음.")
+                Logger.v("phone_number edittext 비어 있음.")
 
                 ////폰 번호 쓰라고 토스트 날리고, shake 애니메이션으로  editext 흔들어줌.
                 //그리고 포커스 줌.
@@ -111,7 +110,7 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
 
             }else if(!Pattern.matches("^01(?:0|1|[6-9])?(\\d{3}|\\d{4})?(\\d{4})$",phone_number)) {// 핸드폰 번호  정규식이 맞지 않을 경우.
 
-                Log.v("check_app_runnig_phone", "$fragment_name_for_Log -> 핸드폰 번호 특성이 아님")
+                Logger.v("핸드폰 번호 특성이 아님")
 
                 //토스트  날려주고  shake 애니메이션 효과 후,  edittext clear 하고  다시 focus 줌.
                 Toast.makeText(activity,"핸드폰 번호 특성이 아닙니다.",Toast.LENGTH_SHORT).show()
@@ -121,7 +120,7 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
 
             }else if(!check_sms_request_ing){//핸드폰 형식이고, sms 요구 상태가 false 일때 -> 처음 번호 넣고  요청할때임(인증번호 받기 버튼).
 
-                Log.v("check_app_runnig_phone", "$fragment_name_for_Log ->  핸드폰 번호 형식 맞고,  인증번호 받기 버튼이 눌렸을때")
+                Logger.v("핸드폰 번호 형식 맞고,  인증번호 받기 버튼이 눌렸을때")
 
                  //로딩 다이얼로그 보여줌.
                  loadingDialog.show_dialog()
@@ -135,10 +134,7 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
                             //sms  인증 코드 보내기 결과 받는 변수.
                             val send_phone_num_result: String? = response.body()?.string()
 
-                            Log.v(
-                                "check_app_runnig_phone",
-                                fragment_name_for_Log + "의  핸드폰 인증 콜백값 -> " + send_phone_num_result
-                            )
+                            Logger.v("의  핸드폰 인증 콜백값 -> $send_phone_num_result")
 
                             if (send_phone_num_result.equals("1")) {//결과 성공시
 
@@ -194,7 +190,9 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
                         }//onResponse()끝
 
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                            Log.v("check_app_runnig_phone",fragment_name_for_Log+"의  서버 통신 에러 남-> "+t.message)
+
+                            Toast.makeText(activity,"서버 통신 과정에서 문제가 생겼습니다.",Toast.LENGTH_SHORT).show()
+                            Logger.v("인증번호 받기 -> 서버 통신 에러 남-> "+t.message)
 
                             //서버 응답이 왔으므로 로딩 다이얼로그 없앰
                             loadingDialog.dismiss_dialog()
@@ -259,7 +257,7 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
 
         //문자로 받은 인증 번호 확인 버튼
         view.btn_for_input_certification_code_complete.setOnClickListener {
-            Log.v("check_app_runnig_status",fragment_name_for_Log+"의 인증번호 입력완료 버튼 눌림.")
+            Logger.v("인증번호 입력완료 버튼 눌림.")
 
             //sms 로 받아서  editext에  넣은 인증키
             var auth_key:String=editxt_for_add_certification_code.text.toString()
@@ -268,7 +266,7 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
 
             if(auth_key.length==5 && timer_job.isActive){//인증키가  5개이고, 타이머가  작동하고 있을 경우
 
-                Log.v("check_app_runnig_status",fragment_name_for_Log+"의  인증번호 5자리 맞음")
+                Logger.v("인증번호 5자리 맞음")
 
                 retrofitClient= RetrofitClient(ServerIp.baseurl)
                 retrofitClient.apiService.send_sms_auth_key(phone_number,0,auth_key)
@@ -281,7 +279,7 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
 
                             if(check_auth_key_result.equals("1")){//성공적으로 끝났을때
 
-                                Log.v("check_app_runnig_status","회원가입용  인증키  체크 결과 -> 인증 성공")
+                                Logger.v("회원가입용  인증키  체크 결과 -> 인증 성공")
 
 
                                 //입련된 인증번호  인증 성공시, 더이상  입력할께 없으므로,  키보드 없애주고,  editexxt 에 포커스 clear 해준다.
@@ -310,7 +308,7 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
                                 check_auth_correct=true
 
                             }else if(check_auth_key_result.equals("2")){//인증키가 틀린경우
-                                Log.v("check_app_runnig_status","회원가입용  인증키  체크 결과 -> 인증 실패")
+                                Logger.v("회원가입용  인증키  체크 결과 -> 인증 실패")
 
                                 view.editxt_for_add_certification_code.requestFocus()
                                 view.editxt_for_add_certification_code.text.clear()
@@ -320,18 +318,18 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
 
 
                             }else if(check_auth_key_result.equals("3")){//해당 값이 존재 하지 않을때
-                                Log.v("check_app_runnig_status","회원가입용  인증키  체크 결과 -> 해당 번호의 데이터 존재하지 않음")
+                                Logger.v("회원가입용  인증키  체크 결과 -> 해당 번호의 데이터 존재하지 않음")
 
                                 Toast.makeText(activity,"인증 코드를 한번더 요청해 보세요",Toast.LENGTH_SHORT).show()
 
                             }else if(check_auth_key_result.equals("4")){//조회 커리문 실패시
-                                Log.v("check_app_runnig_status","회원가입용  인증키  체크 결과 -> 조회문 실패")
+                                Logger.v("회원가입용  인증키  체크 결과 -> 조회문 실패")
 
                                 Toast.makeText(activity,"서버 인증 조회 에러",Toast.LENGTH_SHORT).show()
 
                             }else{
 
-                                Log.v("check_app_runnig_status","회원가입용  인증키  체크 결과 -> 인증상태 1(인증함)으로 업데이트 실패")
+                                Logger.v("회원가입용  인증키  체크 결과 -> 인증상태 1(인증함)으로 업데이트 실패")
                                 Toast.makeText(activity,"서버 에러 error: 232",Toast.LENGTH_SHORT).show()
 
                             }
@@ -341,7 +339,7 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
 
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
 
-                            Log.v("check_app_runnig_status","회원가입용  인증키  체크 실패 결과 ->  ${t.toString()}")
+                            Logger.v("회원가입용  인증키  체크 실패 결과 ->  ${t.toString()}")
                         }
 
 
@@ -381,7 +379,7 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        Log.v("check_app_runnig_status",fragment_name_for_Log+"의 onAttach() 실행 됨")
+        Logger.v("실행 됨")
 
         //진행사항  체크 인터페이스 객체 initialize 함.
         if(context is CheckMakeIdPagerCompleteStatus){
@@ -407,7 +405,7 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
 
         var i:Int=180//180초  3분
 
-        Log.v("check_app_runnig_status", "timer 실행됨")
+        Logger.v("timer 실행됨")
 
         //타이머 시작시 시간초 text를 빨간색으로 바꿔준 이유는
         //기존에 인증 성공시  초록색으로 바꿔주는데,
@@ -444,7 +442,7 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
 
     override fun onPause() {
         super.onPause()
-        Log.v("check_app_runnig_status",fragment_name_for_Log+"의 onpause() 실행 됨")
+        Logger.v("실행 됨")
 
 
         //맨처음 포커싱 해서  키보드 올려주는  editext만  hide 를  적용

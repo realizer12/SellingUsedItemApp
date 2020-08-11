@@ -266,6 +266,8 @@ class MainLoginActivity : AppCompatActivity() {
                         val result:String?=response.body()?.string()
 
                         when {
+
+
                             result.equals("1") -> {// 중복 없음 -> 이메일 사용 가능
 
                                 Logger.v("해당 sns email 중복 없음 -> 사용가능")
@@ -274,6 +276,7 @@ class MainLoginActivity : AppCompatActivity() {
                                 //다 끝났으니  다이얼로그 꺼줌
                                 loadingDialog.dismiss_dialog()
 
+
                                 //sns 이메일 싱글톤 객체에 가져온 이메일 넣어줌.
                                 SnsEmailValue.get_sns_email(sns_login_email)
 
@@ -281,22 +284,22 @@ class MainLoginActivity : AppCompatActivity() {
                                 //사용 가능한 이메일 이므로  인텐트로 넘긴다.
                                 //보내는 값이 1-> email 로그인 아이디를  생성 할때 , 0->  sns 로그인 아이디 생성 할때
                                 //값을 토대로 회원가입 용 뷰페이져의 4개 프래그먼트에서  3번째 프래그먼트(title -> 회원가입) 형태가 바뀌게됨.
-                                intent_to_go_to_MakeNewEmailLoginId.putExtra("check_sns_or_email",0)
+                                intent_to_go_to_MakeNewEmailLoginId.putExtra("check_sns_or_email", 0)
                                 startActivity(intent_to_go_to_MakeNewEmailLoginId)
 
                             }
-
                             result.equals("-2") -> {//중복 값이 있음 -> 해당  sns  이메일로 로그인을 할수 있음.
+
 
                                 //사용하는 이메일이 있는 것이므로,  accesstoken을  서버로 부터 요청해서  로그인 처리를
                                 //진행한다.
-                                //우선,
                                 Logger.v("해당 sns email 중복 있음 -> 사용불가")
 
-
                                 Toast.makeText(this@MainLoginActivity,R.string.string_for_duplicate_email,Toast.LENGTH_SHORT).show()
+
                                 //다 끝났으니  다이얼로그 꺼줌
                                 loadingDialog.dismiss_dialog()
+
                                 //sns 로그아웃
                                 DeleteSnsData(this@MainLoginActivity).Sns_login_signOut()
 
@@ -304,9 +307,11 @@ class MainLoginActivity : AppCompatActivity() {
 
                             }
 
-
                             result.equals("-1") -> {//쿼리 실패함
 
+                                Logger.v("해당 sns email 체크  쿼리 실패")
+
+                                Toast.makeText(this@MainLoginActivity,R.string.string_for_duplicate_email_check_server_error,Toast.LENGTH_SHORT).show()
                                 //다 끝났으니  다이얼로그 꺼줌
                                 loadingDialog.dismiss_dialog()
                                 //sns 로그아웃
@@ -319,10 +324,15 @@ class MainLoginActivity : AppCompatActivity() {
                     }
 
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                        TODO("Not yet implemented")
+
+                        Logger.v("해당 sns email 체크  서버 통신 fail -> ${t.message}")
+
+                        Toast.makeText(this@MainLoginActivity,R.string.string_for_duplicate_email_check_server_error,Toast.LENGTH_SHORT).show()
                     }
 
                 })
+
+
 
         }else{//sns 로그인이 아닐때
 
@@ -485,11 +495,9 @@ class MainLoginActivity : AppCompatActivity() {
         //로그인 요청시 여기로  결과 받아옴 -> 페이스북 callbackmanager 로 넘김
         callbackManager.onActivityResult(requestCode, resultCode, data)
 
-
         super.onActivityResult(requestCode, resultCode, data)
 
-
-         //파이어베이스 구글로그인  진행을 위한  request code 100
+        //파이어베이스 구글로그인  진행을 위한  request code 100
         if (requestCode == GOOGLE_LOGIN_REQUEST) {
 
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)

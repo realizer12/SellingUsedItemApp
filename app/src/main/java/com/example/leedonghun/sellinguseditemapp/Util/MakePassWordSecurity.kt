@@ -22,34 +22,37 @@ import kotlin.random.Random
 class MakePassWordSecurity {
 
   //sha 256 암호화  할때  비밀번호와  함께  넣어질  sort 값이다.
-  private var sort_value:Int=0
+  private var salt_value:String=""
 
   //해쉬 생성시  아래 문자들안에서만 진행
   private  val HEX_CHARS = "0123456789ABCDEF"
 
+  //랜덤 salt value  생성을 위한  chars
+  private val salt_value_chars = ('0'..'z').toList().toTypedArray()
 
 
-   //sort 값  랜덤 생성해줌.
-   private fun make_random_sort_value(){
+   //salt 값  랜덤 생성해줌.
+   private fun make_random_sort_value():String{
 
-       //10 에서 99 사이의  랜덤  숫자 (2자리수로 sort 값을 받기 위해서)
-       sort_value=(10..99).random()
+       //위 salt_value_chars에서  20 자리  랜덤으로 받아서  문자열 생성
+       salt_value =(1..10).map { salt_value_chars.random() }.joinToString("")
 
+
+       //salt 값 return 시켜줌
+       return salt_value
    }
 
    //client가 쓴 비밀 번호를 넣어서 sort값  같이 넣어서 256 단방향 암호화  진행 함수
    fun make_sha_256_hash_value(password:String):JSONObject{
 
-       //랜덤으로 생성한  sort 값 생성 -  먼저  생성 해줘야됨.
-       make_random_sort_value()
 
        //랜덤으로 생성한  sort값을  비밀번호 앞에 넣어줘서  중복이  최대한  줄도록 한다
-       val final_psw_value="${sort_value}"+password
+       val final_psw_value= make_random_sort_value()+password
 
        //회원가입시 반환할 해쉬값이랑 sort값  서버로 보내주기 위하여,
        //jsonobject 로  두개 값 모두 보내줌.
        val josn_value_for_password_security:JSONObject= JSONObject()
-       josn_value_for_password_security.put("sort_value",sort_value)//sort 값  넣어줌.
+       josn_value_for_password_security.put("salt_value",salt_value)//sort 값  넣어줌.
 
 
        //*****************************sha 256 해쉬값 생성 하기*******************************//

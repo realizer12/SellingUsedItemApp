@@ -31,7 +31,7 @@ interface ApiService {
     //map(member_auth_phone_number)reason -> 0 =  회원가입 ,   1= 아이디 찾기 ,   2=  비밀번호 찾기
     //callback 은 response body로
     @FormUrlEncoded
-    @POST("map.php")
+    @POST("account/util/map.php")
     fun send_phone_number_for_auth_own(@Field("phone_number")phone_number: String,
                                        @Field("map_reason")reason:Int):Call<ResponseBody>
 
@@ -40,7 +40,7 @@ interface ApiService {
     //서버로 보내주는 역할을 한다.
     //callback 은 response body로
     @FormUrlEncoded
-    @POST("check_map_key.php")
+    @POST("account/check_user_info/check_map_key.php")
     fun send_sms_auth_key(@Field("phone_number")phone_number: String,
                           @Field("map_reason")reason: Int,
                           @Field("map_auth_key")auth_key:String):Call<ResponseBody>
@@ -50,14 +50,14 @@ interface ApiService {
     //사용자가 입력한 이메일을  서버로 보내 체크한다.
     //callback은  response body로
     @FormUrlEncoded
-    @POST("duplicate_check_login_email.php")
+    @POST("account/check_user_info/duplicate_check_login_email.php")
     fun check_duplicate_login_email(@Field("login_email")login_email:String):Call<ResponseBody>
 
     //닉네임 중복 체크를 위해
     //사용자가 입력한 닉네임을 서버로 보내 체크 한다.
     //callback은 response body로
     //닉네임은  굳이  중요한  개인 정보가 아니라서 GET으로 보냄
-    @GET("duplicate_check_nickname.php")
+    @GET("account/check_user_info/duplicate_check_nickname.php")
     fun check_duplicate_user_nickname(@Query("nickname")nickname:String):Call<ResponseBody>
 
 
@@ -66,7 +66,7 @@ interface ApiService {
     //서버에 회원 등록  성공 여부는 response body로 진행한다.
     //callback은 response body로 진행
     @FormUrlEncoded
-    @POST("upload_new_member_info.php")
+    @POST("account/register/upload_new_member_info.php")
     fun upload_new_member_info(@Field("new_ember_info")new_member_info:JSONObject):Call<ResponseBody>
 
 
@@ -77,4 +77,7 @@ interface ApiService {
     //그외 파라미터는 없음
     @GET("v1/nid/me")
     fun get_naver_login_user_email(@Header("Authorization")token:String):Call<GetNaverLoginResponse>
+
+
+
 }

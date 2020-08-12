@@ -14,6 +14,7 @@ import com.example.leedonghun.sellinguseditemapp.PrivateInfo.ServerIp
 import com.example.leedonghun.sellinguseditemapp.R
 import com.example.leedonghun.sellinguseditemapp.Retrofit.RetrofitClient
 import com.example.leedonghun.sellinguseditemapp.SNSLogin.GetNaverLoginResponse
+import com.example.leedonghun.sellinguseditemapp.Singleton.GlobalClass
 import com.example.leedonghun.sellinguseditemapp.Singleton.SnsEmailValue
 import com.example.leedonghun.sellinguseditemapp.Util.DeleteSnsData
 import com.example.leedonghun.sellinguseditemapp.Util.Logger
@@ -288,6 +289,7 @@ class MainLoginActivity : AppCompatActivity() {
                                 startActivity(intent_to_go_to_MakeNewEmailLoginId)
 
                             }
+
                             result.equals("-2") -> {//중복 값이 있음 -> 해당  sns  이메일로 로그인을 할수 있음.
 
 
@@ -312,8 +314,10 @@ class MainLoginActivity : AppCompatActivity() {
                                 Logger.v("해당 sns email 체크  쿼리 실패")
 
                                 Toast.makeText(this@MainLoginActivity,R.string.string_for_duplicate_email_check_server_error,Toast.LENGTH_SHORT).show()
+
                                 //다 끝났으니  다이얼로그 꺼줌
                                 loadingDialog.dismiss_dialog()
+
                                 //sns 로그아웃
                                 DeleteSnsData(this@MainLoginActivity).Sns_login_signOut()
                             }

@@ -64,6 +64,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx:19.3.2'
     implementation 'com.google.firebase:firebase-core:17.4.4'
     implementation 'com.google.android.gms:play-services-auth:18.1.0'
+    implementation 'com.google.firebase:firebase-messaging:20.2.4'
 
 
     //페이스북 로그인 관련 의존성 추가

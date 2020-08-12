@@ -156,10 +156,7 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
                         AlertDialog.Builder(this)
                             .setCancelable(false)
-                            .setMessage("여기까지 입력한 정보로 \n회원가입이 진행됩니다\n\n회원가입을 진행하시겠습니까??\n\n" +
-                                    "\n※ 다음 페이지는 사용자              ※" +
-                                    "\n※ 선호 상품 카테고리 조사입니다      ※" +
-                                    "\n※ 회원가입 후 꼭 해야하는 조사입니다  ※")
+                            .setMessage(R.string.string_for_dialog_make_new_id)
                             .setPositiveButton("네"){ dialog, which ->//이경우 현재  정한 페이지로,
 
 
@@ -201,6 +198,9 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
                                              Logger.v("회원가입 결과 -> $result -> 실패")
                                              Toast.makeText(this@MakeNewLoginIdActivity,R.string.string_for_fail_make_id,Toast.LENGTH_SHORT).show()
 
+                                             //회원가입 실패이므로,  current_pager_position 값
+                                             //을 다시  -1 해준다. -현재 페이지 유지
+                                             --current_pager_positon
                                          }
 
 
@@ -212,6 +212,12 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
                                      override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                                          Logger.v("회원가입 결과 에러-> ${t.message} -> 실패")
+
+                                         //회원가입 실패이므로,  current_pager_position 값
+                                         //을 다시  -1 해준다. -현재 페이지 유지
+                                         --current_pager_positon
+
+
                                      }//onFailure() 끝
 
                                  })
@@ -260,7 +266,7 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
                 //다이얼로그로  작성된 내용 저장되지 않는다고 말해주는 거 띄우기
                 AlertDialog.Builder(this)
-                    .setMessage("뒤로가기를 누르면,\n회원가입 취소로 간주됩니다.\n정말 뒤로 가시겠습니까??")
+                    .setMessage(R.string.string_for_back_btn)
                     .setCancelable(false)
                     .setPositiveButton("네"){dialog, which ->
 
@@ -283,7 +289,7 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
                 //다이얼로그로  작성된 내용 저장되지 않는다고 말해주는 거 띄우기
                 AlertDialog.Builder(this)
-                    .setMessage("선호 상품 카테고리 선택은 \n꼭 해야하는 절차입니다.\n지금 안하더라도,\n로그인시 하셔야 됩니다.\n\n그냥 넘어 가시겠습니까?")
+                    .setMessage(R.string.string_for_back_btn_select_favor_category)
                     .setCancelable(false)
                     .setPositiveButton("네"){dialog, which ->
 
@@ -399,7 +405,7 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
             //다이얼로그로  작성된 내용 저장되지 않는다고 말해주는 거 띄우기
             AlertDialog.Builder(this)
-                .setMessage("뒤로가기를 누르면,\n회원가입 취소로 간주됩니다.\n정말 뒤로 가시겠습니까??")
+                .setMessage(R.string.string_for_back_btn)
                 .setCancelable(false)
                 .setPositiveButton("네"){dialog, which ->
 
@@ -420,7 +426,7 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
             //다이얼로그로  작성된 내용 저장되지 않는다고 말해주는 거 띄우기
             AlertDialog.Builder(this)
-                .setMessage("선호 상품 카테고리 선택은 \n꼭 해야하는 절차입니다.\n지금 안하더라도,\n로그인시 하셔야 됩니다.\n\n그냥 넘어 가시겠습니까?")
+                .setMessage(R.string.string_for_back_btn_select_favor_category)
                 .setCancelable(false)
                 .setPositiveButton("네"){dialog, which ->
 

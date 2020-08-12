@@ -45,6 +45,8 @@
        <string name="string_for_first_term_pager_private_info_usable_check">개인정보 수집 및 이용 동의 (필수)</string>
        <string name="string_for_fail_make_id">회원가입중  문제가 발견되었습니다.</string>
 
+
+
     <!-- MakeNewLoginIdActivity 뷰페이져 2(sms 인증) string용  -->
        <!-- 휴대폰 번호 입력 edittext   -->
        <string name="string_for_hint_input_phonenumber_edittext">휴대폰 번호 - 없이 입력 하세요</string>
@@ -53,6 +55,10 @@
        <string name="string_for_hint_input_SMS_certification_code_edittext">문자로 받은 인증번호를 입력하세요</string>
        <string name="string_for_btn_input_certication_code_complete">입력 완료</string>
        <string name="string_for_count_txt">2: 57초 남음</string>
+
+
+
+
 
     <!--MakeNewLoginIdActivity  뷰페이저3 (회원가입) string 용 -->
        <!-- 각 edittext 설명을 위한  제목 string-->
@@ -68,6 +74,13 @@
        <string name="string_for_check_dupulicate">중복 확인</string>
        <!-- 비밀번호관련 사용가능  체크  string-->
        <string name="string_for_check_accurate_pwd">입력 대기 중</string>
+       <!-- 다이얼로그 여기까지 회원가입  진행 string  -->
+       <string name="string_for_dialog_make_new_id">여기까지 입력한 정보로 \n회원가입이 진행됩니다\n\n회원가입을 진행하시겠습니까??\n\n\n※ 다음 페이지는 사용자              ※\n※ 선호 상품 카테고리 조사입니다      ※\n※ 회원가입 후 꼭 해야하는 조사입니다  ※</string>
+       <!-- 뒤로가기 메뉴버튼 눌렸을때  string   -->
+       <string name="string_for_back_btn">뒤로가기를 누르면,\n회원가입 취소로 간주됩니다.\n정말 뒤로 가시겠습니까??</string>
+       <!-- 선호하는 상품 카테고리 선택시 back btn  -->
+       <string name="string_for_back_btn_select_favor_category">선호 상품 카테고리 선택은 \n꼭 해야하는 절차입니다.\n지금 안하더라도,\n로그인시 하셔야 됩니다.\n\n그냥 넘어 가시겠습니까?</string>
+
 
 
 
@@ -75,13 +88,23 @@
       <string name="facebook_app_id">1279967912355965</string>
       <string name="fb_login_protocol_scheme">fb1279967912355965</string>
 
+
+
+
     <!-- 페이스북 가입시  로그인 이메일이 없는 경우     -->
       <string name="face_book_login_email_null_check">해당 페이스북 아이디는\n이메일 형식이 아닙니다.</string>
       <string name="face_book_login_fail_to_register_firbase">페이스북 accees token\n파이어베이스 등록 실패</string>
       <string name="face_login_fail">페이스북 로그인에 실패 하였습니다</string>
 
+
+
+
+
     <!--  네이버 로그인 api 사용관련  string -->
       <string name="nhn_oauth_client_id">9E9Q7UU3U4Qt7zG_M9k5</string>
       <string name="nhn_oauth_client_secret">zCUERTfMee</string>
       <string name="nhn_oauth_client_name">중고마켓</string>
+
+
+
 </resources>

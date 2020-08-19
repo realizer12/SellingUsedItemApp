@@ -33,10 +33,16 @@ class SplashActivity: AppCompatActivity() {
         //참고한  부분은 페이스북 앱이랑, 네이버 임.  애네도 coldstart 를  없애고  딜레이를 조금씩 줘서 로고를 보여줌.
         Handler().postDelayed({
 
+
+
             //스플래쉬  엑티비티 실행후 ->   바로  메인으로  가짐.
             //그다음  현재 스플래쉬 엑티비티는  종료 시켜줌.
             val intent_to_go_main=Intent(this,MainLoginActivity::class.java)
             startActivity(intent_to_go_main)
+
+
+
+
 
             //다음  실행되는 엑티비티가  fade in fede out  효과를 내게 해준다.
             //기존에  오른쪽에서 새로운 엑티비티가 날라오는거  싫어서 넣음.
@@ -44,6 +50,8 @@ class SplashActivity: AppCompatActivity() {
             finish()
 
         }, 800)
+
+
 
 
 

@@ -1,7 +1,9 @@
 package com.example.leedonghun.sellinguseditemapp.Activity
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.StyleSpan
@@ -9,11 +11,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import com.bumptech.glide.Glide
+import com.example.leedonghun.sellinguseditemapp.Data.Login.GetNaverLoginResponse
+import com.example.leedonghun.sellinguseditemapp.Data.Login.LoginCallback
 import com.example.leedonghun.sellinguseditemapp.Dialog.LoadingDialog
 import com.example.leedonghun.sellinguseditemapp.PrivateInfo.ServerIp
 import com.example.leedonghun.sellinguseditemapp.R
 import com.example.leedonghun.sellinguseditemapp.Retrofit.RetrofitClient
-import com.example.leedonghun.sellinguseditemapp.SNSLogin.GetNaverLoginResponse
 import com.example.leedonghun.sellinguseditemapp.Singleton.GlobalClass
 import com.example.leedonghun.sellinguseditemapp.Singleton.SnsEmailValue
 import com.example.leedonghun.sellinguseditemapp.Util.DeleteSnsData
@@ -22,7 +25,6 @@ import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
-import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -32,19 +34,12 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonObject
 import com.nhn.android.naverlogin.OAuthLogin
 import com.nhn.android.naverlogin.OAuthLoginHandler
-import com.nhn.android.naverlogin.data.OAuthLoginState
 import kotlinx.android.synthetic.main.main_login_activity.*
-import kotlinx.android.synthetic.main.term_pager_third_fragment.view.*
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.converter.gson.GsonConverterFactory
-import kotlin.math.sign
 
 
 /**
@@ -82,6 +77,10 @@ class MainLoginActivity : AppCompatActivity() {
     //딜레이가 조금 있어서  로딩 다이얼로그 띄어주기로 함
     lateinit var loadingDialog:LoadingDialog
 
+    //회원가입 엑티비티로 감
+    lateinit var intent_to_go_to_MakeNewEmailLoginId:Intent
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_login_activity)
@@ -116,7 +115,6 @@ class MainLoginActivity : AppCompatActivity() {
 
 
 
-
         //glide 라이브러리를 통해 중고마켓 gif 로고 파일을 넣어줌.
         Glide.with(this).load(R.drawable.main_login_activity__gif_logo).into(imgView_for_app_logo_gif)
 
@@ -125,17 +123,32 @@ class MainLoginActivity : AppCompatActivity() {
         //sign_out 진행
         imgView_for_app_logo_gif.setOnClickListener {
 
+
+            val sharedPreferences=this.getSharedPreferences(getString(R.string.shared_preference_name_for_store_uid),Context.MODE_PRIVATE)
+            val uid=sharedPreferences.getString(getString(R.string.shared_key_for_auto_login),null)
+
+            Logger.v("싱글톤으로 받은  sns login email-> ${SnsEmailValue.sns_login_email}")
+
+            if(uid !=null) {
+                Logger.v("shared에 담긴 uid-> $uid")
+            }
+
             //sns 로그아웃
             DeleteSnsData(this).Sns_login_signOut()
+            with(sharedPreferences.edit()){
+                remove(getString(R.string.shared_key_for_auto_login))
+                commit()
+            }
 
         }
+
 
 
 
         //처음 이신 가요? 회원 가입 부분에서 회원가입을  bold 처리 해주기 위해서  아래와 같이
         //각 위치 별로 style을  다르게 적용 시켜서 텍스트에  settext시킴.
         //그런데 폰트 적용은 되지 않음...
-        var stylestring:SpannableString= SpannableString("처음 이신 가요? 회원가입")
+        val stylestring:SpannableString= SpannableString("처음 이신 가요? 회원가입")
         stylestring.setSpan(StyleSpan(ResourcesCompat.getFont(this, R.font.cookierun_regular)!!.style),0,10,0)
         stylestring.setSpan(StyleSpan(ResourcesCompat.getFont(this, R.font.cookierun_bold)!!.style),10,stylestring.length,0)
         txt_to_go_make_id.text = stylestring
@@ -143,12 +156,19 @@ class MainLoginActivity : AppCompatActivity() {
 
         //회원가입 텍스트 클릭 이벤트
         txt_to_go_make_id.setOnClickListener {
+
             Logger.v("이메일 로그인 회원가입 텍스트 클릭됨 -> MakeNewEmailLoginId로 가짐")
 
-            //sns 로그인  아님으로 체크 해서  회원 가입 진행한다.
-            move_make_id_with_sns_login_check(sns_login = false,sns_login_email = "")
+            //회원가입 엑티비티로 감
+            intent_to_go_to_MakeNewEmailLoginId=Intent(this,MakeNewLoginIdActivity::class.java)
+
+            //보내는 값이 1-> email 로그인 아이디를  생성 할때 , 0->  sns 로그인 아이디 생성 할때
+            //값을 토대로 회원가입 용 뷰페이져의 4개 프래그먼트에서  3번째 프래그먼트(title -> 회원가입) 형태가 바뀌게됨.
+            intent_to_go_to_MakeNewEmailLoginId.putExtra("check_sns_or_email",1)
+            startActivity(intent_to_go_to_MakeNewEmailLoginId)
 
         }
+
 
 
 
@@ -208,7 +228,7 @@ class MainLoginActivity : AppCompatActivity() {
 
 
             facebook_login_api_btn.performClick()
-            
+
             //페이스북 로그인  처리하는데
             //시간이 걸릴때가 있어서 로딩 화면  띄어줌.
             loadingDialog.show_dialog()
@@ -223,64 +243,89 @@ class MainLoginActivity : AppCompatActivity() {
 
 
 
-
-    override fun onPause() {
-        super.onPause()
-
-        Logger.v("싱글톤으로 받은  sns login email-> ${SnsEmailValue.sns_login_email}")
-
-
-
-    }
-
-
     //sns  로그인 여부 체크 해서
     //회원가입 창으로 넘어간다.
     //일반 회원 가입의 경우는 그냥  넘어가고,
     //sns 회원 가입의 경우는 서버에서 해당  로그인  이메일을 체크해서
     //넘어가기 여부를 체크 한다.
-    fun move_make_id_with_sns_login_check(sns_login:Boolean,sns_login_email:String){
+    fun move_make_id_with_sns_login_check(sns_login:Int,sns_login_email:String){
 
-        Logger.v("sns 로그인 체크 메소드 실행됨 ->  sns 로그인 체크 값 -> $sns_login")
-
+        Logger.v("sns 로그인 체크 메소드 실행됨 ->  sns 로그인 체크 값 -> $sns_login, 로그인 이메일 -> $sns_login_email")
 
         //회원가입 엑티비티로 감
-        val intent_to_go_to_MakeNewEmailLoginId=Intent(this,MakeNewLoginIdActivity::class.java)
-
-        //sns 로그인이 맞을 때
-        if(sns_login){
+        intent_to_go_to_MakeNewEmailLoginId=Intent(this,MakeNewLoginIdActivity::class.java)
 
 
 
-            //여기서는 우선 해당 이메일이 회원기록에 있는지 체크부터 해준다.
-            //회원 기록에 있으면, 바로 accesstoken 발행만 해서
-            //메인으로 넘겨준다.
-            //회원기록이 없으면  이제  새 회원으로 인식해서 회원가입 진행
+        //여기서는 우선 해당 이메일이 회원기록에 있는지 체크부터 해준다.
+        //회원 기록에 있으면, 바로 accesstoken 발행만 해서
+        //메인으로 넘겨준다.
+        //회원기록이 없으면  이제  새 회원으로 인식해서 회원가입 진행
 
-            //서버로  이메일  보내서 확인
-            retrofitClient= RetrofitClient(ServerIp.baseurl)
-            retrofitClient.apiService.check_duplicate_login_email(sns_login_email)
-                .enqueue(object:Callback<ResponseBody>{
-                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+        //서버로  이메일  보내서 확인
+        retrofitClient= RetrofitClient(ServerIp.baseurl)
+        retrofitClient.apiService.sns_user_login(sns_login,sns_login_email, GlobalClass.uniqueID)
+            .enqueue(object:Callback<LoginCallback>{
+                override fun onResponse(call: Call<LoginCallback>, response: Response<LoginCallback>) {
 
-                        //이메일 중복 체크 결과
-                        val result:String?=response.body()?.string()
+                    //이메일 중복 체크 결과
+                    val result: LoginCallback? =response.body()
 
+                    //callback받은 값  null 아닌 경우
+                    if(result !=null) {
                         when {
 
+                            result.resultcode == 1 -> {//이미  가입한 회원임을 확인함
+//
+                                Logger.v("해당 sns 로그인으로 가입한 유저 맞음 -> $result")
 
-                            result.equals("1") -> {// 중복 없음 -> 이메일 사용 가능
+                                //유저 uid 받은거 sharepreference에 넣어주자
+                                //room을 공부할겸 써볼가 했는데 여기에 쓰기에는 너무 과함.
+                                //다른 곳에서 쓸곳이있을거야  채팅도 하니까...
 
-                                Logger.v("해당 sns email 중복 없음 -> 사용가능")
+                                //이제 로그인 할때마다  이 uid랑  uuid로 해쉬값 만들어서  보낸다음에
+                                //맞으면  자동로그인 틀리면,  로그인창 다시 띄우는  처리 진행하자
+                                val user_uid=result.userUid//서버의 등록된 해당 유저의 uid
 
 
-                                //다 끝났으니  다이얼로그 꺼줌
-                                loadingDialog.dismiss_dialog()
+                                //getpreference를  쓰기에는 로그인엑티비티에서도 로그인이 진행되므로..
+                                //서버로부터 받은 uid  shared에 commit 함.
+                                val store_user_uid:SharedPreferences=this@MainLoginActivity.getSharedPreferences(
+                                    getString(R.string.shared_preference_name_for_store_uid),Context.MODE_PRIVATE)
 
+                                with(store_user_uid.edit()){
+                                    putString(getString(R.string.shared_key_for_auto_login),user_uid)
+                                    commit()
+                                }
+
+
+                                //메인 엑티비티로  넘어감감
+                                val intent_to_go_main_activity=Intent(this@MainLoginActivity,SellingUsedMainActivity::class.java)
+                                startActivity(intent_to_go_main_activity)
+
+                            }
+
+                            //이메일은 가입이 되어잇지만, 회원가입 경로가 다름
+                            //(ex 구글 로그인으로 진행했는데 네이버로 가입한  회원 기록이 있음 등..)
+                            result.resultcode==2 -> {
+
+                                Logger.v("누군가 사용중인 이메일 -요청 유저와  이메일은 같은데 가입경로가 다름-> 사용 불가")
+
+                                Toast.makeText(this@MainLoginActivity,R.string.string_for_duplicate_email,Toast.LENGTH_SHORT).show()
+
+                                //sns 로그아웃
+                                DeleteSnsData(this@MainLoginActivity).Sns_login_signOut()
+                            }
+
+                            result.resultcode==3 -> {//중복되는 이메일이 없어 중복 가능능
+
+                               Logger.v("사용중인 이메일이 아니라서  회원가입으로 넘어감")
+
+                                //sns 로그아웃
+                                DeleteSnsData(this@MainLoginActivity).Sns_login_signOut()
 
                                 //sns 이메일 싱글톤 객체에 가져온 이메일 넣어줌.
                                 SnsEmailValue.get_sns_email(sns_login_email)
-
 
                                 //사용 가능한 이메일 이므로  인텐트로 넘긴다.
                                 //보내는 값이 1-> email 로그인 아이디를  생성 할때 , 0->  sns 로그인 아이디 생성 할때
@@ -288,66 +333,55 @@ class MainLoginActivity : AppCompatActivity() {
                                 intent_to_go_to_MakeNewEmailLoginId.putExtra("check_sns_or_email", 0)
                                 startActivity(intent_to_go_to_MakeNewEmailLoginId)
 
+
                             }
 
-                            result.equals("-2") -> {//중복 값이 있음 -> 해당  sns  이메일로 로그인을 할수 있음.
+                            //회원이어서 로그인 처리 위해  auth_token 발급 해서 넣어줬는데
+                            // update 과정에서 실패함
+                            //이렇게되도 로그인 못하도록 진행하자.
+                            result.resultcode==-1->{
 
 
-                                //사용하는 이메일이 있는 것이므로,  accesstoken을  서버로 부터 요청해서  로그인 처리를
-                                //진행한다.
-                                Logger.v("해당 sns email 중복 있음 -> 사용불가")
-
-                                Toast.makeText(this@MainLoginActivity,R.string.string_for_duplicate_email,Toast.LENGTH_SHORT).show()
-
-                                //다 끝났으니  다이얼로그 꺼줌
-                                loadingDialog.dismiss_dialog()
+                                Logger.v("로그인 도중 auth_token db update부분에서 에러남")
 
                                 //sns 로그아웃
                                 DeleteSnsData(this@MainLoginActivity).Sns_login_signOut()
-
-
-
-                            }
-
-                            result.equals("-1") -> {//쿼리 실패함
-
-                                Logger.v("해당 sns email 체크  쿼리 실패")
 
                                 Toast.makeText(this@MainLoginActivity,R.string.string_for_duplicate_email_check_server_error,Toast.LENGTH_SHORT).show()
 
-                                //다 끝났으니  다이얼로그 꺼줌
-                                loadingDialog.dismiss_dialog()
-
-                                //sns 로그아웃
-                                DeleteSnsData(this@MainLoginActivity).Sns_login_signOut()
                             }
 
+                            else -> {
+
+                                Toast.makeText(this@MainLoginActivity,R.string.string_for_duplicate_email_check_server_error,Toast.LENGTH_SHORT).show()
+                                Logger.v("sns로그인 도중  에러 나옴 -> $result")
+
+                            }
 
                         }
 
                     }
 
-                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
 
-                        Logger.v("해당 sns email 체크  서버 통신 fail -> ${t.message}")
+                    //서버로부터 callback왔으니까 다이얼로그는 꺼줌
+                    loadingDialog.dismiss_dialog()
 
-                        Toast.makeText(this@MainLoginActivity,R.string.string_for_duplicate_email_check_server_error,Toast.LENGTH_SHORT).show()
-                    }
+                }
 
-                })
+                override fun onFailure(call: Call<LoginCallback>, t: Throwable) {
+
+                    Logger.v("해당 sns email 체크  서버 통신 fail -> ${t.message}")
+
+                    Toast.makeText(this@MainLoginActivity,R.string.string_for_duplicate_email_check_server_error,Toast.LENGTH_SHORT).show()
+                    loadingDialog.dismiss_dialog()
+                }
+
+            })
 
 
 
-        }else{//sns 로그인이 아닐때
 
-            //보내는 값이 1-> email 로그인 아이디를  생성 할때 , 0->  sns 로그인 아이디 생성 할때
-            //값을 토대로 회원가입 용 뷰페이져의 4개 프래그먼트에서  3번째 프래그먼트(title -> 회원가입) 형태가 바뀌게됨.
-            intent_to_go_to_MakeNewEmailLoginId.putExtra("check_sns_or_email",1)
-            startActivity(intent_to_go_to_MakeNewEmailLoginId)
-
-        }
     }
-
 
 
 
@@ -421,6 +455,8 @@ class MainLoginActivity : AppCompatActivity() {
     }
 
 
+
+
     //받아온  accesstoken 으로  로그인 유저 정보 가져오기.
     fun get_naver_login_info(accessToken:String){
 
@@ -436,6 +472,7 @@ class MainLoginActivity : AppCompatActivity() {
                         val naver_user_info = response.body()?.resultcode
                         val naver_user_email=naver_user_info?.email
 
+
                        Logger.v("네이버 로그인 유저 이메일 -> $naver_user_email")
 
                         //네이버 유저  이메일 정보가 null 이 아닐때
@@ -443,7 +480,7 @@ class MainLoginActivity : AppCompatActivity() {
 
                             //처음 가입 하는 회원인지 판별
                             move_make_id_with_sns_login_check(
-                                sns_login = true,
+                                sns_login = 2,
                                 sns_login_email = naver_user_email
                             )
 
@@ -554,7 +591,7 @@ class MainLoginActivity : AppCompatActivity() {
 
                         //처음 가입 하는 회원인지 판별
                         move_make_id_with_sns_login_check(
-                            sns_login = true,
+                            sns_login = 1,
                             sns_login_email = google_user_email
                         )
 
@@ -681,7 +718,7 @@ class MainLoginActivity : AppCompatActivity() {
 
                         //처음 가입 하는 회원인지 판별
                         move_make_id_with_sns_login_check(
-                            sns_login = true,
+                            sns_login = 3,
                             sns_login_email = facebook_user_email
                         )
 

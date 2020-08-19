@@ -22,6 +22,12 @@
        <!-- sns 이메일  체크   서버 에러   -->
        <string name="string_for_duplicate_email_check_server_error">이메일 체크 중  서버 에러 발생</string>
 
+       <!-- 로그인 성공시  자동로그인을 위해 서버로 부터 받은 uid를  저장하는 shared의 name   -->
+       <string name="shared_preference_name_for_store_uid">auto_login_uid_shared_preference_name</string>
+
+       <!-- 자동로그인을 위한 서버로 부터 받은 uid 담을 shared key string  -->
+       <string name="shared_key_for_auto_login">auto_login_uid</string>
+
 
     <!--EmailLoginActivity string 용 -->
        <!--이메일 로그인 아이디 넣는 곳에 hint 아이디 와 패스워드 넣으라 hint 넣어줌. -->

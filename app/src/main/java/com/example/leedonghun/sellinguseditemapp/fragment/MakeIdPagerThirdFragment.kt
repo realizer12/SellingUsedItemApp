@@ -600,31 +600,6 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
     }//oncreateview 끝
 
 
-//    //sns로그인여부 체크해서
-//    //sns 로그인의 경우는  임의 문자로 생성해서 hash 처리 해준다.
-//    //그외는 패스워드 editext에 적힌 값을 hash 처리 해준다.
-//    fun make_password():JSONObject{
-//
-//        var login_password=JSONObject()
-//
-//        //sns 로그인용 이메일일떄
-//        if(check_sns_or_email==0){
-//
-//            //sns 로그인의 경우는  패스워드가 필요 없으므로,
-//            //랜덤 문자열 8자리를  만들어서  ,  hash 를 만들어준다.
-//            //이유는
-//            val random_password=(1..8).map { ('0'..'z').toList().toTypedArray().random() }.joinToString("")
-//            login_password=make_hash256_and_sort_value.make_sha_256_hash_value(random_password)
-//
-//        }else if(check_sns_or_email==1){//일반 로그인 이메일일때때
-//
-//           login_password=make_hash256_and_sort_value.make_sha_256_hash_value(view?.editxt_for_add_new_pwd?.text.toString())
-//        }
-//
-//        //해쉬처리한  로그인 비밀번호  return
-//        return login_password
-//    }
-
 
 
     //전체 입력사항  체크 해서 parent

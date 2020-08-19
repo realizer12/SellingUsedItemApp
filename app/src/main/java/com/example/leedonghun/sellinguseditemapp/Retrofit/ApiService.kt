@@ -1,11 +1,11 @@
 package com.example.leedonghun.sellinguseditemapp.Retrofit
 
-import com.example.leedonghun.sellinguseditemapp.SNSLogin.GetNaverLoginResponse
+import com.example.leedonghun.sellinguseditemapp.Data.Login.GetNaverLoginResponse
+import com.example.leedonghun.sellinguseditemapp.Data.Login.LoginCallback
 
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.http.*
 
 /**
@@ -24,6 +24,31 @@ interface ApiService {
     //retrofit 서버 통신 되는지  test용
     @POST("retrofitt_server_connection_check.php")
     fun server_connetion_test():Call<String>
+
+
+    //자동로그인 가능 여부 판단
+    //서버로 auth_token  확인 할  정보를 보내서
+    //서버에서 해쉬처리하여 저장된  auth_token과 맞는지 여부를 판단
+    //맞으면,  로그인을 진행,  틀리면,
+    @FormUrlEncoded
+    @POST("account/login/check_auto_login.php")
+    fun auto_login_check(@Field("user_uid")user_uid:String,
+                         @Field("uuid")uuid:String):Call<ResponseBody>
+
+    //sns 로그인처리를 진행
+    //다음 경우의 수가 있을수 있다.
+    // 1. 해당 sns  이메일이  중복 되고  sns 플랫폼 값이  일치한다면,   로그인 처리->  return 값은  해당 uid (auth_token 만들기 용)
+    // 2. 해당 sns  이메일이  중복 되고  sns 플랫폼  값 일치 x-> 해당 메일은  다른 방식으로  사용 중이라고 return
+    // 3. 해당 sns  이메일이  중복 없을때,  새롭게  회원가입  실행하고 return 값 uid 받고 로그인 처리
+    //parameter 미터 설명
+    //sns_login_status-> 어떤 sns 플랫폼을 이용한 로그인인지 -> 구글 =1, 네이버 =2, 페이스북=3
+    //sns_email-> 이메일
+    //uuid->  사용자(기기) 식별을 위한 uuid
+    @FormUrlEncoded
+    @POST("account/login/sns_user_login.php")
+    fun sns_user_login(@Field("sns_login_status")sns_login_status:Int,
+                       @Field("sns_email")sns_email:String,
+                       @Field("uuid")uuid:String):Call<LoginCallback>
 
 
     //핸드폰 번호를 이용한  본인 인증

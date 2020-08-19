@@ -1,4 +1,4 @@
-package com.example.leedonghun.sellinguseditemapp.SNSLogin
+package com.example.leedonghun.sellinguseditemapp.Data.Login
 
 import com.google.gson.annotations.SerializedName
 
@@ -21,7 +21,7 @@ import com.google.gson.annotations.SerializedName
 data class GetNaverLoginResponse (
 
     @SerializedName("response")
-    var resultcode:GetNaverUserEmail
+    var resultcode: GetNaverUserEmail
 
 )
 

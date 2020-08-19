@@ -16,6 +16,10 @@ import com.nhn.android.naverlogin.OAuthLogin
  * Created by leedonghun.
  * Created On 2020-08-08.
  * Description:
+ *
+ * sns 로그인의 경우  각  로그인 api별
+ * oauth 인증을 위한  accesstoken들이  받아와 저장이ㅇ되는데
+ * 로그아웃시  다  지워주기  위한  클래스이다.
  */
 class DeleteSnsData(private val context: Context) {
 

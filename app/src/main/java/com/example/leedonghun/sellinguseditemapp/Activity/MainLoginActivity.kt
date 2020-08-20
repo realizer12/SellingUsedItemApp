@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import com.bumptech.glide.Glide
+import com.example.leedonghun.sellinguseditemapp.Data.Login.AutoLoginCallback
 import com.example.leedonghun.sellinguseditemapp.Data.Login.GetNaverLoginResponse
 import com.example.leedonghun.sellinguseditemapp.Data.Login.LoginCallback
 import com.example.leedonghun.sellinguseditemapp.Dialog.LoadingDialog
@@ -34,12 +35,15 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.iid.FirebaseInstanceId
 import com.nhn.android.naverlogin.OAuthLogin
 import com.nhn.android.naverlogin.OAuthLoginHandler
 import kotlinx.android.synthetic.main.main_login_activity.*
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.net.ResponseCache
 
 
 /**
@@ -87,9 +91,20 @@ class MainLoginActivity : AppCompatActivity() {
         Logger.v("실행됨")
 
 
+        //쉐어드에 저장된  uid가져오기
+        val sharedPreferences=this.getSharedPreferences(getString(R.string.shared_preference_name_for_store_uid), Context.MODE_PRIVATE)
+        val uid=sharedPreferences.getString(getString(R.string.shared_key_for_auto_login),null)//없으면 null
+
+        //shared에  저장된 uid가 있을떄 자동로그인 진행
+        if(uid != null){
+            
+            Logger.v("uid null -> 자동로그인 그냥 넘어감")
+            check_auto_login(uid)
+        }
+
+
         //로그인 다이얼로그 용
         loadingDialog = LoadingDialog(this)
-
 
 
         //구글 로그인에서 클라이언트 id보내고,
@@ -240,6 +255,81 @@ class MainLoginActivity : AppCompatActivity() {
 
 
     }//onCreate() 끝
+
+
+    //자동로그인에 필요한  uid가 저장되어 있을떄
+    //자동로그인을  진행한다.
+    fun check_auto_login(uid:String){
+
+        retrofitClient = RetrofitClient(ServerIp.baseurl)
+        retrofitClient.apiService.auto_login_check(uid, FirebaseInstanceId.getInstance().id)
+            .enqueue(object : Callback<AutoLoginCallback> {
+
+                override fun onResponse(call: Call<AutoLoginCallback>, response: Response<AutoLoginCallback>) {
+
+                    //response 성공시
+                    if(response.isSuccessful) {
+                        val result = response.body()?.auto_login_response
+                        val status = response.body()?.auto_login_callback_status
+
+                        //result상태로 화면 분기해서 넘어감.
+                        when (result) {
+
+                            //자동로그인 가능
+                            true -> {
+
+                                Logger.v("자동로그인 성공  메인 화면으로 넘어간다.")
+                                //메인 화면으로 넘어가기
+                                val intent = Intent(this@MainLoginActivity, SellingUsedMainActivity::class.java)
+                                startActivity(intent)
+                                finish()//로그인 엑티비티는 종료
+
+
+                            }
+
+                            //자동로그인 실패일때
+                            //상태 분기로 나눠서 원인 파악
+                            false -> {
+
+                                if(status==2){//맞는 개수가 1이 아님
+
+                                    Logger.v("자동로그인 실패 -> status 값 ->  $status  auth_token check 일치 하지 않음")
+                                    //sns 로그아웃
+                                    DeleteSnsData(this@MainLoginActivity).Sns_login_signOut()
+
+                                }else if(status==3){//체크 쿼리 날리는데서 실패
+
+                                    Logger.v("자동로그인 실패 -> status 값 ->  $status  auth_token check 쿼리 진행과정에서 에러")
+                                    //sns 로그아웃
+                                    DeleteSnsData(this@MainLoginActivity).Sns_login_signOut()
+                                }
+
+                            }
+
+                            //서버 지정된 에러 이외  알수 없는 에러  error body보아야됨
+                            else -> {
+
+                                Logger.v("자동로그인 실패 ->  ${response.errorBody()}")
+
+                                //sns 로그아웃
+                                DeleteSnsData(this@MainLoginActivity).Sns_login_signOut()
+                            }
+
+                        }
+                    }
+
+                }
+                override fun onFailure(call: Call<AutoLoginCallback>, t: Throwable) {
+                    Logger.v("자동로그인 결과 실패-> ${t.message}")
+
+                    //sns 로그아웃
+                    DeleteSnsData(this@MainLoginActivity).Sns_login_signOut()
+
+                }
+
+            })
+
+    }//check_auto_login 끝
 
 
 

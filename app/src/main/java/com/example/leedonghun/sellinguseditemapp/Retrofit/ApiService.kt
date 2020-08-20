@@ -1,5 +1,6 @@
 package com.example.leedonghun.sellinguseditemapp.Retrofit
 
+import com.example.leedonghun.sellinguseditemapp.Data.Login.AutoLoginCallback
 import com.example.leedonghun.sellinguseditemapp.Data.Login.GetNaverLoginResponse
 import com.example.leedonghun.sellinguseditemapp.Data.Login.LoginCallback
 
@@ -33,7 +34,9 @@ interface ApiService {
     @FormUrlEncoded
     @POST("account/login/check_auto_login.php")
     fun auto_login_check(@Field("user_uid")user_uid:String,
-                         @Field("uuid")uuid:String):Call<ResponseBody>
+                         @Field("uuid")uuid:String):Call<AutoLoginCallback>
+
+
 
     //sns 로그인처리를 진행
     //다음 경우의 수가 있을수 있다.

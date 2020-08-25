@@ -3,6 +3,7 @@ package com.example.leedonghun.sellinguseditemapp.Retrofit
 import com.example.leedonghun.sellinguseditemapp.Data.Login.AutoLoginCallback
 import com.example.leedonghun.sellinguseditemapp.Data.Login.GetNaverLoginResponse
 import com.example.leedonghun.sellinguseditemapp.Data.Login.LoginCallback
+import com.example.leedonghun.sellinguseditemapp.Data.Register.UploadNewMemberCallback
 
 import okhttp3.ResponseBody
 import org.json.JSONObject
@@ -95,7 +96,7 @@ interface ApiService {
     //callback은 response body로 진행
     @FormUrlEncoded
     @POST("account/register/upload_new_member_info.php")
-    fun upload_new_member_info(@Field("new_ember_info")new_member_info:JSONObject):Call<ResponseBody>
+    fun upload_new_member_info(@Field("new_ember_info")new_member_info:JSONObject):Call<UploadNewMemberCallback>
 
 
 

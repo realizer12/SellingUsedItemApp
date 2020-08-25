@@ -50,7 +50,7 @@
        <string name="string_for_first_term_pager_policy_term_check">이용약관 동의 (필수)</string>
        <string name="string_for_first_term_pager_private_info_usable_check">개인정보 수집 및 이용 동의 (필수)</string>
        <string name="string_for_fail_make_id">회원가입중  문제가 발견되었습니다.</string>
-
+       <string name="string_for_success_make_id">회원가입이 성공적으로 완료되었습니다</string>
 
 
     <!-- MakeNewLoginIdActivity 뷰페이져 2(sms 인증) string용  -->
@@ -81,7 +81,7 @@
        <!-- 비밀번호관련 사용가능  체크  string-->
        <string name="string_for_check_accurate_pwd">입력 대기 중</string>
        <!-- 다이얼로그 여기까지 회원가입  진행 string  -->
-       <string name="string_for_dialog_make_new_id">여기까지 입력한 정보로 \n회원가입이 진행됩니다\n\n회원가입을 진행하시겠습니까??\n\n\n※ 다음 페이지는 사용자              ※\n※ 선호 상품 카테고리 조사입니다      ※\n※ 회원가입 후 꼭 해야하는 조사입니다  ※</string>
+       <string name="string_for_dialog_make_new_id">여기까지 입력한 정보로 \n회원가입이 진행됩니다\n\n회원가입을 진행하시겠습니까??</string>
        <!-- 뒤로가기 메뉴버튼 눌렸을때  string   -->
        <string name="string_for_back_btn">뒤로가기를 누르면,\n회원가입 취소로 간주됩니다.\n정말 뒤로 가시겠습니까??</string>
        <!-- 선호하는 상품 카테고리 선택시 back btn  -->

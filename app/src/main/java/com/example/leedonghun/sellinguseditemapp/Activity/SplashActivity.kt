@@ -37,7 +37,7 @@ class SplashActivity: AppCompatActivity() {
         Logger.v("실행")
 
         //우선 cold start 부분에서  바로 로고 가  뜨게 만들었음.
-        //하지만,  이부분에서 로고가  너무 빨리 사라져서  다음 메인 화면 시작하는데에  딜레이(0.8초)를  줌.
+        //하지만,  이부분에서 로고가  너무 빨리 사라져서  다음 메인 화면 시작하는데에  딜레이(1초)를  줌.
         //참고한  부분은 페이스북 앱이랑, 네이버 임.  애네도 coldstart 를  없애고  딜레이를 조금씩 줘서 로고를 보여줌.
         Handler().postDelayed({
 
@@ -53,7 +53,7 @@ class SplashActivity: AppCompatActivity() {
             overridePendingTransition(R.anim.fadein,R.anim.fadeout)
             finish()
 
-        }, 800)
+        }, 1000)
 
 
     }//onCreate()끝

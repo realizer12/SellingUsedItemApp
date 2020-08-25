@@ -21,6 +21,8 @@ import com.example.leedonghun.sellinguseditemapp.PrivateInfo.ServerIp
 import com.example.leedonghun.sellinguseditemapp.R
 import com.example.leedonghun.sellinguseditemapp.Retrofit.RetrofitClient
 import com.example.leedonghun.sellinguseditemapp.Singleton.AuthPoneNum
+import com.example.leedonghun.sellinguseditemapp.Singleton.GlobalClass
+import com.example.leedonghun.sellinguseditemapp.Singleton.SnsEmailValue
 import com.example.leedonghun.sellinguseditemapp.Util.Logger
 import com.example.leedonghun.sellinguseditemapp.Util.MakePassWordSecurity
 import kotlinx.android.synthetic.main.term_pager_third_fragment.view.*
@@ -116,7 +118,7 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
 
 
         //그래서 해당 구별 값을 생성자를 통해 보내줌. 0-> sns 회원가입 1-> 이메일 회원가입
-        if(check_sns_or_email==0){//-> sns  회원 가입일때는  닉네임만  적으면 됨.
+        if(check_sns_or_email>0){//-> sns  회원 가입일때는  닉네임만  적으면 됨.
 
             //로그인 이메일, 비밀번호, 비밀번호 체크  모두 gone
             view.txt_for_make_new_login_email.visibility=View.GONE
@@ -606,34 +608,64 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
     // 엑티비티에 넘어가도 되는지 여부  정보 넘겨준다.
     fun detect_status_of_requirement_info(login_email_status:Boolean,password_status:Boolean,password_double_check:Boolean,nickname_status:Boolean){
 
-        //전체  요구사항들  true -> 사용자가 요구사항대로 입력했을 경우
-        if(login_email_status && password_status && nickname_status && password_double_check) {
-            Logger.v("요구 입력사항 모두 체크 됨")
+
+        if(check_sns_or_email>0){//sns 로그인일때
+
+            //전체  요구사항들  true -> 사용자가 요구사항대로 입력했을 경우
+            if(nickname_status) {
+                Logger.v("요구 입력사항 모두 체크 됨")
+
+
+                member_info_json.put("login_email",SnsEmailValue.sns_login_email)//멤버 로그인 이메일
+                member_info_json.put("nick_name",member_nickname)//멤버 닉네임
+                member_info_json.put("password",make_hash256_and_sort_value.make_sha_256_hash_value(view?.editxt_for_add_new_pwd?.text.toString()))//패스워드
+                member_info_json.put("phone_num",AuthPoneNum.auth_phonnumber)//핸드폰 번호
+                member_info_json.put("sns_status",check_sns_or_email)//sns 이메일  체크
+                member_info_json.put("uuid",GlobalClass.uniqueID)//sns 회원가입후  바로 로그인 진행하게  uuid를 보내서  서버 에서 auth_token을  생성한다.
+
+                //다음 페이져로 넘어가기 가능함.
+                check_complete.CheckMakeIdPagerComplete_all_or_not(true,3)
+
+                //위에서 넣어준 멤버 정보들 넘겨줌.
+                member_info.new_member_info_with_json(member_info_json)
+
+            }else{//하나라도  안되어있을 경우
+
+                //다음 페이져로 넘어가기 불가능 함.
+                check_complete.CheckMakeIdPagerComplete_all_or_not(false,3)
+            }
+
+
+        }else if(check_sns_or_email==0){//일반 이메일 로그인 일때
+
+            //전체  요구사항들  true -> 사용자가 요구사항대로 입력했을 경우
+            if(login_email_status && password_status && nickname_status && password_double_check) {
+                Logger.v("요구 입력사항 모두 체크 됨")
 
 
 
 
-            member_info_json.put("login_email",member_email)//멤버 로그인 이메일
-            member_info_json.put("nick_name",member_nickname)//멤버 닉네임
+                member_info_json.put("login_email",member_email)//멤버 로그인 이메일
+                member_info_json.put("nick_name",member_nickname)//멤버 닉네임
+                member_info_json.put("password",make_hash256_and_sort_value.make_sha_256_hash_value(view?.editxt_for_add_new_pwd?.text.toString()))//패스워드
+                member_info_json.put("phone_num",AuthPoneNum.auth_phonnumber)//핸드폰 번호
+                member_info_json.put("sns_status",check_sns_or_email)//sns 이메일  체크
 
+                //다음 페이져로 넘어가기 가능함.
+                check_complete.CheckMakeIdPagerComplete_all_or_not(true,3)
 
-            member_info_json.put("password",make_hash256_and_sort_value.make_sha_256_hash_value(view?.editxt_for_add_new_pwd?.text.toString()))//패스워드
+                //위에서 넣어준 멤버 정보들 넘겨줌.
+                member_info.new_member_info_with_json(member_info_json)
 
+            }else{//하나라도  안되어있을 경우
 
-            member_info_json.put("phone_num",AuthPoneNum.auth_phonnumber)//핸드폰 번호
-            member_info_json.put("sns_status",check_sns_or_email)//sns 이메일  체크
+                //다음 페이져로 넘어가기 불가능 함.
+                check_complete.CheckMakeIdPagerComplete_all_or_not(false,3)
+            }
 
-            //다음 페이져로 넘어가기 가능함.
-            check_complete.CheckMakeIdPagerComplete_all_or_not(true,3)
-
-            //위에서 넣어준 멤버 정보들 넘겨줌.
-            member_info.new_member_info_with_json(member_info_json)
-
-        }else{//하나라도  안되어있을 경우
-
-            //다음 페이져로 넘어가기 불가능 함.
-            check_complete.CheckMakeIdPagerComplete_all_or_not(false,3)
         }
+        
+
 
     }//detect_status_of_requirement_info() 끝
 
@@ -714,11 +746,11 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
         //pause 단계에서도  그대로 유지가 되어있는 중이다.
         //그래서 혹시나  맨처음  키보드 올린상태에서 더이상 키보드 전환 과정이 없다면,
         //아래 코드로  적용  hide가 적용된다.
-        if(check_sns_or_email==0){//sns 로그인시 -> 닉네임에  자동 포커스 되어있다.
+        if(check_sns_or_email>0){//sns 로그인시 -> 닉네임에  자동 포커스 되어있다.
 
             mInputMethodManager.hideSoftInputFromWindow(view!!.editxt_for_add_new_nickname.windowToken, 0);
 
-        }else if(check_sns_or_email==1){//이메일 로그인시  -> 로그인 이메일 적는 곳에  자동 포커스 되어있음.
+        }else if(check_sns_or_email==0){//이메일 로그인시  -> 로그인 이메일 적는 곳에  자동 포커스 되어있음.
 
             mInputMethodManager.hideSoftInputFromWindow(view!!.editxt_for_make_new_login_email.windowToken, 0);
 

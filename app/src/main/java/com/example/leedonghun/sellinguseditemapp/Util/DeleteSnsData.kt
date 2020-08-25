@@ -2,6 +2,7 @@ package com.example.leedonghun.sellinguseditemapp.Util
 
 import android.content.Context
 import com.example.leedonghun.sellinguseditemapp.R
+import com.example.leedonghun.sellinguseditemapp.Singleton.AuthPoneNum
 import com.example.leedonghun.sellinguseditemapp.Singleton.SnsEmailValue
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -42,7 +43,6 @@ class DeleteSnsData(private val context: Context) {
 
         //페이스북 로그아웃
         LoginManager.getInstance().logOut()
-
         FirebaseAuth.getInstance().signOut()
 
 
@@ -62,6 +62,8 @@ class DeleteSnsData(private val context: Context) {
         //일단 signletone 지워줌.
         //기존에  회원가입용 signleton은  회원가입 끝날때  다 리셋 시키자.
         SnsEmailValue.delete_sns_email()
+        //회원가입용  핸드폰 번호도 지워줌
+        AuthPoneNum.delete_phone_num()
 
     }
 

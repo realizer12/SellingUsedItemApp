@@ -1,5 +1,6 @@
 package com.example.leedonghun.sellinguseditemapp.Activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
@@ -37,6 +38,13 @@ class EmailLoginActivity :AppCompatActivity() {
         Logger.v("실행됨")
 
 
+        //일반 회원가입후  로그인 이메일 왔을때
+        //로그인 입력 edittext에 가입한 이메일을 넣저준다.
+        val intent= intent
+        val email=intent.getStringExtra("maked_email")
+        
+        Logger.v("sadasdasdadsad -> $email")
+        editxt_for_add_login_email.setText(email)
 
         //뒤로 가기 버튼 클릭
         arrow_btn_for_back_to_login_activity.setOnClickListener {

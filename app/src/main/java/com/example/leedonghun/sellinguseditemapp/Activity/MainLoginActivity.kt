@@ -85,22 +85,26 @@ class MainLoginActivity : AppCompatActivity() {
     lateinit var intent_to_go_to_MakeNewEmailLoginId:Intent
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_login_activity)
-        Logger.v("실행됨")
-
 
         //쉐어드에 저장된  uid가져오기
         val sharedPreferences=this.getSharedPreferences(getString(R.string.shared_preference_name_for_store_uid), Context.MODE_PRIVATE)
         val uid=sharedPreferences.getString(getString(R.string.shared_key_for_auto_login),null)//없으면 null
 
+
         //shared에  저장된 uid가 있을떄 자동로그인 진행
         if(uid != null){
-            
-            Logger.v("uid null -> 자동로그인 그냥 넘어감")
+
+            Logger.v("uid null 아님 -> 자동로그인 체크 진행")
             check_auto_login(uid)
         }
+
+        setContentView(R.layout.main_login_activity)
+        Logger.v("실행됨")
+
+
 
 
         //로그인 다이얼로그 용
@@ -159,7 +163,6 @@ class MainLoginActivity : AppCompatActivity() {
 
 
 
-
         //처음 이신 가요? 회원 가입 부분에서 회원가입을  bold 처리 해주기 위해서  아래와 같이
         //각 위치 별로 style을  다르게 적용 시켜서 텍스트에  settext시킴.
         //그런데 폰트 적용은 되지 않음...
@@ -167,6 +170,8 @@ class MainLoginActivity : AppCompatActivity() {
         stylestring.setSpan(StyleSpan(ResourcesCompat.getFont(this, R.font.cookierun_regular)!!.style),0,10,0)
         stylestring.setSpan(StyleSpan(ResourcesCompat.getFont(this, R.font.cookierun_bold)!!.style),10,stylestring.length,0)
         txt_to_go_make_id.text = stylestring
+
+
 
 
         //회원가입 텍스트 클릭 이벤트
@@ -177,9 +182,9 @@ class MainLoginActivity : AppCompatActivity() {
             //회원가입 엑티비티로 감
             intent_to_go_to_MakeNewEmailLoginId=Intent(this,MakeNewLoginIdActivity::class.java)
 
-            //보내는 값이 1-> email 로그인 아이디를  생성 할때 , 0->  sns 로그인 아이디 생성 할때
+            //보내는 값이 0-> email 로그인 아이디를  생성 할때 , 1,2,3->  sns 로그인 아이디 생성 할때
             //값을 토대로 회원가입 용 뷰페이져의 4개 프래그먼트에서  3번째 프래그먼트(title -> 회원가입) 형태가 바뀌게됨.
-            intent_to_go_to_MakeNewEmailLoginId.putExtra("check_sns_or_email",1)
+            intent_to_go_to_MakeNewEmailLoginId.putExtra("check_sns_or_email",0)
             startActivity(intent_to_go_to_MakeNewEmailLoginId)
 
         }
@@ -304,6 +309,16 @@ class MainLoginActivity : AppCompatActivity() {
                                     DeleteSnsData(this@MainLoginActivity).Sns_login_signOut()
                                 }
 
+
+                                //자동로그인 취소니까  기존 저장된 uid 도 지워주자
+                                //왜냐면 uid 가 계속 남아잇으면,  해당 자동로그인 코드가
+                                //로그인 화면에서 계속 진행되니까..
+                                val sharedPreferences=this@MainLoginActivity.getSharedPreferences(getString(R.string.shared_preference_name_for_store_uid),Context.MODE_PRIVATE)
+                                with(sharedPreferences.edit()){
+                                    remove(getString(com.example.leedonghun.sellinguseditemapp.R.string.shared_key_for_auto_login))
+                                    commit()
+                                }
+
                             }
 
                             //서버 지정된 에러 이외  알수 없는 에러  error body보아야됨
@@ -313,6 +328,16 @@ class MainLoginActivity : AppCompatActivity() {
 
                                 //sns 로그아웃
                                 DeleteSnsData(this@MainLoginActivity).Sns_login_signOut()
+
+                                //자동로그인 취소니까  기존 저장된 uid 도 지워주자
+                                //왜냐면 uid 가 계속 남아잇으면,  해당 자동로그인 코드가
+                                //로그인 화면에서 계속 진행되니까..
+                                val sharedPreferences=this@MainLoginActivity.getSharedPreferences(getString(R.string.shared_preference_name_for_store_uid),Context.MODE_PRIVATE)
+                                with(sharedPreferences.edit()){
+                                    remove(getString(com.example.leedonghun.sellinguseditemapp.R.string.shared_key_for_auto_login))
+                                    commit()
+                                }
+
                             }
 
                         }
@@ -324,6 +349,15 @@ class MainLoginActivity : AppCompatActivity() {
 
                     //sns 로그아웃
                     DeleteSnsData(this@MainLoginActivity).Sns_login_signOut()
+
+                    //자동로그인 취소니까  기존 저장된 uid 도 지워주자
+                    //왜냐면 uid 가 계속 남아잇으면,  해당 자동로그인 코드가
+                    //로그인 화면에서 계속 진행되니까..
+                    val sharedPreferences=this@MainLoginActivity.getSharedPreferences(getString(R.string.shared_preference_name_for_store_uid),Context.MODE_PRIVATE)
+                    with(sharedPreferences.edit()){
+                        remove(getString(com.example.leedonghun.sellinguseditemapp.R.string.shared_key_for_auto_login))
+                        commit()
+                    }
 
                 }
 
@@ -393,6 +427,8 @@ class MainLoginActivity : AppCompatActivity() {
                                 val intent_to_go_main_activity=Intent(this@MainLoginActivity,SellingUsedMainActivity::class.java)
                                 startActivity(intent_to_go_main_activity)
 
+                                finish()
+
                             }
 
                             //이메일은 가입이 되어잇지만, 회원가입 경로가 다름
@@ -407,7 +443,7 @@ class MainLoginActivity : AppCompatActivity() {
                                 DeleteSnsData(this@MainLoginActivity).Sns_login_signOut()
                             }
 
-                            result.resultcode==3 -> {//중복되는 이메일이 없어 중복 가능능
+                            result.resultcode==3 -> {//중복되는 이메일이 없어 회원가입 가능
 
                                Logger.v("사용중인 이메일이 아니라서  회원가입으로 넘어감")
 
@@ -420,7 +456,7 @@ class MainLoginActivity : AppCompatActivity() {
                                 //사용 가능한 이메일 이므로  인텐트로 넘긴다.
                                 //보내는 값이 1-> email 로그인 아이디를  생성 할때 , 0->  sns 로그인 아이디 생성 할때
                                 //값을 토대로 회원가입 용 뷰페이져의 4개 프래그먼트에서  3번째 프래그먼트(title -> 회원가입) 형태가 바뀌게됨.
-                                intent_to_go_to_MakeNewEmailLoginId.putExtra("check_sns_or_email", 0)
+                                intent_to_go_to_MakeNewEmailLoginId.putExtra("check_sns_or_email", sns_login)
                                 startActivity(intent_to_go_to_MakeNewEmailLoginId)
 
 

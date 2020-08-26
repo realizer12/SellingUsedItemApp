@@ -182,7 +182,7 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
                                     val callback_uid = result.uid //sns 회원가입후 로그인시 필요한 uid
                                     val callback_email=result.email
 
-                                    Logger.v("uuiduuiduuid ->  $callback_success, $callback_status, $callback_uid, $callback_email")
+                                    Logger.v("회원가입 callback 값  ->  $callback_success, $callback_status, $callback_uid, $callback_email")
                                     //회원 가입 성공
                                     if(callback_success) {
 
@@ -231,13 +231,20 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
 
                                             }
 
+
                                         }
 
+                                        //sns 토큰 및 저장된 sns 이메일  회원가입을 위해 가지고 있던 이메일 번호 싱글톤 리셋
+                                        DeleteSnsData(this@MakeNewLoginIdActivity).Sns_login_signOut()
                                         Toast.makeText(this@MakeNewLoginIdActivity,R.string.string_for_success_make_id,Toast.LENGTH_SHORT).show()
 
                                     }else{//회원 가입 실패
 
                                         Logger.v("회원가입 결과 -> $result -> 실패")
+
+                                        //sns 토큰 및 저장된 sns 이메일  회원가입을 위해 가지고 있던 이메일 번호 싱글톤 리셋
+                                        //지워도 어차피 json으로  가지고 있기 때문에  회원가입  현재 엑티비티라면 회원가입 진행 가능
+                                        DeleteSnsData(this@MakeNewLoginIdActivity).Sns_login_signOut()
                                         Toast.makeText(this@MakeNewLoginIdActivity,R.string.string_for_fail_make_id,Toast.LENGTH_SHORT).show()
 
                                         //회원가입 실패이므로,  current_pager_position 값
@@ -252,6 +259,10 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
                                 }else{//result null 일때
 
                                     Logger.v("회원가입  callback  받는 부분에서  response는 성공인데 result 값이 null 로 옴 -> $result")
+
+                                    //sns 토큰 및 저장된 sns 이메일  회원가입을 위해 가지고 있던 이메일 번호 싱글톤 리셋
+                                    //지워도 어차피 json으로  가지고 있기 때문에  회원가입  현재 엑티비티라면 회원가입 진행 가능
+                                    DeleteSnsData(this@MakeNewLoginIdActivity).Sns_login_signOut()
                                     Toast.makeText(this@MakeNewLoginIdActivity,R.string.string_for_fail_make_id,Toast.LENGTH_SHORT).show()
 
                                     //회원가입 실패이므로,  current_pager_position 값
@@ -265,7 +276,12 @@ class MakeNewLoginIdActivity :AppCompatActivity(),CheckMakeIdPagerCompleteStatus
                             override fun onFailure(call: Call<UploadNewMemberCallback>, t: Throwable) {
                                 Logger.v("회원가입 결과 에러-> ${t.message} -> 실패")
 
+
+                                //sns 토큰 및 저장된 sns 이메일  회원가입을 위해 가지고 있던 이메일 번호 싱글톤 리셋
+                                //지워도 어차피 json으로  가지고 있기 때문에  회원가입  현재 엑티비티라면 회원가입 진행 가능
+                                DeleteSnsData(this@MakeNewLoginIdActivity).Sns_login_signOut()
                                 Toast.makeText(this@MakeNewLoginIdActivity,R.string.string_for_fail_make_id,Toast.LENGTH_SHORT).show()
+
                                 //회원가입 실패이므로,  current_pager_position 값
                                 //을 다시  -1 해준다. -현재 페이지 유지
                                 --current_pager_positon

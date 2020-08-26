@@ -1,21 +1,29 @@
 package com.example.leedonghun.sellinguseditemapp.Activity
 
+
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
-import android.util.DisplayMetrics
 import android.view.View
 import android.widget.ImageView
-import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
-import androidx.core.view.marginBottom
+import com.example.leedonghun.sellinguseditemapp.Data.Login.LoginCallback
+import com.example.leedonghun.sellinguseditemapp.PrivateInfo.ServerIp
 import com.example.leedonghun.sellinguseditemapp.R
+import com.example.leedonghun.sellinguseditemapp.Retrofit.RetrofitClient
+import com.example.leedonghun.sellinguseditemapp.Singleton.GlobalClass
 import com.example.leedonghun.sellinguseditemapp.Util.KeyboardVisibilityUtils
 import com.example.leedonghun.sellinguseditemapp.Util.Logger
 import kotlinx.android.synthetic.main.email_login_activity.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 /**
@@ -32,6 +40,8 @@ class EmailLoginActivity :AppCompatActivity() {
 
     private lateinit var keyboardVisibilityUtils: KeyboardVisibilityUtils//키보드 visible 판단해주는  클래스
 
+    private lateinit var retrofitClient: RetrofitClient
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.email_login_activity)
@@ -42,9 +52,10 @@ class EmailLoginActivity :AppCompatActivity() {
         //로그인 입력 edittext에 가입한 이메일을 넣저준다.
         val intent= intent
         val email=intent.getStringExtra("maked_email")
-        
-        Logger.v("sadasdasdadsad -> $email")
-        editxt_for_add_login_email.setText(email)
+        if(email != null) {
+            editxt_for_add_login_email.setText(email)
+        }
+
 
         //뒤로 가기 버튼 클릭
         arrow_btn_for_back_to_login_activity.setOnClickListener {
@@ -93,6 +104,12 @@ class EmailLoginActivity :AppCompatActivity() {
         )//키보드 감지 끝.
 
 
+        //배경을 터치시 올라와있던 키보드를 숨겨줌
+        email_login_activity_entire_layout.setOnClickListener{
+
+            keyboardVisibilityUtils.hideKeyboard(this,it)
+
+        }
 
 
 
@@ -110,6 +127,10 @@ class EmailLoginActivity :AppCompatActivity() {
         btn_for_login.setOnClickListener {
             Logger.v("로그인 버튼 눌림")
 
+            //이메일로그인 실행
+            email_login(email = editxt_for_add_login_email.text.toString() ,
+                        password = editxt_for_add_login_password.text.toString() )
+
         }
 
         //아이디 찾기 버튼 눌렸을때
@@ -126,6 +147,84 @@ class EmailLoginActivity :AppCompatActivity() {
 
 
     }//onCreate()끝
+
+
+    //이메일 로그인을 진행한다.
+    //회원 확인후, 로그인이 되면, 메인으로 넘어간다.
+    //실패시  토스트와 함께 알려준다. 
+    fun email_login(email:String, password:String){
+        
+        Logger.v("email_login 실행됨")
+        retrofitClient= RetrofitClient(ServerIp.baseurl)
+        retrofitClient.apiService.email_user_login(email,password,GlobalClass.uniqueID)
+            .enqueue(object: Callback<LoginCallback>{
+
+                override fun onResponse(call: Call<LoginCallback>, response: Response<LoginCallback>) {
+                
+                    val response_value=response.body()
+                    val result_code=response_value?.resultcode
+                    val uid= response_value?.userUid
+
+                    Logger.v("값이 옴 -> $response_value   ${response.message()}")
+
+                    when(result_code){
+
+                        1-> { Logger.v("가입한 내역이 없는 이메일")
+                            Toast.makeText(this@EmailLoginActivity,R.string.string_for_no_history_for_join_email,Toast.LENGTH_SHORT).show()
+                        }
+
+                        2->{ Logger.v("이메일 로그인용 이메일이 아닌  sns 로그인 용임")
+                            Toast.makeText(this@EmailLoginActivity,R.string.string_for_different_email_status,Toast.LENGTH_SHORT).show()
+                        }
+
+
+                        3->{ Logger.v("성공적으로 로그인 가능함")
+                            // TODO: 2020-08-26 여기서  uid저장 하고 메인으로 넘어가기  그리고 flag 정리 해줘야됨
+                            Toast.makeText(this@EmailLoginActivity,R.string.string_for_alert_login_success,Toast.LENGTH_SHORT).show()
+
+                            //getpreference를  쓰기에는 로그인엑티비티에서도 로그인이 진행되므로..
+                            //서버로부터 받은 uid  shared에 commit 함.
+                            val store_user_uid: SharedPreferences =this@EmailLoginActivity.getSharedPreferences(
+                                getString(R.string.shared_preference_name_for_store_uid), Context.MODE_PRIVATE)
+
+                            with(store_user_uid.edit()){
+                                putString(getString(R.string.shared_key_for_auto_login),uid)
+                                commit()
+                            }
+
+
+                            //메인 엑티비티로  넘어감감
+                            val intent_to_go_main_activity= Intent(this@EmailLoginActivity,SellingUsedMainActivity::class.java)
+                            intent_to_go_main_activity.flags=Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK//이제  task 모두  clear시켜줌.
+                            startActivity(intent_to_go_main_activity)
+
+                            finish()
+                        }
+
+                        4->{ Logger.v("로그인 가능한데 auth_token 업데이트 에서 실패함.")
+                            Toast.makeText(this@EmailLoginActivity,R.string.string_for_fail_update_auth_token,Toast.LENGTH_SHORT).show()
+
+                        }
+
+
+                        5->{ Logger.v("로그인 비밀번호가 틀림")
+                            Toast.makeText(this@EmailLoginActivity,R.string.string_for_not_match_password,Toast.LENGTH_SHORT).show()
+
+                        }
+
+                    }
+
+                }
+
+
+                override fun onFailure(call: Call<LoginCallback>, t: Throwable) {
+                    Logger.v("이메일로그인  fail 값 callback 됨  -> ${t.message}")
+                }
+                
+            })
+        
+    }
+
 
 
 

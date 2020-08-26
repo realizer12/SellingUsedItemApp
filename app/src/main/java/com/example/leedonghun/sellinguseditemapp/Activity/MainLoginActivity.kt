@@ -369,9 +369,7 @@ class MainLoginActivity : AppCompatActivity() {
 
     //sns  로그인 여부 체크 해서
     //회원가입 창으로 넘어간다.
-    //일반 회원 가입의 경우는 그냥  넘어가고,
-    //sns 회원 가입의 경우는 서버에서 해당  로그인  이메일을 체크해서
-    //넘어가기 여부를 체크 한다.
+    //회원기록이 있으면,  토큰을 만들어 upadate한후, 메인으로 넘어간다.
     fun move_make_id_with_sns_login_check(sns_login:Int,sns_login_email:String){
 
         Logger.v("sns 로그인 체크 메소드 실행됨 ->  sns 로그인 체크 값 -> $sns_login, 로그인 이메일 -> $sns_login_email")
@@ -400,7 +398,7 @@ class MainLoginActivity : AppCompatActivity() {
                         when {
 
                             result.resultcode == 1 -> {//이미  가입한 회원임을 확인함
-//
+
                                 Logger.v("해당 sns 로그인으로 가입한 유저 맞음 -> $result")
 
                                 //유저 uid 받은거 sharepreference에 넣어주자

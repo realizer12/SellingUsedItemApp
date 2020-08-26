@@ -32,6 +32,9 @@ data class UploadNewMemberCallback(
     @SerializedName("uid")
     var uid:String,
 
+
+    //일반 로그인 회원의 경우 회원가입 완료후
+    //이메일로그인 화면으로 넘어갈떄  가입한 이메일을 같이 넘겨주기 위해 필요
     @SerializedName("email")
     var email:String
 

@@ -4,6 +4,7 @@ import com.example.leedonghun.sellinguseditemapp.Data.Login.AutoLoginCallback
 import com.example.leedonghun.sellinguseditemapp.Data.Login.GetNaverLoginResponse
 import com.example.leedonghun.sellinguseditemapp.Data.Login.LoginCallback
 import com.example.leedonghun.sellinguseditemapp.Data.Register.UploadNewMemberCallback
+import com.facebook.login.Login
 
 import okhttp3.ResponseBody
 import org.json.JSONObject
@@ -37,6 +38,22 @@ interface ApiService {
     fun auto_login_check(@Field("user_uid")user_uid:String,
                          @Field("uuid")uuid:String):Call<AutoLoginCallback>
 
+
+
+
+
+    //일반  이메일 사용 유저의 로그인을 진행
+    //다음의 경우의 수가 있음.
+    //1. 가입한 이력이 없는 경우 -> return result code =1  uid = null
+    //2. 가입한 이력이 있는데, sns_check가 0이상 일때  (0은 일반 로그인 )  return result code =2 uid null
+    //3. 성공적으로  로그인 -> return result code =3 uid = 해당 user의  uid
+    //4. 성공적인 로그인인데 auth_token 업데이트 가 안됨. -> result code 4 uid null
+    //5. 이메일은 맞는데  패스워드가 틀림.
+    @FormUrlEncoded
+    @POST("account/login/email_user_login.php")
+    fun email_user_login(@Field("user_email")user_email:String,
+                         @Field("user_password")user_password:String,
+                         @Field("uuid")uuid:String):Call<LoginCallback>
 
 
     //sns 로그인처리를 진행

@@ -1,8 +1,11 @@
 package com.example.leedonghun.sellinguseditemapp.Util
 
+import android.content.Context
 import android.graphics.Rect
+import android.view.View
 import android.view.ViewTreeObserver
 import android.view.Window
+import android.view.inputmethod.InputMethodManager
 
 
 /**
@@ -62,6 +65,14 @@ class KeyboardVisibilityUtils(
 
     fun detachKeyboardListeners() {
         window.decorView.viewTreeObserver.removeOnGlobalLayoutListener(onGlobalLayoutListener)
+    }
+
+
+
+    //키보드 숨기기
+    fun hideKeyboard(context: Context,view: View) {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
 }

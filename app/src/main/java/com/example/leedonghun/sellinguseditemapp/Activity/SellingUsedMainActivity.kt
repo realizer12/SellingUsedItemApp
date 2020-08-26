@@ -23,6 +23,8 @@ class SellingUsedMainActivity :AppCompatActivity(){
         Logger.v("실행")
 
 
+        // TODO: 2020-08-27 여기서 부터   이제  진행 ㄱㄱ 하자 
+
 
 
 

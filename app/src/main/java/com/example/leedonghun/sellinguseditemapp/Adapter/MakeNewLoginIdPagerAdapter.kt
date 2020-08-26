@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.leedonghun.sellinguseditemapp.Activity.MakeIdPagerFirstFragment
-import com.example.leedonghun.sellinguseditemapp.Activity.MakeIdPagerFourthFragment
 import com.example.leedonghun.sellinguseditemapp.Activity.MakeIdPagerSecondFragment
 import com.example.leedonghun.sellinguseditemapp.Activity.MakeIdPagerThirdFragment
 

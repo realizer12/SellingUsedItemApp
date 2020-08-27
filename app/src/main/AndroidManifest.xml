@@ -36,6 +36,7 @@
 
 
         <activity android:name=".Activity.SplashActivity"
+                  android:screenOrientation="portrait"
                   android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,18 +44,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.MainLoginActivity">
+        <activity android:name=".Activity.MainLoginActivity"
+                  android:screenOrientation="portrait">
 
         </activity>
         <activity android:name=".Activity.EmailLoginActivity"
+                  android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateAlwaysVisible|adjustPan">
 
         </activity>
         <activity android:name=".Activity.MakeNewLoginIdActivity"
+                  android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan" >
 
         </activity>
-        <activity android:name=".Activity.SellingUsedMainActivity">
+        <activity android:name=".Activity.SellingUsedMainActivity"
+                  android:screenOrientation="portrait">
 
         </activity>
     </application>

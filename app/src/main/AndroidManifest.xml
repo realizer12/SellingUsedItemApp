@@ -62,6 +62,10 @@
                   android:screenOrientation="portrait">
 
         </activity>
+        <activity android:name=".Activity.FindLoginEmailActivity"
+                  android:screenOrientation="portrait">
+
+        </activity>
     </application>
 
 </manifest>

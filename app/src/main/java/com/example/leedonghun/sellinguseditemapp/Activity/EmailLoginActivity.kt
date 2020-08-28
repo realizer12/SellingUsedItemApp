@@ -136,7 +136,8 @@ class EmailLoginActivity :AppCompatActivity() {
         //아이디 찾기 버튼 눌렸을때
         btn_for_find_id.setOnClickListener {
             Logger.v("아이디 찾기 버튼 눌림")
-
+            var intent_to_go_find_email=Intent(this,FindLoginEmailActivity::class.java)
+            startActivity(intent_to_go_find_email)
         }
 
         //비밀번호 찾기 버튼 눌림.

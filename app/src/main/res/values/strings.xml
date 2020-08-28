@@ -92,7 +92,10 @@
        <!-- 선호하는 상품 카테고리 선택시 back btn  -->
        <string name="string_for_back_btn_select_favor_category">선호 상품 카테고리 선택은 \n꼭 해야하는 절차입니다.\n지금 안하더라도,\n로그인시 하셔야 됩니다.\n\n그냥 넘어 가시겠습니까?</string>
 
-
+      
+   <!-- FindLoginEmailAcivity  string 용  -->
+      <string name="string_for_top_of_find_login_email_activity">아이디 찾기</string>
+      <string name="string_for_finish_btn">완료</string>
 
 
     <!-- 페이스북 로그인 api  사용관련  key  내용  -->

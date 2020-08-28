@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:id="@+id/find_email_login_activity_container"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_for_find_email_login_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="29dp"/>
+
+    <ImageView
+        android:id="@+id/back_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.04"
+        app:layout_constraintHorizontal_bias="0.03"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.09"
+        app:srcCompat="@drawable/arrow_icon_for_back" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/cookierun_regular"
+        android:text="@string/string_for_top_of_find_login_email_activity"
+        android:textColor="#000"
+        android:textSize="26sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.06"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_for_find_email_login_activity"
+        app:layout_constraintTop_toBottomOf="@+id/back_btn"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.6" />
+
+
+    <LinearLayout
+        android:id="@+id/linearlayout_for_input_phone_number_for_certification"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/custom_view_radius_with_white_background"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.08"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.87">
+
+
+        <EditText
+            android:id="@+id/editxt_for_add_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:backgroundTint="#00000000"
+            android:fontFamily="@font/cookierun_regular"
+            android:gravity="start|center_vertical"
+            android:hint="@string/string_for_hint_input_phonenumber_edittext"
+            android:inputType="phone"
+            android:paddingStart="13dp"
+            android:textColor="#000"
+            android:textColorHint="#858181"
+            android:textSize="14sp"/>
+
+
+
+
+        <Button
+            android:id="@+id/btn_for_get_certification_code"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#000"
+            android:background="@drawable/custom_login_btn_for_email_login_in_email_login_activity"
+            android:layout_weight="1.4"
+            android:fontFamily="@font/cookierun_regular"
+            android:text="@string/string_for_btn_get_certification_code" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_for_input_certification_sms_code"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/custom_view_radius_with_white_background"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintTop_toBottomOf="@+id/txt_for_show_remain_count_of_input_code"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.08"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.87">
+
+
+        <EditText
+            android:id="@+id/editxt_for_add_certification_code"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:fontFamily="@font/cookierun_regular"
+            android:gravity="start|center_vertical"
+            android:hint="@string/string_for_hint_input_SMS_certification_code_edittext"
+            android:inputType="number"
+            android:maxLength="5"
+            android:paddingStart="10dp"
+            android:textColor="#000"
+            android:textColorHint="#858181"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_for_input_certification_code_complete"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#000"
+            android:background="@drawable/custom_login_btn_for_email_login_in_email_login_activity"
+            android:layout_weight="1.4"
+            android:fontFamily="@font/cookierun_regular"
+            android:text="@string/string_for_btn_input_certication_code_complete" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_for_show_remain_count_of_input_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/string_for_count_txt"
+        android:textColor="#FF5F54"
+        android:textSize="20sp"
+        android:fontFamily="@font/cookierun_regular"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="invisible"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/linearlayout_for_input_phone_number_for_certification" />
+
+    <Button
+        android:id="@+id/complet_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/custom_btn_for_no_radius"
+        android:fontFamily="@font/cookierun_regular"
+        android:text="@string/string_for_finish_btn"
+        android:textColor="#000"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.08"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

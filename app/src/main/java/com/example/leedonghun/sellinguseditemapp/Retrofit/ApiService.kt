@@ -29,6 +29,16 @@ interface ApiService {
     fun server_connetion_test():Call<String>
 
 
+    //비밀번호 찾기랑  아이디 찾기  할때 핸드폰 인증은
+    //회원가입 때랑  서버 코드가 좀 달라져서
+    //따로 api를  구성함
+    @FormUrlEncoded
+    @POST("account/util/map_for_find_email_and_pws.php")
+    fun send_sms_auth_code_find_email_pws(@Field("phone_number")phone_number: String,
+                                          @Field("map_reason")reason: Int,
+                                          @Field("login_email")email:String?):Call<ResponseBody>
+
+
     //자동로그인 가능 여부 판단
     //서버로 auth_token  확인 할  정보를 보내서
     //서버에서 해쉬처리하여 저장된  auth_token과 맞는지 여부를 판단

@@ -339,7 +339,7 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
 
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
 
-                            Logger.v("회원가입용  인증키  체크 실패 결과 ->  ${t.toString()}")
+                            Logger.v("회원가입용  인증키  체크 실패 결과 ->  ${t.message}")
                         }
 
 

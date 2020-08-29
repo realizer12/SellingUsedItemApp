@@ -96,7 +96,16 @@
    <!-- FindLoginEmailAcivity  string 용  -->
       <string name="string_for_top_of_find_login_email_activity">아이디 찾기</string>
       <string name="string_for_finish_btn">완료</string>
-
+      <string name="string_for_plz_insert_phone_number">핸드폰 번호를  입력하세요</string>
+      <string name="string_for_not_match_phone_num_regular_expression">핸드폰 번호 특성이 아닙니다.</string>
+      <string name="string_for_someone_used_sell_phone">누군가 사용중인 핸드폰 번호 입니다.</string>
+      <string name="string_for_problem_on_http_communication">서버 통신 과정에서 문제가 생겼습니다.</string>
+      <string name="string_for_rewrite_auth_phone_number">번호 변경시, \n현재 보낸 인증코드는 무효화 됩니다.\n정말 번호 변경을 하시겠습니까? </string>
+      <string name="string_for_no">아니오</string>
+      <string name="string_for_yes">네</string>
+      <string name="string_for_ask_finish_activity">아이디 찾기가 진행중입니다.\n정말 그만두시겠습니까?</string>
+      <string name="string_for_email_show_title">해당 번호로 가입된 아이디 입니다.</string>
+      <string name="string_for_no_one_use_phone_number">등록된 핸드폰 번호가 아닙니다.</string>
 
     <!-- 페이스북 로그인 api  사용관련  key  내용  -->
       <string name="facebook_app_id">1279967912355965</string>

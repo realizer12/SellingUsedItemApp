@@ -154,7 +154,9 @@ class EmailLoginActivity :AppCompatActivity() {
     //회원 확인후, 로그인이 되면, 메인으로 넘어간다.
     //실패시  토스트와 함께 알려준다. 
     fun email_login(email:String, password:String){
-        
+
+        // TODO: 2020-08-29 여기서 이메일 정규식 체크 해주는 코드 추가 해주기   그렇게 해야 서버 호출을 줄일수 있음.
+
         Logger.v("email_login 실행됨")
         retrofitClient= RetrofitClient(ServerIp.baseurl)
         retrofitClient.apiService.email_user_login(email,password,GlobalClass.uniqueID)
@@ -180,7 +182,8 @@ class EmailLoginActivity :AppCompatActivity() {
 
 
                         3->{ Logger.v("성공적으로 로그인 가능함")
-                            // TODO: 2020-08-26 여기서  uid저장 하고 메인으로 넘어가기  그리고 flag 정리 해줘야됨
+
+
                             Toast.makeText(this@EmailLoginActivity,R.string.string_for_alert_login_success,Toast.LENGTH_SHORT).show()
 
                             //getpreference를  쓰기에는 로그인엑티비티에서도 로그인이 진행되므로..

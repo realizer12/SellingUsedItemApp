@@ -165,9 +165,7 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
                                 timer(
                                     view.txt_for_show_remain_count_of_input_code,
                                     timer_job,
-                                    view.editxt_for_add_certification_code,
-                                    view.btn_for_input_certification_code_complete,
-                                    view.btn_for_get_certification_code
+                                    view.editxt_for_add_certification_code
                                 )
 
 
@@ -399,9 +397,8 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
     //인증코드를 써야하는데, 이때  보여지는  timer 역할을 해주는 함수
     //코루틴을 사용해서  진행한다.
     fun timer(show_timer_txt:TextView,timer_job:Job,
-              input_auth_key_editext:EditText,
-              btn_for_input_auth_key:Button,
-              btn_for_rewrite_phone_number:Button) {
+              input_auth_key_editext:EditText
+    ) {
 
         var i:Int=180//180초  3분
 

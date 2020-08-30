@@ -43,6 +43,9 @@
        <string name="string_for_fail_update_auth_token">로그인 도중  에러가 발생하였습니다. error code -12</string>
        <string name="string_for_not_match_password">로그인 비밀번호가 틀립니다!</string>
        <string name="string_for_alert_login_success">성공적으로 로그인 하였습니다</string>
+       <string name="string_for_wrong_email_format">이메일 형식이 아닙니다.</string>
+
+
 
     <!-- MakeNewLoginIdActivity 뷰페이져 1 (약관 동의) string용  -->
        <!-- 뷰페이져 1일때 툴바 위치에 들어가는  이용약관 string    -->
@@ -106,6 +109,7 @@
       <string name="string_for_ask_finish_activity">아이디 찾기가 진행중입니다.\n정말 그만두시겠습니까?</string>
       <string name="string_for_email_show_title">해당 번호로 가입된 아이디 입니다.</string>
       <string name="string_for_no_one_use_phone_number">등록된 핸드폰 번호가 아닙니다.</string>
+
 
     <!-- 페이스북 로그인 api  사용관련  key  내용  -->
       <string name="facebook_app_id">1279967912355965</string>

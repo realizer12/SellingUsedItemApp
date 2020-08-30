@@ -8,6 +8,9 @@ import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -21,9 +24,12 @@ import com.example.leedonghun.sellinguseditemapp.Singleton.GlobalClass
 import com.example.leedonghun.sellinguseditemapp.Util.KeyboardVisibilityUtils
 import com.example.leedonghun.sellinguseditemapp.Util.Logger
 import kotlinx.android.synthetic.main.email_login_activity.*
+import kotlinx.android.synthetic.main.term_pager_third_fragment.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 
 /**
@@ -41,12 +47,16 @@ class EmailLoginActivity :AppCompatActivity() {
     private lateinit var keyboardVisibilityUtils: KeyboardVisibilityUtils//키보드 visible 판단해주는  클래스
 
     private lateinit var retrofitClient: RetrofitClient
-    
+
+    //뷰에 흔들림 효과를 주는 애니메이션
+    private lateinit var shake: Animation
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.email_login_activity)
         Logger.v("실행됨")
 
+        shake= AnimationUtils.loadAnimation(this,R.anim.shake)
 
         //일반 회원가입후  로그인 이메일 왔을때
         //로그인 입력 edittext에 가입한 이메일을 넣저준다.
@@ -127,9 +137,18 @@ class EmailLoginActivity :AppCompatActivity() {
         btn_for_login.setOnClickListener {
             Logger.v("로그인 버튼 눌림")
 
-            //이메일로그인 실행
-            email_login(email = editxt_for_add_login_email.text.toString() ,
-                        password = editxt_for_add_login_password.text.toString() )
+            //이메일 정규식 체크 안 맞을때
+            if(!check_email_regex_function(editxt_for_add_login_email.text.toString())){
+
+                Toast.makeText(this,R.string.string_for_wrong_email_format,Toast.LENGTH_SHORT).show()
+                make_clear_editext_with_wrong_value(editxt_for_add_login_email)
+
+            }else{//정규식 맞을때
+
+                //이메일로그인 실행
+                email_login(email = editxt_for_add_login_email.text.toString() ,
+                    password = editxt_for_add_login_password.text.toString() )
+            }
 
         }
 
@@ -143,19 +162,27 @@ class EmailLoginActivity :AppCompatActivity() {
         //비밀번호 찾기 버튼 눌림.
         btn_for_find_pwd.setOnClickListener {
             Logger.v("비밀번호 찾기 버튼 눌림")
-
+          
         }
 
 
     }//onCreate()끝
+
+    //이메일 중복 확인이랑 닉네임 중복 체크 할때 값이 잘못되면  해주는 처리
+    //동일한 처리여서  메소드 하나 따로 만듬.
+    fun make_clear_editext_with_wrong_value(editText: EditText){
+
+        //틀렸다는 애니메이션 주고, clear 한다음에 focus 처리
+        editText.startAnimation(shake)
+        editText.requestFocus()
+        editText.text.clear()
+    }
 
 
     //이메일 로그인을 진행한다.
     //회원 확인후, 로그인이 되면, 메인으로 넘어간다.
     //실패시  토스트와 함께 알려준다. 
     fun email_login(email:String, password:String){
-
-        // TODO: 2020-08-29 여기서 이메일 정규식 체크 해주는 코드 추가 해주기   그렇게 해야 서버 호출을 줄일수 있음.
 
         Logger.v("email_login 실행됨")
         retrofitClient= RetrofitClient(ServerIp.baseurl)
@@ -230,6 +257,19 @@ class EmailLoginActivity :AppCompatActivity() {
     }
 
 
+
+
+    //이메일 형식  체크 하는 기능
+    fun check_email_regex_function(email:String):Boolean{
+
+        //이메일 형식 맞는 지 확인 하는 정규식
+        val expression:String ="^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"
+
+        val pattern: Pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE)
+        val matcher: Matcher = pattern.matcher(email)
+
+        return matcher.matches()
+    }
 
 
 

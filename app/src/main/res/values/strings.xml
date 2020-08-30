@@ -110,6 +110,13 @@
       <string name="string_for_email_show_title">해당 번호로 가입된 아이디 입니다.</string>
       <string name="string_for_no_one_use_phone_number">등록된 핸드폰 번호가 아닙니다.</string>
 
+    <!-- FindLoginPwsActivity string  용 -->
+      <string name="string_for_top_of_login_pws_activity">비밀 번호 찾기</string>
+      <string name="string_for_hint_write_email">사용중인 이메일을 입력 하세요</string>
+      <string name="string_for_title_of_input_new_pws">새로운 비밀 번호 입력</string>
+
+
+
 
     <!-- 페이스북 로그인 api  사용관련  key  내용  -->
       <string name="facebook_app_id">1279967912355965</string>

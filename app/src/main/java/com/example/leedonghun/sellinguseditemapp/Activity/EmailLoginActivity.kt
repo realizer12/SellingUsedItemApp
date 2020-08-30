@@ -162,7 +162,8 @@ class EmailLoginActivity :AppCompatActivity() {
         //비밀번호 찾기 버튼 눌림.
         btn_for_find_pwd.setOnClickListener {
             Logger.v("비밀번호 찾기 버튼 눌림")
-          
+            var intent_to_go_find_pws=Intent(this,FindLoginPwsActivity::class.java)
+            startActivity(intent_to_go_find_pws)
         }
 
 

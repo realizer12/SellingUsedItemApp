@@ -320,22 +320,6 @@
 
     </LinearLayout>
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/input_new_pws_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        app:constraint_referenced_ids="linearlayout_for_double_check_new_login_pwd,
-                                       linearlayout_for_add_new_login_pwd,
-                                       textView2"/>
-
-    <androidx.constraintlayout.widget.Group
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        app:constraint_referenced_ids="linearlayout_for_input_certification_sms_code,
-                                       txt_for_show_remain_count_of_input_code"
-        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -78,12 +78,14 @@ class FindLoginEmailActivity:AppCompatActivity() {
 
     private lateinit var keyboardVisibilityUtils: KeyboardVisibilityUtils//키보드 visible 판단해주는  클래스  1-0
 
+    //현재 엑티비티  사용 상태  true false 여부
+    private var check_activity_working:Boolean=false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.find_login_email_activity)
 
-        //코루틴으로 시간초 진행
-        timer_job = Job()
+
 
         mInputMethodManager= this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         shake= AnimationUtils.loadAnimation(this,R.anim.shake)
@@ -114,31 +116,7 @@ class FindLoginEmailActivity:AppCompatActivity() {
         when(it){
 
             complet_btn->{//1-1
-
-                if(check_sms_request_ing){//count가  진행중일때는   한번더  alert 로 물어본다.
-                    Logger.v("완료 버튼 클릭됨 -> 아직  count 진행중이므로,  dialog 띄움")
-                    
-                    AlertDialog.Builder(this)
-                        .setCancelable(false)
-                        .setMessage(R.string.string_for_ask_finish_activity)
-                        .setPositiveButton(R.string.string_for_yes){dialog_for_finish_activity, which ->
-
-                            timer_job.cancel()
-                            finish()
-                        }
-                        .setNegativeButton(R.string.string_for_no){dialog_for_finish_activity,which->
-                            
-                            dialog_for_finish_activity.dismiss()
-                            
-                        }.show()
-                        
-                    
-                }else{//count진행 아닐때는  바로 finish
-
-                    Logger.v("완료 버튼 클릭됨 -> 엑티비티 종료 가능")
-                    finish()
-                }
-                
+                onBackPressed()
             }//1-1 끝
 
 
@@ -234,12 +212,18 @@ class FindLoginEmailActivity:AppCompatActivity() {
                             //sms 요청 중 상태로 바꿔줌
                             check_sms_request_ing = true
 
+
+                            //현재 엑티비티 진행 체크  true로 바꿔줌.
+                            check_activity_working= true
+
+
                             //인증 번호에sms 보냈으니까  이번에는
                             //인증 번호 쓰는 editext 포커스 넣어줌.
                             editxt_for_add_certification_code.requestFocus()
 
 
-
+                            //코루틴으로 시간초 진행
+                            timer_job = Job()
                             timer(
                                 txt_for_show_remain_count_of_input_code,
                                 timer_job,
@@ -297,6 +281,8 @@ class FindLoginEmailActivity:AppCompatActivity() {
                     txt_for_login_email.visibility=View.INVISIBLE
 
                     check_sms_request_ing=false//인증 중 상태 초기화
+                    check_activity_working=false
+
 
                     timer_job.cancel()//현재  인증 코드 넣기위한  타이머는 cancel 시켜줌.
 
@@ -315,8 +301,6 @@ class FindLoginEmailActivity:AppCompatActivity() {
 
                     //다시 진행할 때는 원래  background를 유지해야하므로,  다시  기존 bacground 적용해준다.
                     linearlayout_for_input_certification_sms_code.setBackgroundResource(R.drawable.custom_view_radius_with_white_background)
-
-
 
                     //인증 여부  무효화 시켜줌.
                     check_auth_correct=false
@@ -392,8 +376,10 @@ class FindLoginEmailActivity:AppCompatActivity() {
                             txt_for_login_email.visibility=View.VISIBLE
                             txt_for_login_email.text = email
 
-                            check_sms_request_ing=false
-                            
+
+                            //모든 프로세스가 끝났으니 false로 처리
+                            check_activity_working=false
+
                             //인증 완료 여부 true로
                             check_auth_correct=true
 
@@ -466,7 +452,7 @@ class FindLoginEmailActivity:AppCompatActivity() {
 
         Logger.v("뒤로 가기 버튼 클릭 이벤트")
 
-        if(check_sms_request_ing){//count가  진행중일때는   한번더  alert 로 물어본다.
+        if(check_activity_working){//count가  진행중일때는   한번더  alert 로 물어본다.
             Logger.v("완료 버튼 클릭됨 -> 아직  count 진행중이므로,  dialog 띄움")
 
             AlertDialog.Builder(this)
@@ -530,7 +516,7 @@ class FindLoginEmailActivity:AppCompatActivity() {
             //시간 초과 니까 인증키 넣는  editet  막음
             input_auth_key_editext.isEnabled=false
 
-            check_sms_request_ing=false
+            check_activity_working=false
             timer_job.cancel()//시간 초과 됬으니까  job cancel 해줌
         }
 

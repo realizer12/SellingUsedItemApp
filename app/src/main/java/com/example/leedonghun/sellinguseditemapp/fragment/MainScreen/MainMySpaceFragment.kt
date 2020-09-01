@@ -9,24 +9,24 @@ import com.example.leedonghun.sellinguseditemapp.R
 
 /**
  * SellingUsedItemApp
- * Class: MainHomeFragment.
+ * Class: MainMySpaceFragment.
  * Created by leedonghun.
  * Created On 2020-09-01.
  * Description:
  *
- * 중고마켓 메인 화면중에서
- * HOME에  해당 하는
+ * 메인 화면에서 내공간  화면을
+ * 보여준다.
+ *
  */
-class MainHomeFragment :Fragment() {
+
+class MainMySpaceFragment:Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val view:View=inflater.inflate(R.layout.main_home_fragment,container,false)
-
+        val view=inflater.inflate(R.layout.main_my_space_fragment,container,false)
 
         return view
-    }//oncreateview 끝
-
+    }
 
 
 }

@@ -89,5 +89,10 @@ dependencies {
     //kotlin 용 확장 및  코루틴 적용  room
     implementation "androidx.room:room-ktx:$room_version"
 
+    // Android Jetpack support for Navigation
+    def navigation_version = '2.3.0'
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-runtime:$navigation_version"
 
 }

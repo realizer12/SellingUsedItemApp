@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/MainHomeFragment">
+    <fragment
+        android:id="@+id/MainHomeFragment"
+        android:name="com.example.leedonghun.sellinguseditemapp.fragment.MainScreen.MainHomeFragment"
+        android:label="main_home_fragment"
+        tools:layout="@layout/main_home_fragment">
+        <action
+            android:id="@+id/action_basicInfoInputFragment_to_diseaseCheckFragment"
+            app:destination="@id/MainExchangeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/MainExchangeFragment"
+        android:name="com.example.leedonghun.sellinguseditemapp.fragment.MainScreen.MainMyExchangeFragment"
+        android:label="main_exchange_fragment"
+        tools:layout="@layout/main_my_exchange_fragment">
+        <action
+            android:id="@+id/action_basicInfoInputFragment_to_diseaseCheckFragment"
+            app:destination="@id/mainChattingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainChattingFragment"
+        android:name="com.example.leedonghun.sellinguseditemapp.fragment.MainScreen.MainChattingFragment"
+        android:label="MainChattingFragment"
+        tools:layout="@layout/main_chatting_fragment">
+        <action
+            android:id="@+id/action_mainChattingFragment_to_mainAuctionFragment"
+            app:destination="@id/mainAuctionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainAuctionFragment"
+        android:name="com.example.leedonghun.sellinguseditemapp.fragment.MainScreen.MainAuctionFragment"
+        android:label="MainAuctionFragment"
+        tools:layout="@layout/main_auction_fragment">
+        <action
+            android:id="@+id/action_mainAuctionFragment_to_mainMySpaceFragment"
+            app:destination="@id/mainMySpaceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainMySpaceFragment"
+        android:name="com.example.leedonghun.sellinguseditemapp.fragment.MainScreen.MainMySpaceFragment"
+        android:label="MainMySpaceFragment"
+        tools:layout="@layout/main_my_space_fragment"/>
+
+</navigation>

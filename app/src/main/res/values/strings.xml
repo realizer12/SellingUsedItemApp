@@ -136,7 +136,12 @@
 
 
 
-
+    <!-- 메인 bottom navigation view에 메뉴 string  -->
+      <string name="menu_for_home">홈</string>
+      <string name="menu_for_my_exchange">내 거래</string>
+      <string name="menu_for_chatting">채팅</string>
+      <string name="menu_for_auction">경매 장</string>
+      <string name="menu_for_myspace">내 공간</string>
 
     <!--  네이버 로그인 api 사용관련  string -->
       <string name="nhn_oauth_client_id">9E9Q7UU3U4Qt7zG_M9k5</string>

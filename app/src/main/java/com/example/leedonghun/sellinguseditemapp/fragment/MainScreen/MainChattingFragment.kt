@@ -9,23 +9,23 @@ import com.example.leedonghun.sellinguseditemapp.R
 
 /**
  * SellingUsedItemApp
- * Class: MainHomeFragment.
+ * Class: MainChattingFragment.
  * Created by leedonghun.
  * Created On 2020-09-01.
  * Description:
  *
- * 중고마켓 메인 화면중에서
- * HOME에  해당 하는
+ *로그인 후 보이는 메인 화면에서
+ *채팅 리스트를 보여주는  화면이다.
+ *
  */
-class MainHomeFragment :Fragment() {
+class MainChattingFragment:Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        val view:View=inflater.inflate(R.layout.main_home_fragment,container,false)
+        val view=inflater.inflate(R.layout.main_chatting_fragment,container,false)
 
 
         return view
-    }//oncreateview 끝
+    }
 
 
 

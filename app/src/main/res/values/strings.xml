@@ -118,7 +118,9 @@
       <string name="string_for_wrong_regex_of_email">이메일 형식이 맞지 않습니다.</string>
       <string name="string_for_empty_result">작성하신 정보와 일치하는 회원이 없습니다.</string>
       <string name="string_for_sns_email">작성하신 정보는 sns회원 입니다.\n해당 sns 플랫폼에 문의 주세요</string>
-      <string name="string_for_back_btn_click">비밀번호 찾기가 진행중입니다.\n정말 그만두시겠습니까?</string>
+      <string name="string_for_back_btn_click">아직 비밀번호 찾기가 진행중입니다.\n정말 그만두시겠습니까?</string>
+      <string name="string_for_complete_btn">돌아가기</string>
+      <string name="string_for_complete_btn_password_change_available">비밀번호 변경하기</string>
 
     <!-- 페이스북 로그인 api  사용관련  key  내용  -->
       <string name="facebook_app_id">1279967912355965</string>

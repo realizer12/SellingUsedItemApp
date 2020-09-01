@@ -130,7 +130,7 @@
         android:layout_height="0dp"
         android:background="@drawable/custom_btn_for_no_radius"
         android:fontFamily="@font/cookierun_regular"
-        android:text="@string/string_for_finish_btn"
+        android:text="@string/string_for_complete_btn"
         android:textColor="#000"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"

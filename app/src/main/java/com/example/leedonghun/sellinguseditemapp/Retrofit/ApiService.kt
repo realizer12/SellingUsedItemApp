@@ -29,6 +29,16 @@ interface ApiService {
     fun server_connetion_test():Call<String>
 
 
+     //일반 로그인 유저의 경우
+     //비밀번호 찾기에서  새 비밀번호로  변경이 가능하다.
+     //해당 처리용 api를 구성함.
+     @FormUrlEncoded
+     @POST("account/change_user_info/change_user_password.php")
+     fun change_login_password(@Field("new_password")new_password_with_saltvalue:JSONObject,
+                               @Field("login_email")login_email: String):Call<ResponseBody>
+
+
+
     //비밀번호 찾기랑  아이디 찾기  할때 핸드폰 인증은
     //회원가입 때랑  서버 코드가 좀 달라져서
     //따로 api를  구성함

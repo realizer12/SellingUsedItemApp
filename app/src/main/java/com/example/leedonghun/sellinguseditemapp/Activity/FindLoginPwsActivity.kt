@@ -17,9 +17,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.leedonghun.sellinguseditemapp.Dialog.LoadingDialog
 import com.example.leedonghun.sellinguseditemapp.PrivateInfo.ServerIp
 import com.example.leedonghun.sellinguseditemapp.R
+import com.example.leedonghun.sellinguseditemapp.Retrofit.ApiService
 import com.example.leedonghun.sellinguseditemapp.Retrofit.RetrofitClient
 import com.example.leedonghun.sellinguseditemapp.Util.KeyboardVisibilityUtils
 import com.example.leedonghun.sellinguseditemapp.Util.Logger
+import com.example.leedonghun.sellinguseditemapp.Util.MakePassWordSecurity
 import kotlinx.android.synthetic.main.find_login_pws_activity.*
 import kotlinx.coroutines.*
 import okhttp3.ResponseBody
@@ -78,8 +80,9 @@ class FindLoginPwsActivity :AppCompatActivity() {
     //비밀번호 정규식 입력 판단 결과  default 값 false
     var check_pws_regex_result:Boolean = false
 
-    //현재 엑티비티 password체크
-    private var check_password_complete:Boolean=false
+    //패스워드랑  패스워드 체크 부분  같은지 여부 체크
+    private var check_double_password_check:Boolean=false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -126,7 +129,21 @@ class FindLoginPwsActivity :AppCompatActivity() {
 
             complet_btn->{//1-1
                 Logger.v("완료 버튼 클릭됨")
-                onBackPressed()
+
+                //패스워드 정규식 및  패스워드 확인 값과  일치할때
+                if(check_pws_regex_result && check_double_password_check){
+
+                    val email=editext_for_write_use_email.text.toString()
+                    val password=editxt_for_add_new_pwd.text.toString()
+
+                    //비밀번호 변경 진행
+                    change_password(password = password,login_email = email)
+
+                }else{
+
+                    onBackPressed()
+                }
+
             }
 
             find_pws_activity_container->{//1-3
@@ -380,8 +397,11 @@ class FindLoginPwsActivity :AppCompatActivity() {
                        txt_for_show_double_check_new_pwd_available_or_not.text = "일치"
                        txt_for_show_double_check_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_view_radius_with_green_bacground)
 
+                   }else{
+                       txt_for_show_double_check_new_pwd_available_or_not.text="입력 대기 중"
+                       txt_for_show_double_check_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_login_btn_for_email_login_in_email_login_activity)
                    }
-                   check_password_complete = true
+                   check_double_password_check = true
 
                }else{//일치 하지 않을 경우
 
@@ -390,23 +410,14 @@ class FindLoginPwsActivity :AppCompatActivity() {
                        Logger.v("비밀번호 더블 체크  일치 하지 않음")
                        txt_for_show_double_check_new_pwd_available_or_not.text="불일치"
                        txt_for_show_double_check_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_view_radius_with_red_background)
-                   }else{//일치 하지 않고 아무것도 안쓴 경우
-                       Logger.v("비밀번호 더블 체크 아무것도 안 써져잇음")
-
-                       txt_for_show_double_check_new_pwd_available_or_not.text="입력 대기 중"
-                       txt_for_show_double_check_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_login_btn_for_email_login_in_email_login_activity)
-
                    }
 
-
-
-
-                   check_password_complete=false
+                   check_double_password_check=false
 
 
                }
 
-           }else{//패스워드 더블 체크 editxt
+           }else if(s.hashCode()==editxt_for_double_check_new_pwd.text.hashCode()){//패스워드 더블 체크 editxt
 
                //입력한 패스워드
                val written_password= editxt_for_add_new_pwd.text.toString()
@@ -419,8 +430,11 @@ class FindLoginPwsActivity :AppCompatActivity() {
                        txt_for_show_double_check_new_pwd_available_or_not.text = "일치"
                        txt_for_show_double_check_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_view_radius_with_green_bacground)
 
-                   }
-                   check_password_complete = true
+                   }else{
+                   txt_for_show_double_check_new_pwd_available_or_not.text="입력 대기 중"
+                   txt_for_show_double_check_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_login_btn_for_email_login_in_email_login_activity)
+                  }
+                   check_double_password_check = true
 
                }else{//일치 하지 않을 경우
 
@@ -434,9 +448,19 @@ class FindLoginPwsActivity :AppCompatActivity() {
                        txt_for_show_double_check_new_pwd_available_or_not.text="입력 대기 중"
                        txt_for_show_double_check_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_login_btn_for_email_login_in_email_login_activity)
                    }
-                   check_password_complete=false
+                   check_double_password_check = false
                }
            }
+
+            //패스워드 정규식 및  패스워드 확인 값과  일치할때
+            if(check_pws_regex_result && check_double_password_check){
+                complet_btn.setText(R.string.string_for_complete_btn_password_change_available)
+                complet_btn.setBackgroundResource(R.drawable.custom_btn_for_no_radius_with_complete_check_color)
+
+            }else{
+                complet_btn.setText(R.string.string_for_complete_btn)
+                complet_btn.setBackgroundResource(R.drawable.custom_btn_for_no_radius)
+            }
 
         }
       }//textwatcher끝
@@ -625,6 +649,40 @@ class FindLoginPwsActivity :AppCompatActivity() {
     }
 
 
+    //서버에 등록된 패스워드를 바꿔준다.
+    fun change_password(password:String,login_email:String){
+        Logger.v("패스워드 바뀌기 실행")
+
+
+        //패스워드 해쉬 처리하고 salt 값 같이 넣어주기위해 패스워드보안 처리 클래스 가져옴
+        val password_with_salt_json=MakePassWordSecurity()
+
+        retrofitClient= RetrofitClient(ServerIp.baseurl)
+        retrofitClient.apiService.change_login_password( password_with_salt_json.make_sha_256_hash_value(password),login_email)
+            .enqueue(object:Callback<ResponseBody>{
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+
+                    //결과 값  1 = 성공,  2 = 실패
+                    val result=response.body()?.string()
+                     if(result.equals("1")){
+
+                         Toast.makeText(this@FindLoginPwsActivity,"성공",Toast.LENGTH_SHORT).show()
+
+                     }else{
+                         Toast.makeText(this@FindLoginPwsActivity,"실패",Toast.LENGTH_SHORT).show()
+                     }
+
+                }
+
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                    Logger.v("패스워드 변경 실패 -> ${t.message}")
+
+                }
+            })
+
+    }//change_password()끝
 
 
     //이메일 정규식 틀리거나, 핸드폰 특성 틀릳때

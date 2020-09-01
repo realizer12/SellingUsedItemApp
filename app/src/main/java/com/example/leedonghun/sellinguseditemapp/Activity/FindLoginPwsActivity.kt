@@ -341,7 +341,7 @@ class FindLoginPwsActivity :AppCompatActivity() {
 
 
 
-    //패스워드 체크
+    //패스워드 체크용 텍스트 watcher
     val textWatcher:TextWatcher = object:TextWatcher{
 
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {

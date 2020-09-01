@@ -31,7 +31,6 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -353,12 +352,16 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
                 //더블 체크 값이랑  입력한 패스워드가 일치 할 경우
                 if(written_password == view.editxt_for_double_check_new_pwd.text.toString()){
 
-                    Logger.v("비밀번호 더블 체크  일치 함")
+                    if(view.editxt_for_double_check_new_pwd.length()>0) {
+                        Logger.v("비밀번호 더블 체크  일치 함")
+                        view.txt_for_show_double_check_new_pwd_available_or_not.text = "일치"
+                        view.txt_for_show_double_check_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_view_radius_with_green_bacground)
 
-                    view.txt_for_show_double_check_new_pwd_available_or_not.text="일치"
-                    view.txt_for_show_double_check_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_view_radius_with_green_bacground)
-
-                    check_pws_double_check_status=true
+                    }else{
+                        view.txt_for_show_double_check_new_pwd_available_or_not.text="입력 대기 중"
+                        view.txt_for_show_double_check_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_login_btn_for_email_login_in_email_login_activity)
+                    }
+                    check_pws_double_check_status = true
 
                 }else{//일치 하지 않을 경우
 
@@ -369,12 +372,6 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
                         view.txt_for_show_double_check_new_pwd_available_or_not.text="불일치"
                         view.txt_for_show_double_check_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_view_radius_with_red_background)
 
-
-                    }else{//일치 하지 않고 아무것도 안쓴 경우
-                        Logger.v("비밀번호 더블 체크 아무것도 안 써져잇음")
-
-                        view.txt_for_show_double_check_new_pwd_available_or_not.text="입력 대기 중"
-                        view.txt_for_show_double_check_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_login_btn_for_email_login_in_email_login_activity)
 
                     }
 
@@ -414,11 +411,16 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
                 //더블 체크 값이랑  입력한 패스워드가 일치 할 경우
                 if(written_password == view.editxt_for_double_check_new_pwd.text.toString()){
 
-                    Logger.v("비밀번호 더블 체크  일치 함")
-                    view.txt_for_show_double_check_new_pwd_available_or_not.text="일치"
-                    view.txt_for_show_double_check_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_view_radius_with_green_bacground)
+                    if(view.editxt_for_double_check_new_pwd.length()>0) {
+                        Logger.v("비밀번호 더블 체크  일치 함")
+                        view.txt_for_show_double_check_new_pwd_available_or_not.text = "일치"
+                        view.txt_for_show_double_check_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_view_radius_with_green_bacground)
 
-                    check_pws_double_check_status=true
+                    }else{
+                        view.txt_for_show_double_check_new_pwd_available_or_not.text="입력 대기 중"
+                        view.txt_for_show_double_check_new_pwd_available_or_not.setBackgroundResource(R.drawable.custom_login_btn_for_email_login_in_email_login_activity)
+                    }
+                    check_pws_double_check_status = true
 
                 }else{//일치 하지 않을 경우
 

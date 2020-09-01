@@ -32,4 +32,4 @@ class SellingUsedMainActivity :AppCompatActivity(){
 
 
 
-}
+}//SellingUsedMainActivity 클래스 끝

@@ -665,20 +665,24 @@ class FindLoginPwsActivity :AppCompatActivity() {
                     //결과 값  1 = 성공,  2 = 실패
                     val result=response.body()?.string()
                      if(result.equals("1")){
+                         Logger.v("비밀번호 변경 성공")
 
-                         Toast.makeText(this@FindLoginPwsActivity,"성공",Toast.LENGTH_SHORT).show()
+                          Toast.makeText(this@FindLoginPwsActivity,R.string.string_for_change_password_success,Toast.LENGTH_SHORT).show()
+
+                         //현재 엑티비티 종료
+                         finish()
 
                      }else{
-                         Toast.makeText(this@FindLoginPwsActivity,"실패",Toast.LENGTH_SHORT).show()
+                         Logger.v("비밀번호 변경 실패")
+                         Toast.makeText(this@FindLoginPwsActivity,R.string.string_For_error_on_change_password,Toast.LENGTH_SHORT).show()
                      }
 
                 }
 
 
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-
                     Logger.v("패스워드 변경 실패 -> ${t.message}")
-
+                    Toast.makeText(this@FindLoginPwsActivity,R.string.string_For_error_on_change_password,Toast.LENGTH_SHORT).show()
                 }
             })
 

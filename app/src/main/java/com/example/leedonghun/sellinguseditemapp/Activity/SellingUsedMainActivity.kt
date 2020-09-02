@@ -2,8 +2,12 @@ package com.example.leedonghun.sellinguseditemapp.Activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import com.example.leedonghun.sellinguseditemapp.R
 import com.example.leedonghun.sellinguseditemapp.Util.Logger
+import kotlinx.android.synthetic.main.selling_used_main_activity.*
+
 
 /**
  * SellingUsedItemApp
@@ -17,11 +21,12 @@ import com.example.leedonghun.sellinguseditemapp.Util.Logger
  */
 class SellingUsedMainActivity :AppCompatActivity(){
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.selling_used_main_activity)
         Logger.v("실행")
-
+        setUpNavigation()
 
         // TODO: 2020-08-27 여기서 부터   이제  진행 ㄱㄱ 하자 
 
@@ -30,6 +35,17 @@ class SellingUsedMainActivity :AppCompatActivity(){
 
     }//oncreate() 끝
 
+    fun setUpNavigation() {
+
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment?
+
+        NavigationUI.setupWithNavController(
+            bottom_navigation_view,
+            navHostFragment!!.navController
+        )
+
+    }
 
 
 }//SellingUsedMainActivity 클래스 끝

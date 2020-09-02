@@ -17,13 +17,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_graph"/>
+        app:navGraph="@navigation/navigation_graph_with_bottom_nav"
+        />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@drawable/bottom_navigation_background"
+        android:theme="@style/bottom_nav_menu_fontfamily"
         app:menu="@menu/main_bottom_nav_items"
+        app:itemIconTint="@color/colorblack"
+        app:itemTextColor="@color/colorblack"
         app:itemHorizontalTranslationEnabled="false"
         app:labelVisibilityMode="labeled"
         app:layout_constraintHeight_default="percent"

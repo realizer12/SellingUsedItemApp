@@ -2,46 +2,51 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/MainHomeFragment">
+    android:id="@+id/navigation_graph_with_bottom_nav"
+    app:startDestination="@id/home">
+
     <fragment
-        android:id="@+id/MainHomeFragment"
+        android:id="@+id/home"
         android:name="com.example.leedonghun.sellinguseditemapp.fragment.MainScreen.MainHomeFragment"
-        android:label="main_home_fragment"
+        android:label="MainHomeFragment"
         tools:layout="@layout/main_home_fragment">
+
         <action
-            android:id="@+id/action_basicInfoInputFragment_to_diseaseCheckFragment"
-            app:destination="@id/MainExchangeFragment" />
+            android:id="@+id/action_home_to_exchange"
+            app:destination="@id/exchange" />
     </fragment>
     <fragment
-        android:id="@+id/MainExchangeFragment"
+        android:id="@+id/exchange"
         android:name="com.example.leedonghun.sellinguseditemapp.fragment.MainScreen.MainMyExchangeFragment"
-        android:label="main_exchange_fragment"
+        android:label="MainMyExchangeFragment"
         tools:layout="@layout/main_my_exchange_fragment">
+
         <action
-            android:id="@+id/action_basicInfoInputFragment_to_diseaseCheckFragment"
-            app:destination="@id/mainChattingFragment" />
+            android:id="@+id/action_exchange_to_chatting"
+            app:destination="@id/chatting" />
     </fragment>
     <fragment
-        android:id="@+id/mainChattingFragment"
+        android:id="@+id/chatting"
         android:name="com.example.leedonghun.sellinguseditemapp.fragment.MainScreen.MainChattingFragment"
         android:label="MainChattingFragment"
         tools:layout="@layout/main_chatting_fragment">
+
         <action
-            android:id="@+id/action_mainChattingFragment_to_mainAuctionFragment"
-            app:destination="@id/mainAuctionFragment" />
+            android:id="@+id/action_chatting_to_auction"
+            app:destination="@id/auction" />
     </fragment>
     <fragment
-        android:id="@+id/mainAuctionFragment"
+        android:id="@+id/auction"
         android:name="com.example.leedonghun.sellinguseditemapp.fragment.MainScreen.MainAuctionFragment"
         android:label="MainAuctionFragment"
         tools:layout="@layout/main_auction_fragment">
+
         <action
-            android:id="@+id/action_mainAuctionFragment_to_mainMySpaceFragment"
-            app:destination="@id/mainMySpaceFragment" />
+            android:id="@+id/action_auction_to_myspace"
+            app:destination="@id/myspace" />
     </fragment>
     <fragment
-        android:id="@+id/mainMySpaceFragment"
+        android:id="@+id/myspace"
         android:name="com.example.leedonghun.sellinguseditemapp.fragment.MainScreen.MainMySpaceFragment"
         android:label="MainMySpaceFragment"
         tools:layout="@layout/main_my_space_fragment"/>

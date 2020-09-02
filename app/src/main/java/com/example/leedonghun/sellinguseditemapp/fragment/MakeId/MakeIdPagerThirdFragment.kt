@@ -209,7 +209,7 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
                                     Toast.makeText(activity,"사용 가능한 이메일 입니다!",Toast.LENGTH_SHORT).show  ()
 
                                     //이메일 확인 후,  다시 입력 하고 싶을수 있으므로
-                                    view.btn_for_dupulicate_check_new_login_email.text="다시 입력"
+                                    view.btn_for_dupulicate_check_new_login_email.text="변경 하기"
 
                                     //확인 되었을 경우는 초록색으로  가시적으로 알려준다.
                                     view.linearlayout_for_add_new_login_email.setBackgroundResource(R.drawable.custom_view_radius_with_green_bacground)
@@ -520,7 +520,7 @@ class MakeIdPagerThirdFragment(private val check_sns_or_email:Int,context: Conte
                                    Toast.makeText(activity,"사용 가능한 닉네임 입니다.",Toast.LENGTH_SHORT).show()
 
                                    //버튼 text변경
-                                   view.btn_for_dupulicate_check_new_nickname.text="다시 입력"
+                                   view.btn_for_dupulicate_check_new_nickname.text="변경 하기"
 
                                    //닉네임 입력 막음
                                    view.editxt_for_add_new_nickname.isEnabled=false

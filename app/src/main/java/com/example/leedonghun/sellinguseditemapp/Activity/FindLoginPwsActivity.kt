@@ -507,7 +507,7 @@ class FindLoginPwsActivity :AppCompatActivity() {
                             Logger.v("일반 이메일 로그인")
                             // TODO: 2020-08-31 일반 이메일 로그인이어서  인증코드 발행됨 -> 이제 인증코드 group visible 로 만들고 인증 코드 확인 하는거 진행하기
                             auth_view_visible(visible = true)//인증 코드 받는  뷰그룹 visible로
-                            btn_for_get_certification_code.text = "다시 받기"
+                            btn_for_get_certification_code.text = "변경 하기"
 
                             //핸드폰 번호 쓰는  ediitext와 이메일 적는  editext는 더이상 글을 쓰지 못하게 막는다.
                             editxt_for_add_phone_number.isEnabled = false

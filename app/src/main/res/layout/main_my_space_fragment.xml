@@ -191,7 +191,23 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_for_auction_vod_list" />
-
+    <TextView
+        android:id="@+id/txt_for_logout"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@drawable/main_my_space_tv_ripple_effect"
+        android:fontFamily="@font/cookierun_regular"
+        android:gravity="center_vertical"
+        android:paddingStart="60dp"
+        android:text="@string/string_for_logout"
+        android:textColor="@color/colorblack"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_for_game" />
     <ImageView
         android:id="@+id/upload_product_icon"
         android:layout_width="30dp"

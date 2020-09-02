@@ -142,7 +142,7 @@ class MakeIdPagerSecondFragment(context: Context):Fragment() {
                                 //다이얼로그로  인증 번호 보냄을 알려준다.
                                 //sms 보내기 성공 했으니,  이제  시간 초안에
                                 //문자로 받은  인증 코드를 적어줘야되게  숨겨 놨던 인증 코드 입력 뷰 보여 줌
-                                view.btn_for_get_certification_code.text = "다시 받기"
+                                view.btn_for_get_certification_code.text = "변경 하기"
                                 view.txt_for_show_remain_count_of_input_code.visibility =
                                     View.VISIBLE
                                 view.linearlayout_for_input_certification_sms_code.visibility =

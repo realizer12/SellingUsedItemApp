@@ -35,6 +35,8 @@ class SellingUsedMainActivity :AppCompatActivity(){
 
     }//oncreate() 끝
 
+
+    //bottom navigation을  jetpack navigation controller로 연결
     fun setUpNavigation() {
 
         val navHostFragment = supportFragmentManager

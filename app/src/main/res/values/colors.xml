@@ -8,4 +8,6 @@
     <color name="color_light_green">#39D61D</color>
     <color name="white">#ffffff</color>
     <color name="beige">#F9E5A8</color>
+    <color name="dark_beige">#FDCB31</color>
+    <color name="colorgrey">#C4C4C4</color>
 </resources>

@@ -1,19 +1,241 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_my_space_fragment_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="내공간"
-        android:textSize="20dp"
-        android:textColor="@color/colorblack"
-        app:layout_constraintBottom_toBottomOf="parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <!-- 회원 정보 담는 constraint    -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bagie_bacground_wirh_bottom_black_line"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.23"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/profile_img"
+            app:civ_border_color="@color/colorblack"
+            app:civ_border_width="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/guideline3"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.7"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_for_user_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/string_for_nickname_null"
+            android:textSize="16sp"
+            android:layout_marginStart="12dp"
+            android:textColor="@color/colorblack"
+            android:fontFamily="@font/cookierun_bold"
+            android:layout_marginBottom="13dp"
+            app:layout_constraintBottom_toTopOf="@+id/txt_for_present_coin"
+            app:layout_constraintStart_toStartOf="@id/guideline3"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+
+        <TextView
+            android:id="@+id/txt_for_present_coin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:layout_marginStart="13dp"
+            android:text="@string/string_for_present_coin_amount"
+            android:textColor="@color/colorblack"
+            android:fontFamily="@font/cookierun_bold"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline3"
+            app:layout_constraintTop_toBottomOf="@+id/txt_for_user_nickname" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.35" />
+
+        <Button
+            android:id="@+id/btn_for_profile_edit"
+            style="@style/button_style_for_myspace"
+            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="10dp"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_bias="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_for_user_nickname"
+            app:layout_constraintStart_toEndOf="@+id/txt_for_user_nickname"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/string_for_edit_profile" />
+        <Button
+            android:id="@+id/btn_for_charge_coin"
+            style="@style/button_style_for_myspace"
+            android:layout_height="30dp"
+            android:layout_width="55dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_bias="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_for_present_coin"
+            app:layout_constraintStart_toEndOf="@+id/txt_for_present_coin"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/string_for_charge_coin" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/txt_for_my_upload_product"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@drawable/main_my_space_tv_ripple_effect"
+        android:fontFamily="@font/cookierun_regular"
+        android:gravity="center_vertical"
+        android:paddingStart="60dp"
+        android:text="@string/string_for_my_upload_product"
+        android:textColor="@color/colorblack"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+    <TextView
+        android:id="@+id/txt_for_my_favorite"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@drawable/main_my_space_tv_ripple_effect"
+        android:fontFamily="@font/cookierun_regular"
+        android:gravity="center_vertical"
+        android:paddingStart="60dp"
+        android:text="@string/string_for_my_favorite"
+        android:textColor="@color/colorblack"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_for_my_upload_product" />
+
+    <TextView
+        android:id="@+id/txt_for_exchange_list"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@drawable/main_my_space_tv_ripple_effect"
+        android:fontFamily="@font/cookierun_regular"
+        android:gravity="center_vertical"
+        android:paddingStart="60dp"
+        android:text="@string/string_for_exchange_list"
+        android:textColor="@color/colorblack"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_for_my_favorite" />
+
+    <TextView
+        android:id="@+id/txt_for_auction_vod_list"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@drawable/main_my_space_tv_ripple_effect"
+        android:fontFamily="@font/cookierun_regular"
+        android:gravity="center_vertical"
+        android:paddingStart="60dp"
+        android:text="@string/string_for_auction_vod_list"
+        android:textColor="@color/colorblack"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_for_exchange_list" />
+
+    <TextView
+        android:id="@+id/txt_for_game"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@drawable/main_my_space_tv_ripple_effect"
+        android:fontFamily="@font/cookierun_regular"
+        android:gravity="center_vertical"
+        android:paddingStart="60dp"
+        android:text="@string/string_for_game"
+        android:textColor="@color/colorblack"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_for_auction_vod_list" />
+
+    <ImageView
+        android:id="@+id/upload_product_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="12dp"
+        android:background="@drawable/upload_product_icon"
+        app:layout_constraintTop_toTopOf="@id/txt_for_my_upload_product"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_for_my_upload_product"
+        app:layout_constraintStart_toStartOf="@+id/txt_for_my_upload_product" />
+    <ImageView
+        android:id="@+id/my_favorite_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="12dp"
+        android:background="@drawable/my_favorite_icon"
+        app:layout_constraintTop_toTopOf="@id/txt_for_my_favorite"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_for_my_favorite"
+        app:layout_constraintStart_toStartOf="@+id/txt_for_my_favorite" />
+    <ImageView
+        android:id="@+id/exchange_list_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="12dp"
+        android:background="@drawable/exchange_list_icon"
+        app:layout_constraintTop_toTopOf="@id/txt_for_exchange_list"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_for_exchange_list"
+        app:layout_constraintStart_toStartOf="@+id/txt_for_exchange_list" />
+
+    <ImageView
+        android:id="@+id/auction_vod_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="12dp"
+        android:background="@drawable/auction_vod_icon"
+        app:layout_constraintTop_toTopOf="@id/txt_for_auction_vod_list"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_for_auction_vod_list"
+        app:layout_constraintStart_toStartOf="@+id/txt_for_auction_vod_list" />
+    <ImageView
+        android:id="@+id/game_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="12dp"
+        android:background="@drawable/game_icon"
+        app:layout_constraintTop_toTopOf="@id/txt_for_game"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_for_game"
+        app:layout_constraintStart_toStartOf="@+id/txt_for_game" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,11 +21,20 @@
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
-
+    <!-- 메인 화면  bottom 네비게이션 뷰의 style -->
     <style name="bottom_nav_menu_fontfamily">
         <item name="android:fontFamily">@font/cookierun_regular</item>
         <item name="android:textSize">11sp</item>
     </style>
+
+    <!--    -->
+    <style name="button_style_for_myspace">
+        <item name="android:fontFamily">@font/cookierun_bold</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:background">@drawable/myspace_porifle_btn_background</item>
+        <item name="android:textColor">@color/colorblack</item>
+    </style>
+
 
 
 </resources>

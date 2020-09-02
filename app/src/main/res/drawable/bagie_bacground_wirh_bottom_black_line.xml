@@ -10,8 +10,8 @@
         </shape>
     </item>
 
-   <!-- 위쪽만 bordler적용    -->
-    <item android:top="1.5dp" >
+    <!-- 위쪽만 bordler적용    -->
+    <item android:bottom="1.5dp" >
         <shape android:shape="rectangle">
             <stroke android:width="2dp" android:color="@color/beige" />
             <solid android:color="@color/beige" />
@@ -19,5 +19,3 @@
     </item>
 
 </layer-list>
-
-

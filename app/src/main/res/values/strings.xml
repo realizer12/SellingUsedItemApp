@@ -148,6 +148,15 @@
       <string name="nhn_oauth_client_secret">zCUERTfMee</string>
       <string name="nhn_oauth_client_name">중고마켓</string>
 
-
-
+ 
+    <!-- main activity 에서  my_space 쪽 -->
+       <string name="string_for_edit_profile">프로필 편집</string>
+       <string name="string_for_charge_coin">충전</string>
+       <string name="string_for_present_coin_amount">현재 보유 코인:</string>
+       <string name="string_for_nickname_null">닉네임 error</string>
+       <string name="string_for_my_upload_product">내가 올린 물건 &#160;7개 보기 &#160;및 &#160;새 물건 올리기</string>
+       <string name="string_for_my_favorite">관심 목록</string>
+       <string name="string_for_exchange_list">거래 내역</string>
+       <string name="string_for_auction_vod_list">경매 VOD</string>
+       <string name="string_for_game">시간 때우기</string>
 </resources>

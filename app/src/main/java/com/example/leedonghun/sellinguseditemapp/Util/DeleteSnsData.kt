@@ -58,13 +58,30 @@ class DeleteSnsData(private val context: Context) {
         }
 
 
-
         //일단 signletone 지워줌.
         //기존에  회원가입용 signleton은  회원가입 끝날때  다 리셋 시키자.
         SnsEmailValue.delete_sns_email()
         //회원가입용  핸드폰 번호도 지워줌
         AuthPoneNum.delete_phone_num()
 
+    }
+
+
+    //가입후  로그인의 경우는  uid지워주는 행위를 통해
+    //로그아웃 처리를 할수 있다
+    //그때 sns기록이 있으면 해당 기록도 모두 지워준다.
+    fun logot_erase_uid(){
+
+        Sns_login_signOut()
+
+        //자동로그인 취소니까  기존 저장된 uid 도 지워주자
+        //왜냐면 uid 가 계속 남아잇으면,  해당 자동로그인 코드가
+        //로그인 화면에서 계속 진행되니까..
+        val sharedPreferences=context.getSharedPreferences(context.getString(R.string.shared_preference_name_for_store_uid),Context.MODE_PRIVATE)
+        with(sharedPreferences.edit()){
+            remove(context.getString(R.string.shared_key_for_auto_login))
+            commit()
+        }
     }
 
 }

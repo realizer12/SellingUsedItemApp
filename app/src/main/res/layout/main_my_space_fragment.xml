@@ -254,4 +254,13 @@
         app:layout_constraintTop_toTopOf="@id/txt_for_game"
         app:layout_constraintBottom_toBottomOf="@+id/txt_for_game"
         app:layout_constraintStart_toStartOf="@+id/txt_for_game" />
+    <ImageView
+        android:id="@+id/logout_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="12dp"
+        android:background="@drawable/logout_icon"
+        app:layout_constraintTop_toTopOf="@id/txt_for_logout"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_for_logout"
+        app:layout_constraintStart_toStartOf="@+id/txt_for_logout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -162,4 +162,5 @@
        <string name="string_for_auction_vod_list">경매 VOD</string>
        <string name="string_for_game">시간 때우기</string>
        <string name="string_for_logout">로그아웃</string>
+       <string name="string_for_logout_alert">정말 로그아웃 하시겠습니까??</string>
 </resources>

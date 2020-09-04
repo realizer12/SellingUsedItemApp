@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.leedonghun.sellinguseditemapp.Activity.MainLoginActivity
+import com.example.leedonghun.sellinguseditemapp.Activity.MyUploadedLisActivity
 import com.example.leedonghun.sellinguseditemapp.R
+import com.example.leedonghun.sellinguseditemapp.Singleton.GlobalClass
 import com.example.leedonghun.sellinguseditemapp.Util.DeleteSnsData
 import kotlinx.android.synthetic.main.main_my_space_fragment.view.*
 
@@ -33,7 +35,7 @@ class MainMySpaceFragment:Fragment() {
 
 
        view.txt_for_logout.setOnClickListener(clickListener)//로그아웃 버튼 1-1
-
+       view.txt_for_my_upload_product.setOnClickListener(clickListener)//내가 올린 물건들 보러가기 1-2
 
 
         return view
@@ -63,7 +65,15 @@ class MainMySpaceFragment:Fragment() {
                         dialog_for_logout.dismiss()
                     }.show()
 
-            }
+            }//1-1 끝
+
+            view?.txt_for_my_upload_product->{//1-2
+
+                //내 업로드 엑티비티로 가기
+                val intent_to_go_my_upload_activity=Intent(requireActivity(),MyUploadedLisActivity::class.java)
+                startActivity(intent_to_go_my_upload_activity)
+
+            }//1-2끝
 
 
         }

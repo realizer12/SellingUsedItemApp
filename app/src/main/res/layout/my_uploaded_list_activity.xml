@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topbar_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bagie_bacground_wirh_bottom_black_line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.09"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/arrow_back_btn_img"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/topbar_container"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.47"
+            app:layout_constraintHorizontal_bias="0.015"
+            app:layout_constraintStart_toStartOf="@+id/topbar_container"
+            app:layout_constraintTop_toTopOf="@+id/topbar_container"
+            app:layout_constraintVertical_weight="1"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.12"
+            app:srcCompat="@drawable/arrow_icon_for_back" />
+
+        <TextView
+            android:id="@+id/txt_for_activity_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="@string/string_for_topbar_title"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/colorblack"
+            android:fontFamily="@font/cookierun_regular"
+            app:layout_constraintTop_toTopOf="@+id/topbar_container"
+            app:layout_constraintBottom_toBottomOf="@+id/topbar_container"
+            app:layout_constraintStart_toEndOf="@+id/arrow_back_btn_img"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/upload_new_product_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/dark_beige"
+        android:clickable="true"
+        android:focusable="true"
+        app:fabSize="normal"
+        app:borderWidth="1dp"
+        app:backgroundTint="@color/colorblack"
+        app:srcCompat="@drawable/upload_new_products_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.93"
+        app:layout_constraintHorizontal_bias="0.93"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        tools:layout_editor_absoluteX="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topbar_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="59dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

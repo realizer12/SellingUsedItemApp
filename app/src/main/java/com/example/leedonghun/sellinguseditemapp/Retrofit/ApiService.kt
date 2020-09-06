@@ -1,5 +1,6 @@
 package com.example.leedonghun.sellinguseditemapp.Retrofit
 
+import com.example.leedonghun.sellinguseditemapp.Data.GetUserInFo.GetBasicUserInFo
 import com.example.leedonghun.sellinguseditemapp.Data.Login.AutoLoginCallback
 import com.example.leedonghun.sellinguseditemapp.Data.Login.GetNaverLoginResponse
 import com.example.leedonghun.sellinguseditemapp.Data.Login.LoginCallback
@@ -27,6 +28,15 @@ interface ApiService {
     //retrofit 서버 통신 되는지  test용
     @POST("retrofitt_server_connection_check.php")
     fun server_connetion_test():Call<String>
+
+
+    //유저의 기본적인 프로필 내용을 가지고온다.
+    //myspace에서  유저의 프로필 이미지와 ,  닉네임  그리고 코인 보유량을
+    //서버에서 가져와  보여주기위한  api
+    @FormUrlEncoded
+    @POST("account/get_user_info/get_user_basic_info.php")
+    fun get_user_profile_info(@Field("uid")user_uid:String):Call<GetBasicUserInFo>
+
 
 
      //일반 로그인 유저의 경우

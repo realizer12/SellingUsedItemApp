@@ -40,7 +40,6 @@
             android:id="@+id/txt_for_user_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/string_for_nickname_null"
             android:textSize="16sp"
             android:layout_marginStart="12dp"
             android:textColor="@color/colorblack"

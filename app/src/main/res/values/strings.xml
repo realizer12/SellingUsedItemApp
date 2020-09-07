@@ -168,5 +168,15 @@
      <!-- my_uploaded_list_activity -->
          <string name="string_for_topbar_title">내가 올린 물건들</string>
 
-
+     <!-- update_user_info_dialog  string-->
+         <string name="string_for_dialog_title">내 프로필 편집</string>
+         <string name="string_for_profie_img_edit">프로필 사진 편집</string>
+         <string name="string_for_nick_name_title">닉네임:</string>
+         <string name="string_for_pws_title">비밀번호:</string>
+         <string name="string_for_pws_confirmation">비밀번호\n확인:</string>
+         <string name="string_for_nickname_hint">바꾸실 닉네임을 입력하세요!</string>
+         <string name="string_for_pws_hint">바꾸실 비밀번호를 입력하세요!</string>
+         <string name="string_for_pws_check_hint">비밀번호 한번더 입력하세요!</string>
+         <string name="string_for_edit_cancel_btn">편집 취소</string>
+         <string name="string_for_edit_complete_btn">편집 하기</string>
 </resources>

@@ -8,11 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.leedonghun.sellinguseditemapp.Activity.MainLoginActivity
 import com.example.leedonghun.sellinguseditemapp.Activity.MyUploadedLisActivity
 import com.example.leedonghun.sellinguseditemapp.Data.GetUserInFo.GetBasicUserInFo
+import com.example.leedonghun.sellinguseditemapp.Dialog.UpdateUserInFoDialog
 import com.example.leedonghun.sellinguseditemapp.PrivateInfo.ServerIp
 import com.example.leedonghun.sellinguseditemapp.R
 import com.example.leedonghun.sellinguseditemapp.Retrofit.RetrofitClient
@@ -39,6 +41,7 @@ import retrofit2.Response
 class MainMySpaceFragment:Fragment() {
 
     lateinit var retrofitClient: RetrofitClient
+    lateinit var myspace_fragment_dialog: UpdateUserInFoDialog
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -62,6 +65,10 @@ class MainMySpaceFragment:Fragment() {
         view.txt_for_logout.setOnClickListener(clickListener)//로그아웃 버튼 1-1
         view.txt_for_my_upload_product.setOnClickListener(clickListener)//내가 올린 물건들 보러가기 1-2
         view.btn_for_profile_edit.setOnClickListener(clickListener)//프로필 편집 클릭됨 1-3
+
+
+        myspace_fragment_dialog= UpdateUserInFoDialog()
+
 
         return view
     }
@@ -112,6 +119,8 @@ class MainMySpaceFragment:Fragment() {
             btn_for_profile_edit->{//1-3
 
                 Logger.v("프로필 편집 눌림")
+                myspace_fragment_dialog.show(requireActivity().supportFragmentManager,"update_info_dialog")
+
 
             }
 

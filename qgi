@@ -1,0 +1,347 @@
+[33mcommit 5160971c39bbd96ea22840e8842ffa232c00d05e[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Mon Sep 7 10:56:18 2020 +0900
+
+    bottomnavigationview 프래그먼트 중복  클릭되는 거  막기위해 reselect listener 추가 시킴
+
+[33mcommit 9b4a45df93ab773e6e40f9ca025b50972a084122[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Sun Sep 6 23:23:49 2020 +0900
+
+    myspace 프래그먼트에서  유저의 기본정보를  서버로부터 받아오는 작업 추가
+
+[33mcommit 2bf517eb9a811f067766c05ab3d3ab26ee795f45[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Fri Sep 4 21:39:39 2020 +0900
+
+    MyUploadedListActivity xml 구성 및 기본 동작 기능 추가
+
+[33mcommit 63c17ce0e315a2c636ac11b77028f247caa7ab13[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Wed Sep 2 23:45:28 2020 +0900
+
+    로그아웃  기능 추가
+
+[33mcommit 6c797f142265873dc364c10212f562516c0fb83d[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Wed Sep 2 22:58:45 2020 +0900
+
+     개인 정보 다시 찾기 및  회원가입 부분에서 '다시 받기' 멘트 '변경 하기'로 수정
+
+[33mcommit 383397816032f785eb0595e8b45e6f45d090b9c4[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Wed Sep 2 22:52:14 2020 +0900
+
+    비밀번호 찾기 성공시 처리되는 동작  빠진거  추가
+
+[33mcommit 3a324ee64e3cca5e6cceaac48a847a6dde5500f5[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Wed Sep 2 22:43:59 2020 +0900
+
+    메인화면 내공간 fragment  xml 구성 완료 및 몇몇 뷰 클릭시 ripple 효과  추가
+
+[33mcommit 5ac9b585dab80bc6da746730647a9df82965c9bc[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Wed Sep 2 14:22:16 2020 +0900
+
+    메인화면 bottomnavigation view와 jetpack navigcation 컴포넌트 연결  완료
+
+[33mcommit afe4d9fdc91154d72a088691c185f305cdc68ffc[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Tue Sep 1 23:10:02 2020 +0900
+
+    메인 화면 기본 구성(프래그먼트 생성 및 연결 등등) 및 navigation 연결 && bottomnavigation_view  selector.xml 1차 추가
+
+[33mcommit 145ca3d2b056ec09c55ffee6edc8cd050bb6ee1d[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Tue Sep 1 21:13:34 2020 +0900
+
+    프래그먼트 쪽 폴더 용도별 분기에 따른 파일 경로 추가 수정
+
+[33mcommit 19a684811e2e9ffdce616b6c60ddae7d765b172e[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Tue Sep 1 21:00:11 2020 +0900
+
+    프래그먼트 폴더 용도 별 분기 및 파일 경로 이동
+
+[33mcommit 3360d887ead0846e174784094aec0d7e5d21f072[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Tue Sep 1 20:10:17 2020 +0900
+
+    회원가입 에서  패스워드 textwatcher 부분 몇몇 에러  수정
+
+[33mcommit e7335c2eb96c8b4317b609bf2d7ea199a705b057[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Tue Sep 1 19:50:10 2020 +0900
+
+     패스워드 찾기 2차 수정 및 완료
+
+[33mcommit b92abc6a8d73bae1bd56767f2ac152a3942b0ecb[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Tue Sep 1 00:18:17 2020 +0900
+
+    패스워드  찾기 부분  1차 수정  - 2차 수정 필요
+
+[33mcommit 9e53f021a58acc685bdea1dc0490b2c75664456c[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Tue Sep 1 00:17:40 2020 +0900
+
+    이메일 찾기 부분 다시받기 기능 에서  리셋 안되는 곳  수정
+
+[33mcommit c1dc7170e33c36e22eeb20733f34f486af0e7c0f[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Sun Aug 30 23:59:44 2020 +0900
+
+    패스워드 찾기 용 엑티비티  xml 구성 및  기본  버튼 동작들 구현
+
+[33mcommit 81f4f97eb71c84be3b33bc6bdf9b5d1c56b07f81[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Sun Aug 30 22:19:29 2020 +0900
+
+    EmailLoginActivity.kt 에  이메일 정규식 체크 기능 추가
+
+[33mcommit 60fe77c7a89809cb1c45840a03ff8a6d89149f41[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Sat Aug 29 23:01:35 2020 +0900
+
+    로그인 이메일 찾기 기능 추가
+
+[33mcommit d7f75ecf210959209221584ce3f99bd506ac6f84[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Fri Aug 28 22:40:38 2020 +0900
+
+    키보드 visible 관련 지원하는 uilt 클래스  default 생성자  추가ㅏ
+
+[33mcommit d8ab88c4257d60a488f30688e42974eb85e2acb7[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Fri Aug 28 22:39:54 2020 +0900
+
+    아이디 찾기 부분 xml  구현 및  버튼 처리 추가
+
+[33mcommit 8c19ed916796b21e9f9d595ab95c97fdfed8571f[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Thu Aug 27 22:49:36 2020 +0900
+
+    현재 까지 만들어진 엑티비티 orientation -> portrait 속성 적용
+
+[33mcommit 865e71f7e2dce850fe90c907c3b97d17658b7933[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Thu Aug 27 00:15:06 2020 +0900
+
+    일반 이메일 유저 로그인  처리 진행
+
+[33mcommit c8120274a580b49f982474f5be3e3fd26cf965a9[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Wed Aug 26 02:34:40 2020 +0900
+
+    <오늘부터 한글로 남기자>  ||  회원가입 완료 후, 일반 유저와 sns 유저 분기해서 처리 추가
+
+[33mcommit 0a29dbc43c9f109bd71c68f2bb8b14793921ca0c[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Thu Aug 20 16:29:16 2020 +0900
+
+    make auto_login function by certificating with auth_token from server
+
+[33mcommit f76000047cd1905b02ea49de07d06c1af38540f9[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Thu Aug 20 01:00:48 2020 +0900
+
+    make sns login callback function in mainloginactivity.kt
+
+[33mcommit 98765a3697a2a9c9dffe1d06daeace182fcbca6d[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Thu Aug 13 01:27:13 2020 +0900
+
+    add fcm library for getting app uuid with firebaseinstanceid and confirm that specific id
+
+[33mcommit 797706304a8f1815d47dc44a163cb44881eb4fc0[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Wed Aug 12 00:27:55 2020 +0900
+
+    change remained log code to logger
+
+[33mcommit 70a299868b4cb4c2a425b996c54bd9ab0aeaffd5[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Tue Aug 11 17:51:25 2020 +0900
+
+    add Logger class for handling Log when project release
+
+[33mcommit 483e983e5802fc5264ac4855b0cac7f9b8bf67c3[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Sat Aug 8 23:21:33 2020 +0900
+
+     make (new sns login user) can  make their user_id in  makeidactivity
+
+[33mcommit 2ead575dea98467d79ae6770c08ca495caf39d08[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Sat Aug 8 01:35:58 2020 +0900
+
+    add naver login api function  and trim code for all sns login function in mainactivity
+
+[33mcommit a6702aaa4d28f29c04c315efafb20d60ebbca4b3[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Thu Aug 6 01:00:35 2020 +0900
+
+    make SNS Login function (with google  and  facebook api)
+
+[33mcommit da285a46544acbaf2d50947ce457ab3316463aed[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Mon Jul 13 23:38:13 2020 +0900
+
+    make code for upload new memeber info to db server;
+
+[33mcommit afd40e125f7bcfc5718e6f7ac62d50d5dbd6e729[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Sun Jul 12 22:48:45 2020 +0900
+
+    make interface for passing new member info to parent activity from third fragment in making new member
+
+[33mcommit 016c3bada91e251adc6502330a3e360a210a3ddb[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Sat Jul 11 22:38:02 2020 +0900
+
+    make duplicate_nickname_check function;
+
+[33mcommit 0c6124b8218e9d1542b3075a4e61c286a5ff9775[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Fri Jul 10 13:55:00 2020 +0900
+
+    make email_regex check funtion and pws_regex_funtion for make login id
+
+[33mcommit ea35dac2305743b7cafdc6ea64f6a887be57cd13[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Tue Jul 7 22:58:10 2020 +0900
+
+    make sigleton code for send checked number for register id to third fragment in (make id viewpager);
+
+[33mcommit 55848defe6e0cf8ebad115a83c7962ab60f8db62[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Fri Jul 3 23:54:35 2020 +0900
+
+    make sms_auth code and  make custom dialog for loading expression
+
+[33mcommit 21ad7452cf6a5a4daec467a5f870d62fe7933a6d[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Tue Jun 30 22:34:48 2020 +0900
+
+    add retrofit libaray and  test  server_android connection -> success
+
+[33mcommit 7e9de6c57fc1aae7ae84787a75b8b90b7e2d1ea4[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Tue Jun 30 19:06:29 2020 +0900
+
+    move fragments files to  fragment folder
+
+[33mcommit bbe89ad640991b9a1fd0e7582817e2c371b15fb5[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Tue Jun 30 08:24:14 2020 +0900
+
+    make shake animation for  edittext requestfocus event and add hide keyboard event when user touch background
+
+[33mcommit e9556c56bbf9d8fa1795a7be0005e21d5f3e764d[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Mon Jun 29 23:44:28 2020 +0900
+
+    make autofocus and keyboard on first editext in each make_id_fragments;
+
+[33mcommit 6893d123281916e6785d53a172c1d49ff3468320[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Sun Jun 28 23:16:14 2020 +0900
+
+    make xml for third_fragement of make new id
+
+[33mcommit d7dd7b1de9e93020c841102a63382dae6fd9581c[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Tue Jun 23 23:47:14 2020 +0900
+
+    complete the  keyboard and editext focusing issue in make_new_id_activity_ second page fragment
+
+[33mcommit f9856472ce78b567cc2dc8ad2b70dc1717657b53[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Sun Jun 21 00:00:25 2020 +0900
+
+    make up UI  of second pager fragment(phone number auth) in makenewloginid
+
+[33mcommit 1070873c6fe1a349f1cba07f0c6bb2336a9625e4[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Thu Jun 18 10:53:04 2020 +0900
+
+    Check make_id_fragment complete status in ParentActivity(MakeNewLoginIdActivity) using interface
+
+[33mcommit 1932d7acb25826c4c6e29c16efa78cc897e76a30[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Wed Jun 17 00:20:49 2020 +0900
+
+    make the  checking icon visibility function in 'MakeIdPagerFirstFragment'
+
+[33mcommit de60959aad2b1e5cf7d7e5a6165bb5eb57513e3b[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Tue Jun 16 00:41:44 2020 +0900
+
+    make viewpager in MakeNewLoginActivity with 4 fragments for making id step
+
+[33mcommit 26d5c761c4e366e8fb84864e057619cc6ccb34b6[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Sun Jun 14 22:20:40 2020 +0900
+
+    add comment for explain Keyboard detection working in EmailLoginActivity
+
+[33mcommit 0faf2fc5188f2f6ad0e27cd747255c3e6df5afef[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Sun Jun 14 22:12:14 2020 +0900
+
+    Make Keybaord detector util class and use it on login btn for moving-up when keyboard show up in EmailLoginActivity
+
+[33mcommit 67de37817046490700d88c05d39a800333f50c12[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Thu Jun 11 23:50:55 2020 +0900
+
+    finish to make entire layout of EmailLoginActivity
+
+[33mcommit 597638f090f2956f0dbee2bc59a88d02cc0b0186[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Wed Jun 10 12:48:28 2020 +0900
+
+    finish to make entire layout view of MainLoginActivity
+
+[33mcommit 6e0aee22319d3e3c7fcad2e8b153b271229bdb37[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Tue Jun 9 11:27:26 2020 +0900
+
+    new gif logo file and  png file for MainLoginActivity
+
+[33mcommit 19ca7a1f46a68327b35c951bf4ee4580f791e8aa[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Tue Jun 9 11:26:31 2020 +0900
+
+    Add gif logo into MainLoglinActivity with Glide library
+
+[33mcommit 4d39eb153f91b91749c38cccc32271df69c1eaec[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Mon Jun 8 20:52:18 2020 +0900
+
+    make the  splash activity(with custom logo) and make show-up loginactivity with fade in and fade out animation
+
+[33mcommit 856421606360f25638f95db013b30fd1cc2ebf54[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Tue Jun 2 13:03:58 2020 +0900
+
+    Add Recyclerview library on  gradle dependecy
+
+[33mcommit 79faf4ffbb1c584f7cc3ab5ce8f262496ea60dde[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Mon Jun 1 22:03:22 2020 +0900
+
+    Add 앱기획 word on the  README.md at first line
+
+[33mcommit 4d1062ea90e1d2f0efd4501e1b01643312602380[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Mon Jun 1 22:00:13 2020 +0900
+
+    Add first README.md file
+
+[33mcommit 26e962a5808cf86f64f7d401940affc23bd18629[m
+Author: LeeDonghun <dlwldlwldus123@gmail.com>
+Date:   Mon Jun 1 21:54:17 2020 +0900
+
+    first commit for upload github

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item>
+        <shape android:shape="rectangle" >
+            <stroke
+                android:width="2dp"
+                android:color="#FF000000" />
+            <solid android:color="@color/beige" />
+            <corners
+
+                android:bottomRightRadius="10dp"
+                android:topRightRadius="10dp"
+                android:topLeftRadius="0dp"
+                android:bottomLeftRadius="0dp" />
+        </shape>
+    </item>
+
+    <!-- 위쪽만 bordler적용    -->
+    <item android:bottom="2dp"
+        android:top="2dp"
+        android:end="2dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="2dp" android:color="@color/beige" />
+            <solid android:color="@color/beige" />
+
+            <!-- radius 정도   -->
+            <corners
+                android:bottomRightRadius="10dp"
+                android:topRightRadius="10dp"
+                android:topLeftRadius="0dp"
+                android:bottomLeftRadius="0dp" />
+
+        </shape>
+
+    </item>
+
+</layer-list>

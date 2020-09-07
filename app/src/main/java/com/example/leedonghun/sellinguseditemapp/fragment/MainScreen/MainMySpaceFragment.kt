@@ -42,7 +42,7 @@ class MainMySpaceFragment:Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
+        Logger.v("실행")
         //유저의 정보를 가지고 와서   기본정보 가져오기 진행
         val sharedPreferences=context.getSharedPreferences(getString(R.string.shared_preference_name_for_store_uid),
             Context.MODE_PRIVATE)
@@ -56,12 +56,12 @@ class MainMySpaceFragment:Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
+         Logger.v("실행")  
         val view=inflater.inflate(R.layout.main_my_space_fragment,container,false)
 
         view.txt_for_logout.setOnClickListener(clickListener)//로그아웃 버튼 1-1
         view.txt_for_my_upload_product.setOnClickListener(clickListener)//내가 올린 물건들 보러가기 1-2
-        btn_for_profile_edit.setOnClickListener(clickListener)//프로필 편집 클릭됨 1-3
+        view.btn_for_profile_edit.setOnClickListener(clickListener)//프로필 편집 클릭됨 1-3
 
         return view
     }
@@ -134,20 +134,18 @@ class MainMySpaceFragment:Fragment() {
 
                         Logger.v("기본 정보 가져오기 성공")
 
-                        val nickname=profile_result_null_check(response.body()?.nickname.toString(),0)
-                        val image_url=profile_result_null_check(response.body()?.image_url.toString(),1)
-                        val coin_amount=profile_result_null_check(response.body()?.coin_amount.toString(),2)
+                        val nickname=profile_result_null_check(response.body()?.nickname,0)
+                        val image_url=profile_result_null_check(response.body()?.image_url,1)
+                        val coin_amount=response.body()?.coin_amount
 
                         txt_for_user_nickname?.text = nickname
                         txt_for_present_coin?.text=String.format(getString(R.string.string_for_present_coin_amount),coin_amount)
 
-
-                        //이미지가 null이아니면 glide로 해당 url
-                        //적용해서 이미지 넣어줌.
-                        if(!image_url.isNullOrEmpty()){
+                        if(image_url.isNullOrEmpty()) {
+                            profile_image.setImageResource(R.drawable.profile_img)
+                        }else{
                             Glide.with(requireActivity()).load(image_url).into(profile_image)
                         }
-
 
                     }else{
 
@@ -170,18 +168,18 @@ class MainMySpaceFragment:Fragment() {
     //유저 프로필 정보를 받아올때
     //null 값으로 들어오는 부분에대한 처리이다.
     //null값으로 올수 있는 값들 nickname , imageurl
-    fun profile_result_null_check(info_value:String,value_status:Int):String?{
+    fun profile_result_null_check(info_value:String?,value_status:Int):String?{
 
         var return_value:String?=""
 
-        if(info_value == "null") {
+        if(info_value.isNullOrEmpty()) {
 
             when (value_status) {
                 0 -> {//닉네임일때
                    return_value= R.string.string_for_nickname_null.toString()
                 }
                 1 -> {//이미지 url
-                    return_value=null
+                    return_value= null
                 }
             }
 

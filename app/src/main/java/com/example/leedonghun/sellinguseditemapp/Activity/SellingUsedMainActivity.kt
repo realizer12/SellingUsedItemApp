@@ -1,7 +1,9 @@
 package com.example.leedonghun.sellinguseditemapp.Activity
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.leedonghun.sellinguseditemapp.R
@@ -42,10 +44,16 @@ class SellingUsedMainActivity :AppCompatActivity(){
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment?
 
+        val navController=navHostFragment!!.navController
+
         NavigationUI.setupWithNavController(
             bottom_navigation_view,
-            navHostFragment!!.navController
+            navController
         )
+
+        //프래그먼트  중복 실행을 방지하기 위해서 추가함
+        bottom_navigation_view.setOnNavigationItemReselectedListener {}
+
 
     }
 

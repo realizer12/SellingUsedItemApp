@@ -49,6 +49,10 @@
         android:id="@+id/myspace"
         android:name="com.example.leedonghun.sellinguseditemapp.fragment.MainScreen.MainMySpaceFragment"
         android:label="MainMySpaceFragment"
-        tools:layout="@layout/main_my_space_fragment"/>
+        tools:layout="@layout/main_my_space_fragment">
+        <action
+            android:id="@+id/action_myspace_to_home"
+            app:destination="@id/home" />
+    </fragment>
 
 </navigation>

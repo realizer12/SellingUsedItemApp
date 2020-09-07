@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.leedonghun.sellinguseditemapp.R
+import com.example.leedonghun.sellinguseditemapp.Util.Logger
 
 /**
  * SellingUsedItemApp
@@ -22,7 +23,7 @@ class MainHomeFragment :Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view:View=inflater.inflate(R.layout.main_home_fragment,container,false)
-
+        Logger.v("실행")
 
         return view
     }//oncreateview 끝

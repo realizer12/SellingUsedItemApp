@@ -2,21 +2,18 @@ package com.example.leedonghun.sellinguseditemapp.Dialog
 
 
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.constraintlayout.widget.Group
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.DialogFragment
+import com.bumptech.glide.Glide
 import com.example.leedonghun.sellinguseditemapp.R
 import com.example.leedonghun.sellinguseditemapp.Util.*
 import kotlinx.android.synthetic.main.update_user_info_dialog.*
+import kotlinx.android.synthetic.main.update_user_info_dialog.view.*
 
 
 /**
@@ -29,7 +26,11 @@ import kotlinx.android.synthetic.main.update_user_info_dialog.*
  * 유저의 정보를  업데이트 할때 사용하는
  * 다이얼로그를 생성한다.
  */
-class UpdateUserInFoDialog:DialogFragment() {
+class UpdateUserInFoDialog(
+    private var nickname:String,
+    private var profile_url: String?
+):DialogFragment()
+{
 
     //기기 화면 사이즈를 가져오는 클래스  1-1
     lateinit var getWindowSize: GetWindowSize
@@ -54,6 +55,14 @@ class UpdateUserInFoDialog:DialogFragment() {
         isCancelable = false//취소 불가
 
 
+        //기존 닉네임 넣어줌
+
+        view.edittxt_for_nickname.setText(nickname)
+        view.edittxt_for_nickname.setSelection(nickname.length)//cursor 맨뒤로
+
+        if(!(profile_url.isNullOrEmpty())){
+            Glide.with(requireActivity()).load(profile_url).into(view.profile_image)
+        }
 
 
         return view
@@ -71,22 +80,39 @@ class UpdateUserInFoDialog:DialogFragment() {
         change_profile_image_group.setAllOnClickListener(View.OnClickListener{
            Logger.v("프로필 사진 편집 눌림")
 
+
+            //api 23 (마쉬멜로우) 버전 이상 부터는 사용자가 권한
+            //체크를 진행한다.
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                //퍼미션 체크 진행
 
+                //사용자 퍼미션 체크 진행
                 PermissionCheck.apply {
-                    get_context(requireActivity())
-                    get_packagename(requireActivity().packageName)
 
-                    if (check_permissions(arrayOf(READ_EXTERNAL_STORAGE))) {
-                        Toast.makeText(requireActivity(), "다 허용됨", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(requireActivity(), "아직", Toast.LENGTH_SHORT).show()
+                    //true의 값은  현재 권한 체크를 진행하는
+                    //권한들이 전부 허용된 상태일때이다.
+                    if (isPermissionChecked(
+                        requst_permission_array = arrayOf(READ_EXTERNAL_STORAGE),
+                        packagename = requireActivity().packageName,
+                        activity = requireActivity())
+                    ){
+                        Logger.v("모든 권한 허용 됨")
+
+
+                        // TODO: 2020-09-11 모든 권한 허용에 따라 앨범에서 사진 가져오는 일을 진행한다.
+
+
+                    }else{//아직 허용 안된 권한이 있다.
+                        Logger.v("아직 허용 안된 권한이 존재")
+
                     }
-
                 }
+
             }else{
-                Toast.makeText(requireActivity(), "다 허용됨", Toast.LENGTH_SHORT).show()
+                //마쉬멜로우 버전 이하는 권한 체크가 설치 이전에 자동 허용된다.
+                //현재 버전의 min sdk 23이므로 상관 없지만, 혹시 몰라 else 넣어둠.
+
+                Logger.v("모든 권한 허용됨")
+
             }
 
         })//이미지 편집 2-1
@@ -98,7 +124,7 @@ class UpdateUserInFoDialog:DialogFragment() {
     }
 
 
-
+     //클릭 이벤트 모음
      val clickListener=View.OnClickListener {
 
          when(it){
@@ -140,7 +166,7 @@ class UpdateUserInFoDialog:DialogFragment() {
         //다이얼로그 크기 설정
         val params: ViewGroup.LayoutParams? = dialog?.window?.attributes
         params?.width = (getWindowSize.getX() * 0.93).toInt()//전체 넓이에 93% 크리고 설정
-        params?.height = (getWindowSize.getY() * 0.8).toInt()//전체 높이에 80% 크기로 설정
+        params?.height = (getWindowSize.getY() * 0.85).toInt()//전체 높이에 85% 크기로 설정
         dialog?.window?.attributes = params as WindowManager.LayoutParams
 
 

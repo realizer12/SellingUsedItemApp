@@ -7,8 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.leedonghun.sellinguseditemapp.Activity.MainLoginActivity
@@ -65,9 +63,6 @@ class MainMySpaceFragment:Fragment() {
         view.txt_for_logout.setOnClickListener(clickListener)//로그아웃 버튼 1-1
         view.txt_for_my_upload_product.setOnClickListener(clickListener)//내가 올린 물건들 보러가기 1-2
         view.btn_for_profile_edit.setOnClickListener(clickListener)//프로필 편집 클릭됨 1-3
-
-
-        myspace_fragment_dialog= UpdateUserInFoDialog()
 
 
         return view
@@ -152,9 +147,23 @@ class MainMySpaceFragment:Fragment() {
 
                         if(image_url.isNullOrEmpty()) {
                             profile_image.setImageResource(R.drawable.profile_img)
+
+                            //프로필 편집 다이얼로그
+                            myspace_fragment_dialog= UpdateUserInFoDialog(
+                                nickname = nickname.toString(),
+                                profile_url =  null)
                         }else{
                             Glide.with(requireActivity()).load(image_url).into(profile_image)
+
+                            //프로필 편집 다이얼로그
+                            myspace_fragment_dialog= UpdateUserInFoDialog(
+                                nickname = nickname.toString(),
+                                profile_url =  image_url)
                         }
+
+
+
+
 
                     }else{
 

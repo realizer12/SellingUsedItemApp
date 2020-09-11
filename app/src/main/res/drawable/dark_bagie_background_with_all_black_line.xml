@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item>
+        <shape android:shape="rectangle" >
+            <stroke
+                android:width="2dp"
+                android:color="#FF000000" />
+        </shape>
+    </item>
+    <!-- 위쪽만 bordler적용    -->
+    <item android:top="2dp"
+          android:end="2dp"
+          android:bottom="2dp"
+          android:start="1dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="2dp"
+                   android:color="@color/dark_beige" />
+            <solid android:color="@color/dark_beige" />
+        </shape>
+    </item>
+</layer-list>

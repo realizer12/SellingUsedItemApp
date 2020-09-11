@@ -42,9 +42,9 @@
         android:id="@+id/txt_for_pws_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_marginTop="45dp"
         android:fontFamily="@font/cookierun_regular"
+        android:gravity="center"
         android:text="@string/string_for_pws_confirmation"
         android:textColor="@color/colorblack"
         android:textSize="18sp"
@@ -128,6 +128,7 @@
         app:layout_constraintTop_toTopOf="@id/txt_for_pws_check"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="0.65" />
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         android:layout_width="0dp"
@@ -181,28 +182,27 @@
         android:id="@+id/btn_for_cancel"
         android:layout_width="0dp"
         android:layout_height="45dp"
-        android:fontFamily="@font/cookierun_regular"
-        android:textColor="@color/colorblack"
         android:background="@drawable/custom_beige_button_left"
+        android:fontFamily="@font/cookierun_regular"
         android:text="@string/string_for_edit_cancel_btn"
+        android:textColor="@color/colorblack"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/btn_for_complete"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintEnd_toStartOf="@+id/btn_for_complete"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btn_for_complete"
         android:layout_width="0dp"
         android:layout_height="45dp"
-        android:textColor="@color/colorblack"
+        android:background="@drawable/custom_beige_button_right"
         android:fontFamily="@font/cookierun_regular"
         android:text="@string/string_for_edit_complete_btn"
+        android:textColor="@color/colorblack"
         android:textSize="18sp"
-        android:background="@drawable/custom_beige_button_right"
-        app:layout_constraintStart_toEndOf="@id/btn_for_cancel"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_for_cancel" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

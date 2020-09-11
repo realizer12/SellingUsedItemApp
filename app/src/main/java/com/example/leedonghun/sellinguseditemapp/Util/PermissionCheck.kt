@@ -10,6 +10,9 @@ import android.provider.Settings
 import androidx.core.content.ContextCompat
 import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
+import com.example.leedonghun.sellinguseditemapp.Dialog.UpdatePermissionOptionDialog
+import com.example.leedonghun.sellinguseditemapp.Dialog.UpdateUserInFoDialog
+import com.example.leedonghun.sellinguseditemapp.R
 
 /**
  * SellingUsedItemApp
@@ -21,34 +24,20 @@ import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
  * 유저의  permission 체크가 필요한 부분에서
  * permission 다이얼로그를 띄어주는 기능의 클래스이다.
  */
-class PermissionCheck(
-) {
-    //객체 선언 없이  진행 static 형태로
+class PermissionCheck() {
     companion object {
 
-       lateinit var activity:Activity
-       lateinit var packgename:String
-
-        fun get_packagename(packagename: String): Companion {
-            this.packgename= packagename
-            return this
-        }
-
-        fun get_context(activity: Activity):Companion{
-            this.activity=activity
-            return  this
-        }
-
-
+//        private lateinit var dialog:UpdatePermissionOptionDialog
         //퍼미션 list를 받아서
-        //각 퍼미션이 사용자에게
-        fun check_permissions(
-            requst_permission_array: Array<out String>
+        //각 퍼미션이 사용자에게 승인 받았는지를 확인한다.
+        //list의 퍼미션이 전부 확인 승인 받으면 true
+        //그외는 전부 false를 반환한다.
+        fun isPermissionChecked(
+            requst_permission_array: Array<out String>,
+            packagename: String,
+            activity: Activity
         ):Boolean {
             Logger.v("실행")
-
-
-
 
 
             //이전에 거절되어서 다시 사용자에게 권한 request해야하는 퍼미션 array
@@ -64,7 +53,6 @@ class PermissionCheck(
             //받아온  permission array for문으로
             //각가  체크 진행
             for (permission in requst_permission_array) {
-
 
                 //해당 permission 으로  key값을 주고  처음 권한 체크인지 여부를 shared에 저장한다.
                 //이유는 shouldShowRequestPermissionRationale에서 옵션 체크와 처음 체크 모두 false로 반환하기에
@@ -108,38 +96,36 @@ class PermissionCheck(
             }//for문 끝
 
 
-            if (re_permission_array.size > 0) {//퍼미션 다시 할수 있는게 있으면  request 실행
+            //퍼미션 다시 request할수 있는게 있으면  request 실행
+            if (re_permission_array.size > 0) {
+
                 requestPermissions(activity, requst_permission_array, PERMISSION_REQUEST_CODE)
 
                 return false
-            } else {
 
+            } else {//다시 request할수 있는게 아예 없는 경우는  첫번째 체크나, option체크를 한 경우로만 퍼미션이 채워진경우이다.
+
+                //첫번째 체크인 경우가 있는 경우 -> 이땐  request dialog 띄울수 있으므로
+                //request 를 진행한다.
                 if (first_checked_array.size > 0) {
                     requestPermissions(activity, requst_permission_array, PERMISSION_REQUEST_CODE)
 
                     return false
+
                 } else {
 
+                    //첫번째 퍼미션 리스트도 없는 경우 및
+                    //옵션체크된 퍼미션 리스트가 있는 경우이다.
+                    //이때는 다이얼로그를 띄어 setting창에서 권한을 설정해야 함을 알려준다.
                     if (option_checked_permission_array.size > 0) {
 
-                        AlertDialog.Builder(activity).setMessage("해당 기능을 사용하기위해선 \n제공되는 권한 체크를 \n모두 허용하셔야 합니다")
-                            .setPositiveButton("네") { dialog, i ->
-                                val intent = Intent()
-                                intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                                val uri = Uri.fromParts("package", packgename, null)
-                                intent.data = uri
-                                activity.startActivity(intent)
-                                dialog.dismiss()
-                            }
-                            .setNegativeButton("아니오") { dialog, i ->
-
-                                dialog.dismiss()
-                            }.show()
+                        val dialog=UpdatePermissionOptionDialog(activity,packagename)
+                        dialog.show_dialog()
 
                         return false
                     }else{
 
-                        Logger.v("다 올 허용")
+                        Logger.v("퍼미션 전부 허용")
 
                         return true
                     }
@@ -150,7 +136,6 @@ class PermissionCheck(
 
 
         }//check_permissions 끝
-
 
     }
 

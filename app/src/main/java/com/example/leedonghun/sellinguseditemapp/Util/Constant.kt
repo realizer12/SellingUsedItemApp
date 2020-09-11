@@ -11,5 +11,6 @@ package com.example.leedonghun.sellinguseditemapp.Util
  *
  */
 
-
+//permission 체크 에 따른 permissionResult에서 받을
+// request 코드이다.
 const val PERMISSION_REQUEST_CODE =12

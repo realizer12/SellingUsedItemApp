@@ -179,8 +179,9 @@
          <string name="string_for_pws_check_hint">비밀번호 한번더 입력하세요!</string>
          <string name="string_for_edit_cancel_btn">편집 취소</string>
          <string name="string_for_edit_complete_btn">편집 하기</string>
+         <string name="string_for_profile_img_edit_dialog">아래 옵션으로 프로필 사진을 지정하세요!</string>
 
      <!-- permission option check dialog string   -->
-          <string name="string_for_permission_dialog_title">해당 기능을 이용하시려면, \n권한 설정을 해주셔야 합니다.\n아래 영상을 보고 권한을 \n전부 허용해주세요!</string>
+         <string name="string_for_permission_dialog_title">해당 기능을 이용하시려면, \n권한 설정을 해주셔야 합니다.\n아래 영상을 보고 권한을 \n전부 허용해주세요!</string>
 
 </resources>

@@ -36,7 +36,7 @@ class UpdatePermissionOptionDialog(context: Context,packagename:String) {
     init {
 
         dialog.setContentView(R.layout.custom_permission_option_check_dialog)
-
+        dialog.setCancelable(false)//취소 불가
 
         //glide 라이브러리를 통해 중고마켓 gif 로고 파일을 넣어줌.
         //glide 캐쉬 저장은 skip시킴  왜냐면
@@ -51,8 +51,6 @@ class UpdatePermissionOptionDialog(context: Context,packagename:String) {
 
 
     }
-    //외부 context 받아서  로딩용 dialog 세팅 진행
-
 
 
 

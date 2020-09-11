@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:color="@color/colorgrey"
+    tools:ignore="NewApi">
+    <item>
+        <shape android:shape="rectangle" >
+            <stroke
+                android:width="0.5dp"
+                android:color="#FF000000" />
+            <solid android:color="@color/colorblack" />
+        </shape>
+    </item>
+    <!-- 위쪽만 bordler적용    -->
+    <item  android:top="0dp"
+          android:bottom="1dp"
+          android:end="2dp"
+          android:start="2dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="0.5dp" android:color="@color/colorblack" />
+            <solid android:color="@color/white" />
+        </shape>
+    </item>
+</ripple>

@@ -2,16 +2,22 @@ package com.example.leedonghun.sellinguseditemapp.Dialog
 
 
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.app.AlertDialog
+import android.content.Context.LAYOUT_INFLATER_SERVICE
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.text.Layout
 import android.view.*
+import android.widget.Toast
 import androidx.constraintlayout.widget.Group
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
 import com.example.leedonghun.sellinguseditemapp.R
 import com.example.leedonghun.sellinguseditemapp.Util.*
+import kotlinx.android.synthetic.main.custom_profile_img_edit_dialog.view.*
 import kotlinx.android.synthetic.main.update_user_info_dialog.*
 import kotlinx.android.synthetic.main.update_user_info_dialog.view.*
 
@@ -31,6 +37,9 @@ class UpdateUserInFoDialog(
     private var profile_url: String?
 ):DialogFragment()
 {
+
+    lateinit var editProfileImageDialog: AlertDialog
+    lateinit var editProfileImageDialogBuilder:AlertDialog.Builder
 
     //기기 화면 사이즈를 가져오는 클래스  1-1
     lateinit var getWindowSize: GetWindowSize
@@ -56,7 +65,6 @@ class UpdateUserInFoDialog(
 
 
         //기존 닉네임 넣어줌
-
         view.edittxt_for_nickname.setText(nickname)
         view.edittxt_for_nickname.setSelection(nickname.length)//cursor 맨뒤로
 
@@ -98,7 +106,30 @@ class UpdateUserInFoDialog(
                         Logger.v("모든 권한 허용 됨")
 
 
-                        // TODO: 2020-09-11 모든 권한 허용에 따라 앨범에서 사진 가져오는 일을 진행한다.
+                        val inflater:LayoutInflater= requireActivity().getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+                        val view=inflater.inflate(R.layout.custom_profile_img_edit_dialog,null)
+                        editProfileImageDialogBuilder=AlertDialog.Builder(requireActivity())
+                        editProfileImageDialogBuilder.setView(view)
+                        editProfileImageDialogBuilder.setCancelable(false)
+
+                        editProfileImageDialog=editProfileImageDialogBuilder.create()
+                        editProfileImageDialog.show()
+
+
+                        view.txt_no_img.setOnClickListener {
+
+                           Toast.makeText(requireActivity(),"프로필 없음",Toast.LENGTH_SHORT).show()
+
+                        }
+
+                        view.txt_for_goto_gallery.setOnClickListener{
+
+                            Toast.makeText(requireActivity(),"갤러리 가기기",Toast.LENGTH_SHORT).show()
+                        }
+
+                       view.txt_for_cancel_dialog.setOnClickListener {
+                            editProfileImageDialog.dismiss()
+                        }
 
 
                     }else{//아직 허용 안된 권한이 있다.
@@ -125,7 +156,7 @@ class UpdateUserInFoDialog(
 
 
      //클릭 이벤트 모음
-     val clickListener=View.OnClickListener {
+     private val clickListener=View.OnClickListener {
 
          when(it){
 

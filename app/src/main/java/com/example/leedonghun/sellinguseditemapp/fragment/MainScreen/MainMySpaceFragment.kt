@@ -38,8 +38,11 @@ import retrofit2.Response
 
 class MainMySpaceFragment:Fragment() {
 
-    lateinit var retrofitClient: RetrofitClient
-    lateinit var myspace_fragment_dialog: UpdateUserInFoDialog
+    private lateinit var retrofitClient: RetrofitClient
+    private lateinit var myspace_fragment_dialog: UpdateUserInFoDialog
+
+    private var userProfileUrl:String? = null
+    private var userNickName:String =""
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -114,6 +117,10 @@ class MainMySpaceFragment:Fragment() {
             btn_for_profile_edit->{//1-3
 
                 Logger.v("프로필 편집 눌림")
+                //프로필 편집 다이얼로그
+                myspace_fragment_dialog= UpdateUserInFoDialog(
+                    nickname = userNickName,
+                    profile_url =  userProfileUrl)
                 myspace_fragment_dialog.show(requireActivity().supportFragmentManager,"update_info_dialog")
 
 
@@ -148,17 +155,15 @@ class MainMySpaceFragment:Fragment() {
                         if(image_url.isNullOrEmpty()) {
                             profile_image.setImageResource(R.drawable.profile_img)
 
-                            //프로필 편집 다이얼로그
-                            myspace_fragment_dialog= UpdateUserInFoDialog(
-                                nickname = nickname.toString(),
-                                profile_url =  null)
+                            userNickName=nickname.toString()
+                            userProfileUrl=null
+
                         }else{
                             Glide.with(requireActivity()).load(image_url).into(profile_image)
 
-                            //프로필 편집 다이얼로그
-                            myspace_fragment_dialog= UpdateUserInFoDialog(
-                                nickname = nickname.toString(),
-                                profile_url =  image_url)
+                            userNickName=nickname.toString()
+                            userProfileUrl=image_url
+
                         }
 
 

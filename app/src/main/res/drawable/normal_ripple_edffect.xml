@@ -7,8 +7,8 @@
         <shape android:shape="rectangle" >
             <stroke
                 android:width="0.5dp"
-                android:color="#FF000000" />
-            <solid android:color="@color/colorblack" />
+                android:color="@color/white" />
+            <solid android:color="@color/white" />
         </shape>
     </item>
     <!-- 위쪽만 bordler적용    -->
@@ -17,7 +17,7 @@
           android:end="2dp"
           android:start="2dp">
         <shape android:shape="rectangle">
-            <stroke android:width="0.5dp" android:color="@color/colorblack" />
+            <stroke android:width="0.5dp" android:color="@color/white" />
             <solid android:color="@color/white" />
         </shape>
     </item>

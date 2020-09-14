@@ -136,7 +136,7 @@ class UpdateUserInFoDialog(
                         Logger.v("아직 허용 안된 권한이 존재")
 
                     }
-                }
+                }//PermissionCheck apply 끝
 
             }else{
                 //마쉬멜로우 버전 이하는 권한 체크가 설치 이전에 자동 허용된다.

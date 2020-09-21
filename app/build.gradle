@@ -31,6 +31,10 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -98,6 +102,9 @@ dependencies {
 
     //circle image 라이브러리리
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //ted imagepick 라이브러리
+    implementation 'gun0912.ted:tedimagepicker:1.1.3'
 
 
 }

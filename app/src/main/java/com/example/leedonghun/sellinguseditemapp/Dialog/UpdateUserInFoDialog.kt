@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.*
@@ -18,7 +19,10 @@ import androidx.constraintlayout.widget.Group
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
+import com.example.leedonghun.sellinguseditemapp.Data.GetUserInFo.GetBasicUserInFo
+import com.example.leedonghun.sellinguseditemapp.PrivateInfo.ServerIp
 import com.example.leedonghun.sellinguseditemapp.R
+import com.example.leedonghun.sellinguseditemapp.Retrofit.RetrofitClient
 import com.example.leedonghun.sellinguseditemapp.Util.GetWindowSize
 import com.example.leedonghun.sellinguseditemapp.Util.KeyboardVisibilityUtils
 import com.example.leedonghun.sellinguseditemapp.Util.Logger
@@ -28,6 +32,13 @@ import gun0912.tedimagepicker.builder.type.MediaType
 import kotlinx.android.synthetic.main.custom_profile_img_edit_dialog.view.*
 import kotlinx.android.synthetic.main.update_user_info_dialog.*
 import kotlinx.android.synthetic.main.update_user_info_dialog.view.*
+import retrofit2.Callback
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Response
+import java.io.File
 
 
 /**
@@ -45,6 +56,14 @@ class UpdateUserInFoDialog(
     private var profile_url: String?
 ):DialogFragment()
 {
+
+    //retrofit client
+    private lateinit var retrofitClient: RetrofitClient
+
+
+    //프로필 이미지 uri
+    private  var profileUri: Uri? = null
+
 
     //프로필 이미지  편집 용 dialog 와 그 builder
     private lateinit var editProfileImageDialog: AlertDialog
@@ -172,10 +191,13 @@ class UpdateUserInFoDialog(
         editProfileImgDialogView.txt_no_img.setOnClickListener {
             Logger.v("프로필 없애기 눌림")
 
+            Toast.makeText(requireActivity(),R.string.string_for_alert_profile_will_change_later,Toast.LENGTH_SHORT).show()
             profile_image.setImageResource(R.drawable.profile_img)
 
             //1=> 프로필 없애기 2=> 새이미지로 변경 3=> 그냥 그대로
             profileImgChangeCheck=1
+
+            profileUri=null
 
             editProfileImageDialog.dismiss()
         }
@@ -200,9 +222,11 @@ class UpdateUserInFoDialog(
                     //1=> 프로필 없애기 2=> 새이미지로 변경 3=> 그냥 그대로
                     profileImgChangeCheck=2
 
-                    Toast.makeText(requireActivity(),"",Toast.LENGTH_SHORT).show()
+                    profileUri=uri
 
+                    Toast.makeText(requireActivity(),R.string.string_for_alert_profile_will_change_later,Toast.LENGTH_SHORT).show()
                     profile_image.setImageURI(uri)
+
                     editProfileImageDialog.dismiss()
                 }
 
@@ -214,6 +238,8 @@ class UpdateUserInFoDialog(
 
             //1=> 프로필 없애기 2=> 새이미지로 변경 3=> 그냥 그대로
             profileImgChangeCheck=3
+
+            profileUri=null
 
             Logger.v("취소 버튼 클릭됨")
             editProfileImageDialog.dismiss()
@@ -228,6 +254,8 @@ class UpdateUserInFoDialog(
 
             //1=> 프로필 없애기 2=> 새이미지로 변경 3=> 그냥 그대로
             profileImgChangeCheck=3
+
+            profileUri=null
 
             Glide.with(requireActivity())
                 .load(profile_url)
@@ -249,14 +277,18 @@ class UpdateUserInFoDialog(
          when(it){
 
              btn_for_cancel->{//2-2
-                 Logger.v("취소 버튼 클릭됨")
+                 Logger.v("편집취소 버튼 클릭됨")
                  dismiss()
              }
 
              btn_for_complete->{//2-3
-                 Logger.v("편집 하기 버튼 클릭됨")
-                 dismiss()
+                 Logger.v("편집 완료 버튼 클릭됨")
+
+                 uploadEditedProfileInfo(profileUri)
+
+                 //dismiss()
              }
+
 
              container_of_profile_edit->{//2-4
 
@@ -266,8 +298,55 @@ class UpdateUserInFoDialog(
 
          }
 
+     }//clicklistener 끝
 
-     }
+//    String current_video_path;// 사진1 경로
+//
+//    File uploadFile;//파일 객체
+//
+//    RequestBody reqFile = null;
+//    current_video_path=uriList.get(0).getPath();
+//
+//    uploadFile=new File(current_video_path);
+//    reqFile = RequestBody.create(MediaType.parse("video/*"),uploadFile);//프로필 사진;
+//
+//    MultipartBody.Part reqFile1=MultipartBody.Part.createFormData("video", uploadFile.getName(),reqFile);
+
+
+    //편집된 프로필 정보  서버에 업로드
+    private fun uploadEditedProfileInfo(uri:Uri?){
+
+
+        val file = File(uri?.path)
+        val requestFile = RequestBody.create(okhttp3.MediaType.parse("image/*"),file)
+
+        val body =MultipartBody.Part.createFormData("uploaded_img",file.name,requestFile)
+
+        retrofitClient= RetrofitClient(ServerIp.baseurl)
+        retrofitClient.apiService.updateUserProfile(body,"1","동키",null)
+            .enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) {
+                    val result =response.body()?.string()
+                    val errorbody =response.errorBody()?.string()
+                    Logger.v("result -> $result")
+                    Logger.v("errorbdy -> $errorbody")
+
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Logger.v("이미지 편집 실패 -> ${t.message}")
+                }
+
+            })
+
+
+
+
+    }//uploadEditedProfileInfo() 끝
+
 
 
 

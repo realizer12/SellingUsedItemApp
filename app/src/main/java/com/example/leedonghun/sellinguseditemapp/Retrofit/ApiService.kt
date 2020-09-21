@@ -6,6 +6,8 @@ import com.example.leedonghun.sellinguseditemapp.Data.Login.GetNaverLoginRespons
 import com.example.leedonghun.sellinguseditemapp.Data.Login.LoginCallback
 import com.example.leedonghun.sellinguseditemapp.Data.Register.UploadNewMemberCallback
 import com.facebook.login.Login
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 import okhttp3.ResponseBody
 import org.json.JSONObject
@@ -28,6 +30,17 @@ interface ApiService {
     //retrofit 서버 통신 되는지  test용
     @POST("retrofitt_server_connection_check.php")
     fun server_connetion_test():Call<String>
+
+
+    //유저 프로필 업데이트 관련  내용을  서버로 보낸다.
+    //그리고 서버 업로드 성공 여부를 받아와서 알려준다.
+
+    @Multipart
+    @POST("account/change_user_info/change_user_basic_info.php")
+    fun updateUserProfile(@Part imageFile:MultipartBody.Part?,
+                          @Part("uid")user_uid: String?,
+                          @Part("nickname")user_nickname:String?,
+                          @Part("new_password")new_password_with_saltvalue:JSONObject?):Call<ResponseBody>
 
 
     //유저의 기본적인 프로필 내용을 가지고온다.
